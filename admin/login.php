@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="/CssForAdmin/Login_css.css">
     <title>ล็อกอินผู้ดูแลระบบ</title>
 </head>
 <body>
