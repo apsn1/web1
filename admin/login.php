@@ -15,11 +15,11 @@
             <input type="password" name="password" placeholder="รหัสผ่าน" required>
             <button type="submit">เข้าสู่ระบบ</button>
         </form>
-        <from>
+        <form>
         <a href="register.php">
             <button type="button">ลงทะเบียน</button>
         </a>
-    </from>
+</form>
     </div>
 
     
