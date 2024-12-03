@@ -5,7 +5,7 @@
     <title>หน้าเว็บหลัก</title>
 </head>
 <body>
-    <h1>ข้อมูลในหน้าเว็บ11111ssd11</h1>
+    <h1>ข้อมูลในหน้าเว็บ</h1>
     <?php
     $sql = "SELECT * FROM content";
     $result = $conn->query($sql);
