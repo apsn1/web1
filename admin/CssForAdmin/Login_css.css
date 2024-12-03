@@ -19,6 +19,7 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: inline-block;
     margin-top: 20px;
+    text-align: left; /* Align text to the left */
 }
 
 input[type="text"], input[type="password"] {
@@ -27,6 +28,7 @@ input[type="text"], input[type="password"] {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
+    display: block; /* Makes each input field appear in a vertical stack */
 }
 
 button {
@@ -37,6 +39,8 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    display: block; /* Makes button appear below the inputs */
+    margin-top: 10px;
 }
 
 button:hover {
