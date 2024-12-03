@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+        $password = md5($password);
 
         // ดีบักแสดงค่า
         echo "รหัสผ่านที่เก็บในฐานข้อมูล: " . $user['password'] . "<br>";
