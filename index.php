@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>ข้อมูลในหน้าเว็บ</h1>
-    <button type="submit" href="add_content.php">sub</button>
+    <a href="admin/admin_panel.php">สร้างโพส</a>
     <?php
     $sql = "SELECT * FROM content";
     $result = $conn->query($sql);
