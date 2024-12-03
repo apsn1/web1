@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $insertQuery="INSERT INTO users (email,username,password) VALUE ('$email','$username','$password')";
         if($conn->query($insertQuery)==TRUE){
             echo "สมัครสำเร็จ";
-            
+            echo "<meta http-equiv='refresh' content='3;url=login.php'/>";
             header("location login.php");
         }
         else{
