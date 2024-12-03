@@ -2,32 +2,23 @@
 include('../db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $password = md5($password);
 
     // คำสั่ง SQL
     $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        session_start();
         $user = $result->fetch_assoc();
-        $password = md5($password);
-
-        // ดีบักแสดงค่า
-        echo "รหัสผ่านที่เก็บในฐานข้อมูล: " . $user['password'] . "<br>";
-        echo "รหัสผ่านที่กรอก: " . $password . "<br>";
-
-        // ตรวจสอบรหัสผ่าน
-        if (password_verify($password, $user['password'])) {
-            session_start();
-            $_SESSION['username'] = $username;
+        $_SESSION['username'] = $username;
             header("Location: admin_panel.php");
-            exit;
-        } else {
-            echo "รหัสผ่านไม่ถูกต้อง";
-        }
+            exit();
+
     } else {
-        echo "ไม่พบผู้ใช้งาน";
+        echo "ไม่พบผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง";
     }
 }
 ?>
