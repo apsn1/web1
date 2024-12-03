@@ -6,7 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $sql = "INSERT INTO content (title, body) VALUES ('$title', '$body')";
     if ($conn->query($sql) === TRUE) {
-        header("Location: admin_panel.php");
+        echo "เพิ่มโพสสำเร็จ";
+        echo "<meta http-equiv='refresh' content='2;url=../index.php'/>";
     } else {
         echo "เกิดข้อผิดพลาด: " . $conn->error;
     }
