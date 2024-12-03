@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="CssForAdmin/register_css.css">
     <title>สมัครบัญชีผู้ใช้งาน</title>
 </head>
 <body>
