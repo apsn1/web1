@@ -16,13 +16,13 @@
             <button type="submit">เข้าสู่ระบบ</button>
         </form>
         <form>
-        <a href="register.php">
-            <button type="button">ลงทะเบียน</button>
-        </a>
-</form>
+            <a href="register.php">
+                <button type="button">ลงทะเบียน</button>
+            </a>
+        </form>
     </div>
 
-    
+
 
 </body>
 

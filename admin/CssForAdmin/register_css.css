@@ -1,34 +1,11 @@
 /* Login_css.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-    margin: 0;
-    padding: 0;
+.error {
+    color: red;
+    font-size: 14px;
 }
 
-h1 {
-    color: #333;
-    margin-top: 50px;
-}
-
-form {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    margin-top: 20px;
-    text-align: left; /* Align text to the left */
-}
-
-input[type="text"], input[type="password"] {
-    width: 300px;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    display: block; /* Makes each input field appear in a vertical stack */
+button:hover {
+    background-color: #45a049;
 }
 
 button {
@@ -39,15 +16,55 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    display: block; /* Makes button appear below the inputs */
-    margin-top: 10px;
+    transition: background-color 0.3s ease; /* การเปลี่ยนสีปุ่มอย่างนุ่มนวล */
 }
 
 button:hover {
     background-color: #45a049;
+    transform: scale(1.05); /* เพิ่มขนาดเล็กน้อยเมื่อ hover */
 }
 
-.error {
-    color: red;
-    font-size: 14px;
+input[type="text"], input[type="password"] {
+    width: 100%; /* ให้ช่องกรอกข้อมูลเต็มความกว้างของ form */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* รวม padding และ border ในขนาดที่กำหนด */
+}
+
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin-top: 20px;
+    width: 100%; /* ปรับให้เต็มความกว้างที่มี */
+    max-width: 400px; /* กำหนดความกว้างสูงสุด */
+}
+
+h1 {
+    color: #333;
+    margin-top: 0;
+    font-size: 2em; /* ปรับขนาดฟอนต์ */
+    margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่าง */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* จัดเรียงเป็นแนวตั้ง */
+    justify-content: center; /* จัดกลางในแนวนอน */
+    align-items: center; /* จัดกลางในแนวตั้ง */
+    height: 100vh; /* ทำให้ body ครอบคลุมทั้งหน้าจอ */
+    text-align: center; /* จัดข้อความทั้งหมดให้อยู่ตรงกลาง */
+}
+
+/* ทำให้ฟอร์มมีระยะห่างจากส่วนอื่นๆ */
+form {
+    margin-top: 20px;
 }
