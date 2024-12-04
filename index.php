@@ -13,6 +13,7 @@
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            echo "<a href='admin/edit_content.php'> edit </a>";
             echo "<h2>" . $row['title'] . "</h2>";
             echo "<p>" . $row['body'] . "</p>";
         }
