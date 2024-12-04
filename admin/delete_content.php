@@ -8,6 +8,7 @@ $result = mysqli_query($conn,$sql);
 
 if($result){
     echo "Delete successful!!";
+    echo "<meta http-equiv='refresh' content='2;url=../index.php'/>";
    
 }else{
     echo "Can't delete this card please try again!!";
