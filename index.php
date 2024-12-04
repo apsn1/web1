@@ -179,7 +179,7 @@
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            echo "<a href='admin/edit_content.php'> edit </a>";
+            echo "<a href='admin/delete.php?del=".$row['contentID']." '> ลบ </a>";
             echo "<h2>" . $row['title'] . "</h2>";
             echo "<p>" . $row['body'] . "</p>";
         }

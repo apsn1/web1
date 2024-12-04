@@ -3,7 +3,7 @@
 $del = $_GET['del'];
 include("../db.php");
 
-$sql = "delete from content where contentID = '$del' ";
+$sql = "delete from content where contentId = '$del' ";
 $result = mysqli_query($conn,$sql);
 
 if($result){
