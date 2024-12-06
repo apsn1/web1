@@ -22,32 +22,41 @@
     <script src="scripts.js"></script>
 </head>
 
-<body>
+<body id="page-top">
+    <?php
+    $sql = "SELECT * FROM navbar";
+    $result = $conn->query($sql);
+    echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
+    echo "<div class='container'>";
+    echo "<a href='############################################'>";
+    echo "<img class='logoinbanner' src='admin/img/logo/logoOld1.png'style='height: 75px; width: 97px; margin-right: 50px;' alt='Logo'>";
+    echo "</a>";
+    echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary1 text-white rounded' type='button'data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'aria-expanded='false' aria-label='Toggle navigation'> Menu";
+    echo "<i class='fas fa-bars'>";
+    echo "</i>";
+    echo "</button>";
 
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-        <div class="container">
-            <a href="############################################">
-                <img class="logoinbanner" src="admin/img/logo/logoOld1.png"
-                    style="height: 75px; width: 97px; margin-right: 50px;" alt="Logo"></a>
-            <!-- <a class="navbar-brand" href="#page-top">One Siame</a>-->
-            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary1 text-white rounded" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin/admin_panel.php">จัดการข้อมูล</a> 
-                        <!-- ลิงก์ไปยัง admin.php -->
-                    </li>
-                </ul>
-            </div>
-        </div>
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
+            echo "<ul class='navbar-nav ms-auto'>";
+            echo "<li class='nav-item mx-0 mx-lg-1'>";
+            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded'>" . $row['name'] . "</a>";
+            echo "</li>";
+            echo "</ul>";
+            echo "</div>";
+        }
+    } else {
+        echo "<li><a href='#'>ไม่มีเมนู</a></li>";
+    }
+    echo "<a class='nav-link' href='admin/admin_panel.php'>จัดการข้อมูล</a>";
+    echo "</nav>";
+    echo "</div>";
 
-    </nav>
+    ?>
+    
+    <!-- ลิงก์ไปยัง admin.php -->
+
 
     <!-------------------------------------------------------------------------------------------------------------->
     <header class="masthead bg-primary text-white text-center" id="Home" style="
@@ -68,25 +77,29 @@
     </header>
 
     <!--------------------------------------------------------------------------------------------------------------->
-    <div class="from_on_top">
-        <h1>ข้อมูลในหน้าเว็บ</h1>
-        <a href="admin/admin_panel.php">สร้างโพส</a>
-    </div>
-    <div class="container">
-    <?php
+
+    <div class="Colum15year">
+
+        <?php
         $sql = "SELECT * FROM content";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<div>" . $row['title'] . "</div>";
-                echo "<div>" . $row['body'] . "</div>";
-                echo "<div><a href='admin/delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
+                echo "<div class='Colum1'>";
+                echo "<h3>" . $row['title'] . "</h3>";
+                echo "<p>" . $row['body'] . "</p>";
+                echo "<div class='action'><a href='admin/delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
+                echo "</div>";
             }
         } else {
             echo "<div>ไม่มีข้อมูล</div>";
         }
-    ?>
-</div>
+        ?>
+
+        <div class="from_on_top">
+            <a href="admin/admin_panel.php">สร้างโพส + </a>
+        </div>
+    </div>
 
 </body>
 
