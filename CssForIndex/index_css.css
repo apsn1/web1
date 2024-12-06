@@ -11637,3 +11637,9 @@ img.img-fluid {
 #scrollToTop:hover {
   background-color: #0056b3;
 }
+
+.container {
+  display: flex;
+  justify-content: flex-end; /* จัดทุกองค์ประกอบในแถวให้เรียงไปทางขวา */
+  gap: 10px; /* ระยะห่างระหว่างแต่ละองค์ประกอบ */
+}

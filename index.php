@@ -72,21 +72,19 @@
         <h1>ข้อมูลในหน้าเว็บ</h1>
         <a href="admin/admin_panel.php">สร้างโพส</a>
     </div>
+    <div class="container">
     <?php
-    $sql = "SELECT * FROM content";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<a href='admin/delete_content.php?del=".$row['contentID']." '> ลบ </a>";
-            echo "<h2>" . $row['title'] . "</h2>";
-            echo "<p>" . $row['body'] . "</p>";
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div>" . $row['title'] . "</div>";
+                echo "<div>" . $row['body'] . "</div>";
+                echo "<div><a href='admin/delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
+            }
+        } else {
+            echo "<div>ไม่มีข้อมูล</div>";
         }
-    } else {
-        echo "ไม่มีข้อมูล";
-    }
     ?>
-
+</div>
 
 </body>
 
