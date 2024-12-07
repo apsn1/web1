@@ -1,4 +1,3 @@
-@ -0,0 +1,57 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uploadDir = "uploads/";

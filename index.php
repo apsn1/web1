@@ -32,35 +32,35 @@
     echo "<a href='############################################'>";
     $directory = 'admin/uploads/';
 
-// ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
-if (is_dir($directory)) {
-    $files = scandir($directory);
+    // ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
+    if (is_dir($directory)) {
+        $files = scandir($directory);
 
-    // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
-    if ($files !== false) {
-        // ลบ . และ .. ออกจากลิสต์
-        $files = array_diff($files, array('.', '..'));
+        // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
+        if ($files !== false) {
+            // ลบ . และ .. ออกจากลิสต์
+            $files = array_diff($files, array('.', '..'));
 
-        // กรองเฉพาะไฟล์ที่เป็นรูปภาพ (เช่น .jpg, .png)
-        $imageFiles = array_filter($files, function($file) {
-            $ext = pathinfo($file, PATHINFO_EXTENSION);
-            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']); // เพิ่มประเภทไฟล์ที่ต้องการ
-        });
+            // กรองเฉพาะไฟล์ที่เป็นรูปภาพ (เช่น .jpg, .png)
+            $imageFiles = array_filter($files, function ($file) {
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']); // เพิ่มประเภทไฟล์ที่ต้องการ
+            });
 
-        // ตรวจสอบว่าอาร์เรย์ $imageFiles มีไฟล์รูปภาพ
-        if (count($imageFiles) > 0) {
-            // เลือกรูปภาพแรกจากโฟลเดอร์
-            $image = reset($imageFiles); // เลือกรูปภาพแรกจากอาร์เรย์ที่กรองแล้ว
-            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='width:200px; height:auto;'>";
+            // ตรวจสอบว่าอาร์เรย์ $imageFiles มีไฟล์รูปภาพ
+            if (count($imageFiles) > 0) {
+                // เลือกรูปภาพแรกจากโฟลเดอร์
+                $image = reset($imageFiles); // เลือกรูปภาพแรกจากอาร์เรย์ที่กรองแล้ว
+                echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-right: 50px;'>";
+            } else {
+                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+            }
         } else {
-            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
         }
     } else {
-        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+        echo "ไม่พบโฟลเดอร์ uploads";
     }
-} else {
-    echo "ไม่พบโฟลเดอร์ uploads";
-}
     echo "</a>";
     echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary1 text-white rounded' type='button'data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'aria-expanded='false' aria-label='Toggle navigation'> Menu";
     echo "<i class='fas fa-bars'>";
@@ -129,7 +129,37 @@ if (is_dir($directory)) {
             <a href="admin/admin_panel.php">สร้างโพส + </a>
         </div>
     </div>
+    <?php
+    $sql = "SELECT * FROM videos";
+    $result = $conn->query($sql);
 
+    // ตรวจสอบว่ามีข้อมูลในฐานข้อมูลหรือไม่
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // ตรวจสอบว่ามีลิงก์วิดีโอ
+            $currentVideo = $row['video_link'];
+            if ($currentVideo) {
+                echo "<div class='video-container'>";
+                echo "<div class='video'>";
+                echo "<iframe src='" . htmlspecialchars($currentVideo) . "' frameborder='0' allowfullscreen></iframe>";
+                echo "</div>";
+                echo "</div>";
+
+                echo "<div class='Textdownvideo'>";
+                echo "<div class='TextVideo' style='margin-top: 10px; margin-bottom: 20px; text-align: center; font-size: 22px;'>";
+                echo "<a class='nav-link py-3 px-0 px-lg-3 rounded'>" . $row['video_title'] . "</a>";
+                echo "</div>";
+                echo "</div>";
+                
+            }
+        }
+    } else {
+        echo "<div>ไม่มีข้อมูล</div>";
+    }
+                
+    ?>
+    
+</div>
 </body>
 
 </html>

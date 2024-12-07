@@ -47,6 +47,16 @@ if (!isset($_SESSION['username'])) {
 
         <button type="submit">เพิ่มข้อมูล</button>
     </form>
+    <h1>จัดการข้อมูล วิดิโอ</h1>
+    <form action="update_video.php" method="POST">
+        <input type="text" name="video_link" placeholder="YouTube Video Link" required>
+        <div class="form-group">
+        <input type="text" name="video_title" placeholder="ชื่อหัวข้อ Link" required>
+    </div>
+        <button type="submit">อัปเดตวิดีโอ</button>
+        
+    </form>
+    
 </body>
 
 </html>
