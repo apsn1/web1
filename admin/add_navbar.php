@@ -1,8 +1,7 @@
 <?php
 include('../db.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['name'];
-    $body = $_POST['body'];
+    $name = $_POST['name'];
 
     $sql = "INSERT INTO navbar (name) VALUES ('$name')";
     if ($conn->query($sql) === TRUE) {

@@ -23,19 +23,44 @@
 </head>
 
 <body id="page-top">
+
     <?php
     $sql = "SELECT * FROM navbar";
     $result = $conn->query($sql);
     echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
     echo "<div class='container'>";
     echo "<a href='############################################'>";
-    echo "<img class='logoinbanner' src='admin/img/logo/logoOld1.png'style='height: 75px; width: 97px; margin-right: 50px;' alt='Logo'>";
+    $directory = 'admin/uploads/';
+
+    // ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
+    if (is_dir($directory)) {
+        $files = scandir($directory);
+    
+        // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
+        if ($files !== false) {
+            // ลบ . และ .. ออกจากลิสต์
+            $files = array_diff($files, array('.', '..'));
+    
+            // หากมีไฟล์ในโฟลเดอร์
+            if (count($files) > 0) {
+                // เลือกรูปภาพแรกจากโฟลเดอร์
+                $image = $files[0];
+                // แสดงรูปภาพ
+                echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='width:200px; height:auto;'>";
+            } else {
+                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+            }
+        } else {
+            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+        }
+    } else {
+        echo "ไม่พบโฟลเดอร์ uploads";
+    }
     echo "</a>";
     echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary1 text-white rounded' type='button'data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'aria-expanded='false' aria-label='Toggle navigation'> Menu";
     echo "<i class='fas fa-bars'>";
     echo "</i>";
     echo "</button>";
-
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
@@ -54,7 +79,6 @@
     echo "</div>";
 
     ?>
-    
     <!-- ลิงก์ไปยัง admin.php -->
 
 

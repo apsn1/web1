@@ -144,4 +144,15 @@ window.addEventListener('scroll', () => {
         scrollToTopButton.style.display = 'none';
     }
 });
+//-----------------------------------------------------------------------------------------------------------/
 
+        // เมื่อคลิกที่รูป ให้เปิดตัวเลือกไฟล์
+        document.getElementById('preview').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+
+        // แสดงตัวอย่างรูปที่เลือก
+        function previewImage(event) {
+            const preview = document.getElementById('preview');
+            preview.src = URL.createObjectURL(event.target.files[0]);
+        }
