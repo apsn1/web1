@@ -32,30 +32,35 @@
     echo "<a href='############################################'>";
     $directory = 'admin/uploads/';
 
-    // ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
-    if (is_dir($directory)) {
-        $files = scandir($directory);
-    
-        // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
-        if ($files !== false) {
-            // ลบ . และ .. ออกจากลิสต์
-            $files = array_diff($files, array('.', '..'));
-    
-            // หากมีไฟล์ในโฟลเดอร์
-            if (count($files) > 0) {
-                // เลือกรูปภาพแรกจากโฟลเดอร์
-                $image = $files[0];
-                // แสดงรูปภาพ
-                echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='width:200px; height:auto;'>";
-            } else {
-                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
-            }
+// ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
+if (is_dir($directory)) {
+    $files = scandir($directory);
+
+    // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
+    if ($files !== false) {
+        // ลบ . และ .. ออกจากลิสต์
+        $files = array_diff($files, array('.', '..'));
+
+        // กรองเฉพาะไฟล์ที่เป็นรูปภาพ (เช่น .jpg, .png)
+        $imageFiles = array_filter($files, function($file) {
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']); // เพิ่มประเภทไฟล์ที่ต้องการ
+        });
+
+        // ตรวจสอบว่าอาร์เรย์ $imageFiles มีไฟล์รูปภาพ
+        if (count($imageFiles) > 0) {
+            // เลือกรูปภาพแรกจากโฟลเดอร์
+            $image = reset($imageFiles); // เลือกรูปภาพแรกจากอาร์เรย์ที่กรองแล้ว
+            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='width:200px; height:auto;'>";
         } else {
-            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
         }
     } else {
-        echo "ไม่พบโฟลเดอร์ uploads";
+        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
     }
+} else {
+    echo "ไม่พบโฟลเดอร์ uploads";
+}
     echo "</a>";
     echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary1 text-white rounded' type='button'data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'aria-expanded='false' aria-label='Toggle navigation'> Menu";
     echo "<i class='fas fa-bars'>";

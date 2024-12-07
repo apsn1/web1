@@ -22,9 +22,11 @@ if (!isset($_SESSION['username'])) {
         <div class="form-container">
             <div class="form-group">
                 <input type="text" name="name" placeholder="ชื่อหัวข้อ">
+                <button type="submit">อัปโหลด</button>
             </div>
 
     </form>
+    <h1>อัพโหลด Logo</h1>
     <form action="upload_update.php" method="post" enctype="multipart/form-data">
                 <label for="logo">เลือกรูปภาพใหม่:</label>
                 <input type="file" name="logo" id="logo" accept="image/*">
