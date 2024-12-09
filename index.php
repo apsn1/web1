@@ -150,16 +150,16 @@
                 echo "<a class='nav-link py-3 px-0 px-lg-3 rounded'>" . $row['video_title'] . "</a>";
                 echo "</div>";
                 echo "</div>";
-                
+
             }
         }
     } else {
         echo "<div>ไม่มีข้อมูล</div>";
     }
-                
+
     ?>
-    
-</div>
+
+    </div>
 </body>
 
 </html>
