@@ -40,8 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // อัปเดตไฟล์ใหม่ในฐานข้อมูล
             $sql = "REPLACE INTO images (id, file_name, file_path) VALUES (1, '$fileName', '$targetFile')";
             if ($conn->query($sql) === TRUE) {
-                echo "อัปโหลดและอัปเดตรูปภาพสำเร็จ: <a href='$targetFile'>ดูรูป</a>";
-                echo "<img src='$targetFile' alt='อัปโหลดแล้ว' style='max-width:300px; max-height:300px;'>";
+                // หลังจากอัปเดตฐานข้อมูลเสร็จให้กลับไปหน้า index.php
+                header("Location: ../index.php");
+                exit();
             } else {
                 echo "เกิดข้อผิดพลาดในการบันทึกฐานข้อมูล: " . $conn->error;
             }
