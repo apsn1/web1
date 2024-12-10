@@ -115,7 +115,6 @@
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='Colum1'>";
-                echo "<img src='admin/img/SEO_image/".$row['img']."'/>";
                 echo "<h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['body'] . "</p>";
                 echo "<div class='action'><a href='admin/delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
