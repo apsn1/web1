@@ -123,6 +123,28 @@ a:hover {
     color: #999;
 }
 
+.imageShow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* ให้สูงเท่าหน้าจอ */
+    background-color: #f0f0f0; /* สีพื้นหลังเรียบ */
+  }
+  
+  /* กล่องของรูป */
+  .imageShow img {
+    max-width: 80%; /* ปรับให้ไม่เกิน 80% ของความกว้างหน้าจอ */
+    height: auto; /* รักษาอัตราส่วนของรูป */
+    border-radius: 12px; /* ทำมุมให้โค้งมน */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+    transition: transform 0.3s, box-shadow 0.3s; /* ทำให้มีเอฟเฟกต์เคลื่อนไหว */
+  }
+  
+  .imageShow img:hover {
+    transform: scale(1.05); /* ขยายรูปเมื่อเอาเมาส์ชี้ */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* เงาเพิ่มเมื่อโฮเวอร์ */
+  }
+
 /* ปรับแต่งหน้าจอให้ตอบสนองต่อขนาดหน้าจอ */
 @media (max-width: 768px) {
     .form-container {
