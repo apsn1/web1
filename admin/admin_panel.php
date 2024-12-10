@@ -23,42 +23,54 @@ if (!isset($_SESSION['username'])) {
             <form method="POST" action="add_navbar.php">
                 <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
                 <div class="form-container">
-                    <form action="upload_logo.php" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <input type="text" name="name" placeholder="ชื่อหัวข้อ" required>
-                            <button type="submit">อัปโหลด</button>
-                        </div>
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>ชื่อหัวข้อ</th>
-                                    <th>ลบ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sql = "SELECT * FROM navbar";
-                                $result = $conn->query($sql);
-                                if ($result->num_rows > 0) {
-                                    // วนลูปแสดงข้อมูล
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        echo "<td>" . $row["id"] . "</td>";
-                                        echo "<td>" . $row["name"] . "</td>";
-                                        echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
-                                        echo "</tr>";
+                    <label for="name">ชื่อเมนูหลัก:</label>
+                    <input type="text" name="name" placeholder="ชื่อเมนูหลัก" required>
 
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='2'>ไม่มีข้อมูล</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </form>
+                    <label for="is_dropdown">ทำให้เมนูเป็น Dropdown?</label>
+                    <input type="checkbox" name="is_dropdown" id="is_dropdown" onclick="toggleDropdownFields(this)">
+
+                    <!-- ช่องกรอกเมนูย่อย -->
+                    <div class="dropdown-fields" style="display: none;">
+                        <label for="dropdown_name">ชื่อเมนูย่อย:</label>
+                        <input type="text" name="dropdown_name[]" placeholder="ชื่อเมนูย่อย 1">
+                        <div class="additional-dropdown-fields"></div>
+
+                        <!-- ปุ่มเพิ่มเมนูย่อย -->
+                        <button type="button" onclick="addDropdownMenu()">เพิ่มเมนูย่อย</button>
+                    </div>
+
+                    <input type="submit" value="เพิ่มเมนู">
                 </div>
+
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ชื่อหัวข้อ</th>
+                            <th>ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT * FROM navbar";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row["id"] . "</td>";
+                                echo "<td>" . $row["name"] . "</td>";
+                                echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>ไม่มีข้อมูล</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </form>
+
+
 
             <form action="upload_update.php" method="post" enctype="multipart/form-data">
                 <h1>อัพโหลด Logo</h1>
@@ -170,9 +182,27 @@ if (!isset($_SESSION['username'])) {
             </form>
         </div>
         <div class="ส่วนตัวอย่างหน้า">
-        <iframe src="../index.php" class="iframe-content"></iframe>
+            <iframe src="../index.php" class="iframe-content"></iframe>
         </div>
     </div>
+    <script>
+                function toggleDropdownFields(checkbox) {
+                    var dropdownFields = document.querySelector('.dropdown-fields');
+                    if (checkbox.checked) {
+                        dropdownFields.style.display = 'block';
+                    } else {
+                        dropdownFields.style.display = 'none';
+                    }
+                }
+
+                function addDropdownMenu() {
+                    var newInput = document.createElement('input');
+                    newInput.type = 'text';
+                    newInput.name = 'dropdown_name[]';
+                    newInput.placeholder = 'ชื่อเมนูย่อย';
+                    document.querySelector('.additional-dropdown-fields').appendChild(newInput);
+                }
+            </script>
 </body>
 
 </html>

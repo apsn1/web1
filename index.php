@@ -11,6 +11,11 @@
     <!-- Favicon-->
 
     <link rel="icon" type="image/x-icon" href="/images/logoOld1.png">
+    <!-- เพิ่มไฟล์ CSS ของ Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- เพิ่มไฟล์ JS ของ Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
@@ -24,71 +29,82 @@
 
 <body id="page-top">
 
-    <?php
-    $sql = "SELECT * FROM navbar";
-    $result = $conn->query($sql);
-    echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
-    echo "<div class='container'>";
-    echo "<a href='############################################'>";
-    $directory = 'admin/uploads/';
+<?php
+$sql = "SELECT * FROM navbar ORDER BY parent_id ASC";  // ดึงข้อมูลเมนูทั้งหมดจากฐานข้อมูล
+$result = $conn->query($sql);
 
-    // ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
-    if (is_dir($directory)) {
-        $files = scandir($directory);
+echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
+echo "<div class='container'>";
+echo "<a href='#'>";
 
-        // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
-        if ($files !== false) {
-            // ลบ . และ .. ออกจากลิสต์
-            $files = array_diff($files, array('.', '..'));
-
-            // กรองเฉพาะไฟล์ที่เป็นรูปภาพ (เช่น .jpg, .png)
-            $imageFiles = array_filter($files, function ($file) {
-                $ext = pathinfo($file, PATHINFO_EXTENSION);
-                return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']); // เพิ่มประเภทไฟล์ที่ต้องการ
-            });
-
-            // ตรวจสอบว่าอาร์เรย์ $imageFiles มีไฟล์รูปภาพ
-            if (count($imageFiles) > 0) {
-                // เลือกรูปภาพแรกจากโฟลเดอร์
-                $image = reset($imageFiles); // เลือกรูปภาพแรกจากอาร์เรย์ที่กรองแล้ว
-                echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-right: 50px;'>";
-            } else {
-                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
-            }
+// แสดงรูปภาพจากโฟลเดอร์ uploads
+$directory = 'admin/uploads/';
+if (is_dir($directory)) {
+    $files = scandir($directory);
+    if ($files !== false) {
+        $files = array_diff($files, array('.', '..'));
+        $imageFiles = array_filter($files, function ($file) {
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+        });
+        if (count($imageFiles) > 0) {
+            $image = reset($imageFiles);
+            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-right: 50px;'>";
         } else {
-            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
         }
     } else {
-        echo "ไม่พบโฟลเดอร์ uploads";
+        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
     }
-    echo "</a>";
-    echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary1 text-white rounded' type='button'data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'aria-expanded='false' aria-label='Toggle navigation'> Menu";
-    echo "<i class='fas fa-bars'>";
-    echo "</i>";
-    echo "</button>";
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
-            echo "<ul class='navbar-nav ms-auto'>";
-            echo "<li class='nav-item mx-0 mx-lg-1'>";
-            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded'>" . $row['name'] . "</a>";
-            echo "</li>";
-            echo "</ul>";
-            echo "</div>";
-        }
-    } else {
-        echo "<li><a href='#'>ไม่มีเมนู</a></li>";
-    }
-    echo "</nav>";
-    echo "</div>";
+} else {
+    echo "ไม่พบโฟลเดอร์ uploads";
+}
+echo "</a>";
 
-    ?>
+echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation'> Menu <i class='fas fa-bars'></i></button>";
+
+echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
+echo "<ul class='navbar-nav ms-auto'>";
+
+// อาร์เรย์เก็บเมนูจากฐานข้อมูล
+$menus = [];
+while ($row = $result->fetch_assoc()) {
+    $menus[$row['parent_id']][] = $row;  // จัดเก็บเมนูตาม parent_id
+}
+
+// แสดงเมนูหลัก (ที่ไม่มี parent_id หรือ parent_id เป็น 0)
+if (isset($menus[0]) || isset($menus[NULL])) {  // เพิ่มเงื่อนไขเพื่อรองรับกรณี parent_id เป็น NULL
+    foreach ($menus[0] ?? $menus[NULL] as $row) {  // ใช้ค่านี้เมื่อไม่มี parent_id
+        echo "<li class='nav-item mx-0 mx-lg-1 dropdown'>";
+        echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#' data-bs-toggle='dropdown'>" . $row['name'] . "</a>";
+
+        // หากมีเมนูย่อย (ที่มี parent_id ตรงกับ id ของเมนูหลัก)
+        if (isset($menus[$row['id']])) {
+            echo "<ul class='dropdown-menu'>";
+            foreach ($menus[$row['id']] as $submenu) {
+                echo "<li><a class='dropdown-item' href='#'>" . $submenu['name'] . "</a></li>";
+            }
+            echo "</ul>";
+        }
+
+        echo "</li>";
+    }
+} else {
+    echo "<li><a href='#'>ไม่มีเมนู</a></li>";
+}
+
+echo "</ul>";
+echo "</div>";
+echo "</nav>";
+?>
+
     <!-- ลิงก์ไปยัง admin.php -->
 
 
     <!-------------------------------------------------------------------------------------------------------------->
     <header class="masthead bg-primary text-white text-center" id="Home">
-    <img src="admin/img/banner/ปกเว็ปสีน้ำเงิน.jpg" style="width: 100%; height: auto; display: block; margin: 0;"></img>
+        <img src="admin/img/banner/ปกเว็ปสีน้ำเงิน.jpg"
+            style="width: 100%; height: auto; display: block; margin: 0;"></img>
         <div class=" container d-flex align-items-center flex-column" id="Home">
 
         </div>
@@ -116,10 +132,6 @@
             echo "<div>ไม่มีข้อมูล</div>";
         }
         ?>
-
-        <div class="from_on_top">
-            <a href="admin/admin_panel.php">สร้างโพส + </a>
-        </div>
     </div>
     <?php
     $sql = "SELECT * FROM videos";
