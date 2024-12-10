@@ -123,7 +123,8 @@ if (!isset($_SESSION['username'])) {
                             echo "<div class='Colum1'>";
                             echo "<h3>" . $row['title'] . "</h3>";
                             echo "<p>" . $row['body'] . "</p>";
-                            echo "<div class='action'><a href='delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
+                            echo "<td> <div class='action'><a href='update_content.php?edit=" . $row['contentID'] . "'>แก้ไขข้อมูล</a></div>" . "</td>";
+                            echo "<td> <div class='action'><a href='delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>" . "</td>";
                             echo "</div>";
                         }
                     } else {

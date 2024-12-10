@@ -79,7 +79,6 @@
     } else {
         echo "<li><a href='#'>ไม่มีเมนู</a></li>";
     }
-    echo "<a class='nav-link' href='admin/admin_panel.php'>จัดการข้อมูล</a>";
     echo "</nav>";
     echo "</div>";
 
@@ -88,10 +87,9 @@
 
 
     <!-------------------------------------------------------------------------------------------------------------->
-    <header class="masthead bg-primary text-white text-center" id="Home" style="
-
-">
-        <div class="container d-flex align-items-center flex-column" id="Home">
+    <header class="masthead bg-primary text-white text-center" id="Home">
+    <img src="admin/img/banner/ปกเว็ปสีน้ำเงิน.jpg" style="width: 100%; height: auto; display: block; margin: 0;"></img>
+        <div class=" container d-flex align-items-center flex-column" id="Home">
 
         </div>
 
@@ -111,6 +109,7 @@
                 echo "<h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['body'] . "</p>";
                 echo "<div class='action'><a href='admin/delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
+                echo "<td> <div class='action'><a href='admin/update_content.php?edit=" . $row['contentID'] . "'>แก้ไขข้อมูล</a></div>" . "</td>";
                 echo "</div>";
             }
         } else {
@@ -133,6 +132,7 @@
             $currentVideo = $row['video_link'];
             if ($currentVideo) {
                 echo "<div class='video-container'>";
+                echo "<div class='video'>";
                 echo "<iframe src='" . htmlspecialchars($currentVideo) . "' frameborder='0' allowfullscreen></iframe>";
                 echo "</div>";
                 echo "</div>";
