@@ -89,14 +89,7 @@
 
     <!-------------------------------------------------------------------------------------------------------------->
     <header class="masthead bg-primary text-white text-center" id="Home" style="
-  background-image: url('admin/img/banner/ปกเว็ปสีน้ำเงิน.jpg'); /* ลิงก์ไปยังภาพ */
-  background-size: cover; /* ปรับขนาดให้เต็มจอ */
-  background-position: center; /* จัดตำแหน่งให้กึ่งกลาง */
-  background-repeat: no-repeat; /* ไม่ให้ภาพซ้ำ */
-  height: 120vh; /* ความสูงเต็มจอ */
-  width: 220vh;
-  padding: 0; /* ลบระยะ padding */
-  padding-top: 20px;
+
 ">
         <div class="container d-flex align-items-center flex-column" id="Home">
 
@@ -140,7 +133,6 @@
             $currentVideo = $row['video_link'];
             if ($currentVideo) {
                 echo "<div class='video-container'>";
-                echo "<div class='video'>";
                 echo "<iframe src='" . htmlspecialchars($currentVideo) . "' frameborder='0' allowfullscreen></iframe>";
                 echo "</div>";
                 echo "</div>";

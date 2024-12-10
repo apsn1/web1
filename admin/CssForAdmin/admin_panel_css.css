@@ -208,7 +208,7 @@ a:hover {
     font-weight: bold;
   }
 
-.allPage {
+  .allPage {
     display: flex;
     flex-direction: row; /* จัดเรียงจากซ้ายไปขวา */
     gap: 20px; /* เว้นระยะห่างระหว่างส่วน */
@@ -217,30 +217,28 @@ a:hover {
 
 .ส่วนจัดการหน้า {
     flex: 1; /* ใช้พื้นที่ 50% */
-    max-width: 60%; /* จำกัดขนาดสูงสุดที่ 50% */
-    background-color: #f4f4f4;
+    max-width: 30%;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    padding-right: 80px;
 }
 
 .ส่วนตัวอย่างหน้า {
     flex: 1; /* ใช้พื้นที่ที่เหลือใน container */
-    max-width: 40%; /* จำกัดขนาดสูงสุด 50% ของความกว้างหน้า */
-    max-height: 40%;
+    max-width: 70%;
     background-color: #ffffff;
     padding: 0; /* ลบ padding เพื่อให้ iframe เต็มพื้นที่ */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    height: 70vh; /* ใช้ความสูงเต็มหน้าจอ */
-    display: flex; /* ใช้ flexbox เพื่อจัด iframe */
-    justify-content: center; /* จัดกึ่งกลางในแนวนอน */
-    align-items: center; /* จัดกึ่งกลางในแนวตั้ง */
+    overflow: hidden; /* ป้องกันการเลื่อนใน iframe */
 }
 
 .iframe-content {
-    width: 100%; /* ให้ iframe ครอบคลุมพื้นที่เต็ม */
-    height: 100%; /* ความสูงเต็มพื้นที่ */
-    border: none; /* ซ่อนขอบของ iframe */
+    width: 170%;  /* ให้ iframe ขยายเต็มพื้นที่ */
+    height: 100%; /* ให้ iframe มีความสูงเต็มพื้นที่ */
+    border: none; /* ลบขอบของ iframe */
     border-radius: 0; /* มุมเหลี่ยมตรง */
+    display: block; /* แสดงเป็นบล็อก */
+    margin: 0; /* ลบ margin */
+    transform: scale(0.6); /* ลดขนาดเนื้อหาใน iframe */
+    transform-origin: 0 0; /* กำหนดจุดการซูมที่มุมซ้ายบน */
 }
