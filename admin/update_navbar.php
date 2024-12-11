@@ -138,13 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="name">ชื่อเมนู:</label>
         <input type="text" name="name" id="name" value="<?php echo $navbar['name']; ?>" required>
         <br>
-
-        <!-- Dropdown -->
-        <label for="is_dropdown">
-            <input type="checkbox" name="is_dropdown" id="is_dropdown" <?php echo $navbar['is_dropdown'] ? 'checked' : ''; ?>>
-            เป็น Dropdown
-        </label>
-        <br>
         
         <!-- SEO: Meta Title -->
         <label for="meta_title">Meta Title:</label>

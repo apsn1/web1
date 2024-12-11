@@ -61,7 +61,7 @@ if (!isset($_SESSION['username'])) {
                                 echo "<tr>";
                                 echo "<td>" . $row["id"] . "</td>";
                                 echo "<td>" . $row["name"] . "</td>";
-                                echo "<td>" . $row["parent_id"] ."</td>";
+                                echo "<td>" . $row["parent_id"] . "</td>";
                                 echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
                                 echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
                                 echo "</tr>";
@@ -184,29 +184,63 @@ if (!isset($_SESSION['username'])) {
                 }
                 ?>
             </form>
+            <?php
+            // ดึงข้อมูลจากฐานข้อมูล (กรณีแก้ไข)
+            $sql = "SELECT * FROM about WHERE aboutID = 1"; // หรือกำหนดเงื่อนไขที่ต้องการ
+            $result = $conn->query($sql);
+            $about = $result->fetch_assoc();
+            ?>
+
+            <form method="POST" action="edit_about.php">
+                <input type="hidden" name="aboutID" value="<?php echo htmlspecialchars($about['aboutID'] ?? ''); ?>">
+                <!-- กำหนด aboutID -->
+
+                <!-- ข้อความองค์กร -->
+                <div class="underAbout"></div>
+                <div class="row">
+                    <div class="col-lg-4 ms-auto">
+                        <label for="onesiamText">องค์กร บริษัท วันน์สยาม จำกัด</label><br>
+                        <textarea id="onesiamText" name="onesiamText" rows="5" class="form-control">
+                <?php echo htmlspecialchars($about['onesiamText'] ?? ''); ?>
+            </textarea>
+                    </div>
+                    <div class="col-lg-4 me-auto">
+                        <label for="aboutText">ข้อความเกี่ยวกับบริษัท</label><br>
+                        <textarea id="aboutText" name="aboutText" rows="5" class="form-control">
+                <?php echo htmlspecialchars($about['aboutText'] ?? ''); ?>
+            </textarea>
+                    </div>
+                     <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
+                </div>
+            </form>
+
         </div>
         <div class="ส่วนตัวอย่างหน้า">
             <iframe src="../index.php" class="iframe-content"></iframe>
         </div>
     </div>
-    <script>
-                function toggleDropdownFields(checkbox) {
-                    var dropdownFields = document.querySelector('.dropdown-fields');
-                    if (checkbox.checked) {
-                        dropdownFields.style.display = 'block';
-                    } else {
-                        dropdownFields.style.display = 'none';
-                    }
-                }
+    <!-- Form สำหรับแก้ไขข้อมูล -->
+   
 
-                function addDropdownMenu() {
-                    var newInput = document.createElement('input');
-                    newInput.type = 'text';
-                    newInput.name = 'dropdown_name[]';
-                    newInput.placeholder = 'ชื่อเมนูย่อย';
-                    document.querySelector('.additional-dropdown-fields').appendChild(newInput);
-                }
-            </script>
+    <script>
+        function toggleDropdownFields(checkbox) {
+            var dropdownFields = document.querySelector('.dropdown-fields');
+            if (checkbox.checked) {
+                dropdownFields.style.display = 'block';
+            } else {
+                dropdownFields.style.display = 'none';
+            }
+        }
+
+        function addDropdownMenu() {
+            var newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'dropdown_name[]';
+            newInput.placeholder = 'ชื่อเมนูย่อย';
+            document.querySelector('.additional-dropdown-fields').appendChild(newInput);
+        }
+    </script>
+
 </body>
 
 </html>
