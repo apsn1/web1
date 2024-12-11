@@ -30,14 +30,19 @@
 <body id="page-top">
 
 <?php
-$sql = "SELECT * FROM navbar ORDER BY parent_id ASC";  // ดึงข้อมูลเมนูทั้งหมดจากฐานข้อมูล
+$sql = "SELECT *, COALESCE(parent_id, 0) AS parent_id FROM navbar ORDER BY parent_id ASC";
 $result = $conn->query($sql);
+
+$menus = [];
+while ($row = $result->fetch_assoc()) {
+    $parentId = $row['parent_id'];
+    $menus[$parentId][] = $row;
+}
 
 echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
 echo "<div class='container'>";
 echo "<a href='#'>";
 
-// แสดงรูปภาพจากโฟลเดอร์ uploads
 $directory = 'admin/uploads/';
 if (is_dir($directory)) {
     $files = scandir($directory);
@@ -59,34 +64,24 @@ if (is_dir($directory)) {
 } else {
     echo "ไม่พบโฟลเดอร์ uploads";
 }
+
 echo "</a>";
-
 echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation'> Menu <i class='fas fa-bars'></i></button>";
-
 echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
 echo "<ul class='navbar-nav ms-auto'>";
 
-// อาร์เรย์เก็บเมนูจากฐานข้อมูล
-$menus = [];
-while ($row = $result->fetch_assoc()) {
-    $menus[$row['parent_id']][] = $row;  // จัดเก็บเมนูตาม parent_id
-}
-
-// แสดงเมนูหลัก (ที่ไม่มี parent_id หรือ parent_id เป็น 0)
-if (isset($menus[0]) || isset($menus[NULL])) {  // เพิ่มเงื่อนไขเพื่อรองรับกรณี parent_id เป็น NULL
-    foreach ($menus[0] ?? $menus[NULL] as $row) {  // ใช้ค่านี้เมื่อไม่มี parent_id
+if (isset($menus[0])) {
+    foreach ($menus[0] as $row) {
         echo "<li class='nav-item mx-0 mx-lg-1 dropdown'>";
-        echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#' data-bs-toggle='dropdown'>" . $row['name'] . "</a>";
+        echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#' data-bs-toggle='dropdown'>" . htmlspecialchars($row['name']) . "</a>";
 
-        // หากมีเมนูย่อย (ที่มี parent_id ตรงกับ id ของเมนูหลัก)
         if (isset($menus[$row['id']])) {
             echo "<ul class='dropdown-menu'>";
             foreach ($menus[$row['id']] as $submenu) {
-                echo "<li><a class='dropdown-item' href='#'>" . $submenu['name'] . "</a></li>";
+                echo "<li><a class='dropdown-item' href='#'>" . htmlspecialchars($submenu['name']) . "</a></li>";
             }
             echo "</ul>";
         }
-
         echo "</li>";
     }
 } else {

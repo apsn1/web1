@@ -47,7 +47,9 @@ if (!isset($_SESSION['username'])) {
                         <tr>
                             <th>ID</th>
                             <th>ชื่อหัวข้อ</th>
+                            <th>เป็นหัวข้อย่อยของ</th>
                             <th>ลบ</th>
+                            <th>แก้ไข</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,7 +61,9 @@ if (!isset($_SESSION['username'])) {
                                 echo "<tr>";
                                 echo "<td>" . $row["id"] . "</td>";
                                 echo "<td>" . $row["name"] . "</td>";
+                                echo "<td>" . $row["parent_id"] ."</td>";
                                 echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
+                                echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
                                 echo "</tr>";
                             }
                         } else {
