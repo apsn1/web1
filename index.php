@@ -201,6 +201,14 @@
                 </div>
             </div>
         </section>
+        <section class="phoneandidline">
+        <h3> ติดต่อสอบถามเพิ่มเติมได้ที่</h3>
+        <div class="container">
+            <button id="phoneButton" class="btn black-btn">แสดงเบอร์ติดต่อ</button>
+            <button id="lineButton" class="btn line-btn">แสดงไอดีไลน์</button>
+            <div id="contactInfo" class="hidden"></div>
+        </div>
+    </section>
     </div>
 </body>
 
