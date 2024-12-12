@@ -1,8 +1,4 @@
 
-
-
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -11,9 +7,8 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
     justify-content: space-around;
+    align-items: stretch
 }
 
 /* ตั้งค่าหัวข้อ */
@@ -29,7 +24,6 @@ form {
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
     max-width: 800px;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -216,17 +210,13 @@ a:hover {
     display: flex;
     flex-direction: row; /* จัดเรียงจากซ้ายไปขวา */
     gap: 20px; /* เว้นระยะห่างระหว่างส่วน */
-    width: 100%; /* ใช้ความกว้างเต็ม */
 }
 
 .ส่วนจัดการหน้า {
-    flex: 1; /* ใช้พื้นที่ 50% */
-    max-width: 30%;
-    padding: 10px; /* ลด padding ให้พื้นที่ดูเล็กลง */
+    max-width: 40%;
+    padding: 8px; /* ลด padding ให้พื้นที่ดูเล็กลง */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding-right: 40px; /* ลดระยะขวา */
-    height: 400px; /* กำหนดความสูงให้สั้นลง */
     
 }
 
@@ -236,7 +226,7 @@ a:hover {
     background-color: #ffffff;
     padding: 0; /* ลบ padding เพื่อให้ iframe เต็มพื้นที่ */
     overflow: hidden; /* ป้องกันการเลื่อนใน iframe */
-    height: 1000px; /* กำหนดความสูงเป็น 500px */
+
 }
 
 .iframe-content {

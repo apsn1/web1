@@ -19,8 +19,10 @@ if (!isset($_SESSION['username'])) {
 <body>
     <div class="allPage">
         <div class="ส่วนจัดการหน้า">
+
             <button onclick="toggleForm('editForm6')">ฟอมจัดการหน้าเว็บ</button>
             <form id="editForm6" method="POST" action="add_navbar.php" style="display: none;">
+                <input type="hidden" name="id" id="formId" placeholder="Form 6">
                 <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
                 <div class="form-container">
                     <label for="name">ชื่อเมนูหลัก:</label>
@@ -76,36 +78,28 @@ if (!isset($_SESSION['username'])) {
 
 
             <button onclick="toggleForm('editForm5')">ฟอม อัพโหลด logo</button>
-            <form id="editForm5" action="upload_update.php" method="post" enctype="multipart/form-data" style="display: none;">
+            <form id="editForm5" action="upload_update.php" method="post" enctype="multipart/form-data"
+                style="display: none;">
+                <input type="hidden" name="id" id="formId" placeholder="Form 5">
                 <h1>อัพโหลด Logo</h1>
                 <label for="logo">เลือกรูปภาพใหม่:</label>
-                <input type="file" name="logo" id="logo" accept="image/*"></input>
+                <input type="file" name="logo" id="logo" accept="image/*">
                 <button type="submit">อัปโหลดและอัปเดต</button>
+
                 <?php
-                $sql = "SELECT * FROM navbar";
-                $result = $conn->query($sql);
                 $directory = 'uploads/';
-                // ตรวจสอบว่าโฟลเดอร์มีอยู่จริง
                 if (is_dir($directory)) {
                     $files = scandir($directory);
-
-                    // ตรวจสอบว่า scandir() คืนค่าไม่เป็น false
                     if ($files !== false) {
-                        // ลบ . และ .. ออกจากลิสต์
                         $files = array_diff($files, array('.', '..'));
-
-                        // กรองเฉพาะไฟล์ที่เป็นรูปภาพ (เช่น .jpg, .png)
                         $imageFiles = array_filter($files, function ($file) {
                             $ext = pathinfo($file, PATHINFO_EXTENSION);
-                            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']); // เพิ่มประเภทไฟล์ที่ต้องการ
+                            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
                         });
-
-                        // ตรวจสอบว่าอาร์เรย์ $imageFiles มีไฟล์รูปภาพ
                         if (count($imageFiles) > 0) {
-                            // เลือกรูปภาพแรกจากโฟลเดอร์
-                            $image = reset($imageFiles); // เลือกรูปภาพแรกจากอาร์เรย์ที่กรองแล้ว
-                            echo "<div class ='imageShow'>";
-                            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' ></img>";
+                            $image = reset($imageFiles);
+                            echo "<div class='imageShow'>";
+                            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='max-width: 100%; height: auto;'>";
                             echo "</div>";
                         } else {
                             echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
@@ -118,8 +112,9 @@ if (!isset($_SESSION['username'])) {
                 }
                 ?>
             </form>
-            <button onclick="toggleForm('editForm4')">ฟอมจัดการเว็บ</button>
-            <form id="editForm4" method="POST" action="add_content.php" enctype="multipart/form-data" style="display: none;">
+            <button onclick="toggleForm('editForm4')">ฟอมจัดการ video</button>
+            <form id="editForm4" method="POST" action="add_contact.php" style="display: none;">
+                <input type="hidden" name="id" id="formId" placeholder="Form 4"></input>
                 <h1>จัดการข้อมูลหน้าเว็บ</h1>
                 <div class="form-container">
                     <div class="form-group">
@@ -149,8 +144,10 @@ if (!isset($_SESSION['username'])) {
                     ?>
                 </div>
             </form>
+
             <button onclick="toggleForm('editForm3')">ฟอมจัดการ video</button>
             <form id="editForm3" method="POST" action="edit_contact.php" style="display: none;">
+                <input type="hidden" name="id" id="formId" placeholder="Form 3"></input>
                 <h1>จัดการข้อมูล วิดิโอ</h1>
                 <input type="text" name="video_link" placeholder="YouTube Video Link" required></input>
                 <div class="form-group">
@@ -186,7 +183,7 @@ if (!isset($_SESSION['username'])) {
             </form>
             <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
             <form id="editForm2" method="POST" action="edit_contact.php" style="display: none;">
-                <input type="hidden" name="id" id="formId">
+                <input type="hidden" name="id" id="formId" placeholder="Form 2">
                 <input type="hidden" name="aboutID" value="<?php echo htmlspecialchars($about['aboutID'] ?? ''); ?>">
                 <!-- กำหนด aboutID -->
 
@@ -212,9 +209,9 @@ if (!isset($_SESSION['username'])) {
 
             <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
             <!-- ฟอร์มที่ซ่อนอยู่ -->
-            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;">
-                <input type="hidden" name="id" id="formId"
-                    value="<?php echo htmlspecialchars($minicontacts['id'] ?? ''); ?>">
+            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;" ">
+                <input type=" hidden" name="id" id="formId" placeholder="Form 1
+                    value=" <?php echo htmlspecialchars($minicontacts['id'] ?? ''); ?>">
                 <!-- ส่งค่า id ของข้อมูลที่จะแก้ไข -->
 
                 <label for="type">ประเภท:</label>
@@ -268,27 +265,40 @@ if (!isset($_SESSION['username'])) {
             document.getElementById('formValue').value = value || '';
         }
 
+
+        // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 3;
+            const formCount = 6;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
-                    form.style.display = 'none'; // ซ่อนฟอร์ม
+                    form.style.display = 'none'; // ซ่อนฟอร์มทั้งหมด
                 }
             }
         };
 
-        // ฟังก์ชันสำหรับ toggle การแสดงผลฟอร์มแต่ละตัว
+        // ฟังก์ชันสำหรับ toggle การแสดงผลฟอร์มทีละตัว
         function toggleForm(formId) {
-            const form = document.getElementById(formId); // เลือกฟอร์มที่ต้องการ
-            if (form) {
-                if (form.style.display === 'none' || form.style.display === '') {
-                    form.style.display = 'block'; // แสดงฟอร์ม
-                } else {
-                    form.style.display = 'none'; // ซ่อนฟอร์ม
+            const formCount = 6;
+
+            for (let i = 1; i <= formCount; i++) {
+                const form = document.getElementById(`editForm${i}`);
+                if (form) {
+                    // ซ่อนฟอร์มที่ไม่ใช่ฟอร์มที่กำลังจะเปิด
+                    if (form.id !== formId) {
+                        form.style.display = 'none';
+                    }
                 }
             }
+
+            // เปิดหรือปิดฟอร์มที่เลือก
+            const formToToggle = document.getElementById(formId);
+            if (formToToggle) {
+                // แสดงฟอร์มถ้าฟอร์มถูกซ่อนอยู่, หรือซ่อนถ้าฟอร์มเปิดอยู่
+                formToToggle.style.display = formToToggle.style.display === 'block' ? 'none' : 'block';
+            }
         }
+
 
     </script>
 
