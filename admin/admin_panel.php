@@ -19,8 +19,8 @@ if (!isset($_SESSION['username'])) {
 <body>
     <div class="allPage">
         <div class="ส่วนจัดการหน้า">
-
-            <form method="POST" action="add_navbar.php">
+            <button onclick="toggleForm('editForm6')">ฟอมจัดการหน้าเว็บ</button>
+            <form id="editForm6" method="POST" action="add_navbar.php" style="display: none;">
                 <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
                 <div class="form-container">
                     <label for="name">ชื่อเมนูหลัก:</label>
@@ -75,8 +75,8 @@ if (!isset($_SESSION['username'])) {
             </form>
 
 
-
-            <form action="upload_update.php" method="post" enctype="multipart/form-data">
+            <button onclick="toggleForm('editForm5')">ฟอม อัพโหลด logo</button>
+            <form id="editForm5" action="upload_update.php" method="post" enctype="multipart/form-data" style="display: none;">
                 <h1>อัพโหลด Logo</h1>
                 <label for="logo">เลือกรูปภาพใหม่:</label>
                 <input type="file" name="logo" id="logo" accept="image/*"></input>
@@ -118,8 +118,8 @@ if (!isset($_SESSION['username'])) {
                 }
                 ?>
             </form>
-
-            <form method="POST" action="add_content.php" enctype="multipart/form-data">
+            <button onclick="toggleForm('editForm4')">ฟอมจัดการเว็บ</button>
+            <form id="editForm4" method="POST" action="add_content.php" enctype="multipart/form-data" style="display: none;">
                 <h1>จัดการข้อมูลหน้าเว็บ</h1>
                 <div class="form-container">
                     <div class="form-group">
@@ -149,8 +149,8 @@ if (!isset($_SESSION['username'])) {
                     ?>
                 </div>
             </form>
-
-            <form action=" update_video.php" method="POST">
+            <button onclick="toggleForm('editForm3')">ฟอมจัดการ video</button>
+            <form id="editForm3" method="POST" action="edit_contact.php" style="display: none;">
                 <h1>จัดการข้อมูล วิดิโอ</h1>
                 <input type="text" name="video_link" placeholder="YouTube Video Link" required></input>
                 <div class="form-group">
@@ -184,14 +184,9 @@ if (!isset($_SESSION['username'])) {
                 }
                 ?>
             </form>
-            <?php
-            // ดึงข้อมูลจากฐานข้อมูล (กรณีแก้ไข)
-            $sql = "SELECT * FROM about WHERE aboutID = 1"; // หรือกำหนดเงื่อนไขที่ต้องการ
-            $result = $conn->query($sql);
-            $about = $result->fetch_assoc();
-            ?>
-
-            <form method="POST" action="edit_about.php">
+            <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
+            <form id="editForm2" method="POST" action="edit_contact.php" style="display: none;">
+                <input type="hidden" name="id" id="formId">
                 <input type="hidden" name="aboutID" value="<?php echo htmlspecialchars($about['aboutID'] ?? ''); ?>">
                 <!-- กำหนด aboutID -->
 
@@ -213,7 +208,11 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
                 </div>
             </form>
-            <form method="POST" action="edit_contact.php">
+
+
+            <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
+            <!-- ฟอร์มที่ซ่อนอยู่ -->
+            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;">
                 <input type="hidden" name="id" id="formId"
                     value="<?php echo htmlspecialchars($minicontacts['id'] ?? ''); ?>">
                 <!-- ส่งค่า id ของข้อมูลที่จะแก้ไข -->
@@ -267,6 +266,28 @@ if (!isset($_SESSION['username'])) {
             document.getElementById('formId').value = id || '';
             document.getElementById('formType').value = type || 'phone';
             document.getElementById('formValue').value = value || '';
+        }
+
+        window.onload = function () {
+            const formCount = 3;
+            for (let i = 1; i <= formCount; i++) {
+                const form = document.getElementById(`editForm${i}`);
+                if (form) {
+                    form.style.display = 'none'; // ซ่อนฟอร์ม
+                }
+            }
+        };
+
+        // ฟังก์ชันสำหรับ toggle การแสดงผลฟอร์มแต่ละตัว
+        function toggleForm(formId) {
+            const form = document.getElementById(formId); // เลือกฟอร์มที่ต้องการ
+            if (form) {
+                if (form.style.display === 'none' || form.style.display === '') {
+                    form.style.display = 'block'; // แสดงฟอร์ม
+                } else {
+                    form.style.display = 'none'; // ซ่อนฟอร์ม
+                }
+            }
         }
 
     </script>

@@ -11,6 +11,7 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    justify-content: space-around;
 }
 
 /* ตั้งค่าหัวข้อ */
@@ -234,11 +235,30 @@ a:hover {
 
 .iframe-content {
     width: 170%;  /* ให้ iframe ขยายเต็มพื้นที่ */
-    height: 100%; /* ให้ iframe มีความสูงเต็มพื้นที่ */
+    height: 200%; /* ให้ iframe มีความสูงเต็มพื้นที่ */
     border: none; /* ลบขอบของ iframe */
     border-radius: 0; /* มุมเหลี่ยมตรง */
     display: block; /* แสดงเป็นบล็อก */
     margin: 0; /* ลบ margin */
     transform: scale(0.6); /* ลดขนาดเนื้อหาใน iframe */
     transform-origin: 0 0; /* กำหนดจุดการซูมที่มุมซ้ายบน */
+}
+
+#editForm {
+    display: none; /* ซ่อนฟอร์มโดยค่าเริ่มต้น */
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.toggle-btn {
+    cursor: pointer;
+    color: #007BFF;
+    text-decoration: underline;
+}
+
+.toggle-btn:hover {
+    color: #0056b3;
 }
