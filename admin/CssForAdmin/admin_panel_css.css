@@ -40,6 +40,7 @@ form {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    justify-content: center;
 }
 
 /* กำหนดให้แต่ละ div ใช้ 50% ของความกว้าง */
@@ -221,10 +222,12 @@ a:hover {
 .ส่วนจัดการหน้า {
     flex: 1; /* ใช้พื้นที่ 50% */
     max-width: 30%;
-    padding: 20px;
+    padding: 10px; /* ลด padding ให้พื้นที่ดูเล็กลง */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    padding-right: 80px;
+    padding-right: 40px; /* ลดระยะขวา */
+    height: 400px; /* กำหนดความสูงให้สั้นลง */
+    
 }
 
 .ส่วนตัวอย่างหน้า {
@@ -233,6 +236,7 @@ a:hover {
     background-color: #ffffff;
     padding: 0; /* ลบ padding เพื่อให้ iframe เต็มพื้นที่ */
     overflow: hidden; /* ป้องกันการเลื่อนใน iframe */
+    height: 1000px; /* กำหนดความสูงเป็น 500px */
 }
 
 .iframe-content {
