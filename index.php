@@ -206,7 +206,8 @@
         <div class="container">
             <button id="phoneButton" class="btn black-btn">แสดงเบอร์ติดต่อ</button>
             <button id="lineButton" class="btn line-btn">แสดงไอดีไลน์</button>
-            <div id="contactInfo" class="hidden"></div>
+            <div id="contactInfo" class="hidden">
+            </div>
         </div>
     </section>
     </div>

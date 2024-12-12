@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded'), () => {
     const contactInfo = document.getElementById('contactInfo');
 
     // ตัวแปรเก็บสถานะ
@@ -17,18 +17,33 @@ document.addEventListener('DOMContentLoaded', () => {
             currentButton = buttonId; // บันทึกปุ่มที่ถูกกด
         }
     }
+}
 //-------------------------------------------------------------//
 
-    // การคลิกปุ่มเบอร์ติดต่อ
-    document.getElementById('phoneButton').addEventListener('click', () => {
-        toggleInfo('เบอร์ติดต่อ: 08x-xxx-xxxx', 'phoneButton');
-    });
+function toggleInfo(info, buttonId) {
+    const button = document.getElementById(buttonId);
+    const displayElement = document.getElementById('infoDisplay');
 
-    // การคลิกปุ่มไอดีไลน์
-    document.getElementById('lineButton').addEventListener('click', () => {
-        toggleInfo('ไอดีไลน์: @exampleline', 'lineButton');
-    });
+    if (displayElement) {
+        displayElement.textContent = info;
+    } else {
+        const newElement = document.createElement('div');
+        newElement.id = 'infoDisplay';
+        newElement.textContent = info;
+        document.body.appendChild(newElement);
+    }
+}
+
+// การคลิกปุ่มเบอร์ติดต่อ
+document.getElementById('phoneButton').addEventListener('click', () => {
+    toggleInfo(`เบอร์ติดต่อ: ${contactInfo.phone}`, 'phoneButton');
 });
+
+// การคลิกปุ่มไอดีไลน์
+document.getElementById('lineButton').addEventListener('click', () => {
+    toggleInfo(`ไอดีไลน์: ${contactInfo.line}`, 'lineButton');
+});
+
 
 //-------------------------------------------------------------//
 
@@ -156,3 +171,4 @@ window.addEventListener('scroll', () => {
             const preview = document.getElementById('preview');
             preview.src = URL.createObjectURL(event.target.files[0]);
         }
+    

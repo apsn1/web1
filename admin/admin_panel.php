@@ -213,33 +213,34 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
                 </div>
             </form>
+            <form method="POST" action="edit_contact.php">
+                <input type="hidden" name="id" id="formId"
+                    value="<?php echo htmlspecialchars($minicontacts['id'] ?? ''); ?>">
+                <!-- ส่งค่า id ของข้อมูลที่จะแก้ไข -->
+
+                <label for="type">ประเภท:</label>
+                <select name="type" id="formType">
+                    <option value="phone" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'phone') ? 'selected' : ''; ?>>
+                        เบอร์โทรศัพท์
+                    </option>
+                    <option value="line" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'line') ? 'selected' : ''; ?>>
+                        ไอดีไลน์
+                    </option>
+                </select>
+
+                <label for="value">ข้อมูล:</label>
+                <input type="text" name="value" id="formValue"
+                    value="<?php echo htmlspecialchars($minicontacts['value'] ?? ''); ?>" required>
+
+                <button type="submit">บันทึก</button>
+            </form>
+
 
         </div>
         <div class="ส่วนตัวอย่างหน้า">
             <iframe src="../index.php" class="iframe-content"></iframe>
         </div>
     </div>
-    <form method="POST" action="edit_contact.php">
-    <input type="hidden" name="id" id="formId" 
-           value="<?php echo htmlspecialchars($minicontacts['id'] ?? ''); ?>"> 
-    <!-- ส่งค่า id ของข้อมูลที่จะแก้ไข -->
-
-    <label for="type">ประเภท:</label>
-    <select name="type" id="formType">
-        <option value="phone" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'phone') ? 'selected' : ''; ?>>
-            เบอร์โทรศัพท์
-        </option>
-        <option value="line" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'line') ? 'selected' : ''; ?>>
-            ไอดีไลน์
-        </option>
-    </select>
-
-    <label for="value">ข้อมูล:</label>
-    <input type="text" name="value" id="formValue" 
-           value="<?php echo htmlspecialchars($minicontacts['value'] ?? ''); ?>" required>
-
-    <button type="submit">บันทึก</button>
-</form>
 
 
     <!-- Form สำหรับแก้ไขข้อมูล -->
