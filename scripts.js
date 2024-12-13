@@ -1,34 +1,26 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const contactInfo = document.getElementById('contactInfo');
 
-    // ตัวแปรเก็บสถานะ
-    let currentButton = null;
-
-    // ฟังก์ชันสำหรับจัดการการแสดง/ซ่อน
-    function toggleInfo(content, buttonId) {
-        if (currentButton === buttonId) {
-            // ถ้าปุ่มเดิมถูกกด ให้ซ่อนข้อความ
-            contactInfo.classList.add('hidden');
-            currentButton = null; // รีเซ็ตสถานะ
-        } else {
-            // แสดงข้อความใหม่
-            contactInfo.textContent = content;
-            contactInfo.classList.remove('hidden');
-            currentButton = buttonId; // บันทึกปุ่มที่ถูกกด
-        }
-    }
 //-------------------------------------------------------------//
 
-    // การคลิกปุ่มเบอร์ติดต่อ
-    document.getElementById('phoneButton').addEventListener('click', () => {
-        toggleInfo('เบอร์ติดต่อ: 08x-xxx-xxxx', 'phoneButton');
+
+    // จัดการการแสดง/ซ่อนข้อมูล
+    document.getElementById("phoneButton").addEventListener("click", function () {
+        const contactInfo = document.getElementById("contactInfo");
+        if (contactInfo.classList.contains("hidden")) {
+            contactInfo.classList.remove("hidden");
+        } else {
+            contactInfo.classList.add("hidden");
+        }
     });
 
-    // การคลิกปุ่มไอดีไลน์
-    document.getElementById('lineButton').addEventListener('click', () => {
-        toggleInfo('ไอดีไลน์: @exampleline', 'lineButton');
+    document.getElementById("lineButton").addEventListener("click", function () {
+        const contactInfo = document.getElementById("contactInfo");
+        if (contactInfo.classList.contains("hidden")) {
+            contactInfo.classList.remove("hidden");
+        } else {
+            contactInfo.classList.add("hidden");
+        }
     });
-});
+
 
 //-------------------------------------------------------------//
 
@@ -156,3 +148,4 @@ window.addEventListener('scroll', () => {
             const preview = document.getElementById('preview');
             preview.src = URL.createObjectURL(event.target.files[0]);
         }
+    
