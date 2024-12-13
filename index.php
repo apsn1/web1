@@ -211,23 +211,27 @@
 
             $sql = "SELECT * FROM minicontacts WHERE type = 'line'";
             $resultLine = $conn->query($sql);
-
+                    echo "<div class='contactsall'>";
             if ($resultPhone->num_rows > 0) {
                 while ($row = $resultPhone->fetch_assoc()) {
-                    echo '<p>ข้อมูลโทรศัพท์: ' . htmlspecialchars($row['value']) . '</p>';
+                    echo "<div class='contactphone'>";
+                    echo "<p>ข้อมูลโทรศัพท์: " . htmlspecialchars($row['value']) . "</p>";
+                    echo "</div>";
                 }
             } else {
-                echo '<p>ไม่มีข้อมูลโทรศัพท์</p>';
+                echo "<p>ไม่มีข้อมูลโทรศัพท์</p>";
             }
 
             if ($resultLine->num_rows > 0) {
                 while ($row = $resultLine->fetch_assoc()) {
-                    echo '<p>ข้อมูลไลน์: ' . htmlspecialchars($row['value']) . '</p>';
+                    echo "<div class='contactline'>";
+                    echo "<p>ข้อมูลไลน์: " . htmlspecialchars($row['value']) . "</p>";
+                    echo "</div>";
                 }
             } else {
                 echo '<p>ไม่มีข้อมูลไลน์</p>';
             }
-
+            echo "</div>";
             $conn->close();
             ?>
 

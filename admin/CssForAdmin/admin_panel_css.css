@@ -225,7 +225,6 @@ a:hover {
     max-width: 70%;
     background-color: #ffffff;
     padding: 0; /* ลบ padding เพื่อให้ iframe เต็มพื้นที่ */
-    overflow: hidden; /* ป้องกันการเลื่อนใน iframe */
 
 }
 

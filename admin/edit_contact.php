@@ -6,30 +6,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $type = htmlspecialchars(trim($_POST['type']));
     $value = htmlspecialchars(trim($_POST['value']));
 
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-        $id = intval($_POST['id']); // แปลงเป็นตัวเลขเพื่อความปลอดภัย
+    // ตรวจสอบว่ามีข้อมูลประเภทนี้อยู่ในฐานข้อมูลแล้วหรือไม่
+    $stmt_check = $conn->prepare("SELECT id FROM minicontacts WHERE type = ?");
+    $stmt_check->bind_param("s", $type);
+    $stmt_check->execute();
+    $result = $stmt_check->get_result();
 
-        // ใช้ prepared statement สำหรับการอัปเดต
-        $stmt = $conn->prepare("UPDATE minicontacts SET type = ?, value = ? WHERE id = ?");
-        $stmt->bind_param("ssi", $type, $value, $id);
+    if ($result->num_rows > 0) {
+        // มีข้อมูลอยู่แล้ว ทำการอัปเดต
+        $row = $result->fetch_assoc();
+        $id = $row['id'];
+
+        $stmt_update = $conn->prepare("UPDATE minicontacts SET value = ? WHERE id = ?");
+        $stmt_update->bind_param("si", $value, $id);
+
+        if ($stmt_update->execute()) {
+            header("Location: ../index.php"); // กลับไปที่หน้าหลัก
+            exit();
+        } else {
+            echo "เกิดข้อผิดพลาดในการอัปเดต: " . $stmt_update->error;
+        }
+
+        $stmt_update->close();
     } else {
-        // ใช้ prepared statement สำหรับการเพิ่มข้อมูลใหม่
-        $stmt = $conn->prepare("INSERT INTO minicontacts (type, value) VALUES (?, ?)");
-        $stmt->bind_param("ss", $type, $value);
+        // ไม่มีข้อมูล ทำการเพิ่มใหม่
+        $stmt_insert = $conn->prepare("INSERT INTO minicontacts (type, value) VALUES (?, ?)");
+        $stmt_insert->bind_param("ss", $type, $value);
+
+        if ($stmt_insert->execute()) {
+            header("Location: ../index.php"); // กลับไปที่หน้าหลัก
+            exit();
+        } else {
+            echo "เกิดข้อผิดพลาดในการเพิ่มข้อมูล: " . $stmt_insert->error;
+        }
+
+        $stmt_insert->close();
     }
 
-    // ตรวจสอบการดำเนินการ
-    if ($stmt->execute()) {
-        header("Location: ../index.php"); // กลับไปที่หน้าหลัก
-        exit();
-    } else {
-        // บันทึกข้อผิดพลาดในไฟล์ log
-        error_log("SQL Error: " . $stmt->error, 3, "../errors.log");
-        echo "เกิดข้อผิดพลาด: กรุณาลองใหม่.";
-    }
-
-    // ปิด statement และการเชื่อมต่อ
-    $stmt->close();
-    $conn->close();
+    // ปิด statement
+    $stmt_check->close();
 }
+
+// ปิดการเชื่อมต่อฐานข้อมูล
+$conn->close();
 ?>
