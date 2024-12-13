@@ -20,7 +20,7 @@
                 
                 if ($conn->query($sql) === TRUE) {
                     echo "เพิ่มรูปสำเร็จ";
-                    echo "<meta http-equiv='refresh' content='2;url=../index.php'/>";
+                    header("Location: admin_panel.php");;
                 } else {
                     echo "เกิดข้อผิดพลาด: " . $conn->error;
                 }
