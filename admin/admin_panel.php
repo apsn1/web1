@@ -295,7 +295,7 @@ if (!isset($_SESSION['username'])) {
 
         // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 6;
+            const formCount = 8;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {

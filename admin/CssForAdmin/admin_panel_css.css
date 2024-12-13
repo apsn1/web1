@@ -83,7 +83,7 @@ label {
 }
 
 .ส่วนตัวอย่างหน้า {
-    flex: 1;
+    flex: 2.5;
     overflow-y: auto;
     background: #f9f9f9;
     padding: 20px;
@@ -96,6 +96,8 @@ label {
     height: calc(100% - 40px); /* Full height minus padding */
     border: none;
     border-radius: 10px;
+    transform: scale(0.6);
+    transform-origin: 4 0;
 }
 
 /* Form Styles */
