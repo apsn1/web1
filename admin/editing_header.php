@@ -20,7 +20,7 @@ if(isset($_FILES['header'])) {
 
             if ($result) {
                 echo "แก้ไขสำเร็จ";
-                echo "<meta http-equiv='refresh' content='2;url=../index.php'/>";
+                header("Location: admin_panel.php");
             } else {
                 die(mysqli_error($conn)); // ถ้ามีข้อผิดพลาดในการอัพเดต
             }

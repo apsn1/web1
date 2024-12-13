@@ -9,7 +9,7 @@ $result = mysqli_query($conn,$sql);
     
     if($result){
         echo"แก้ไขสำเสร็จ";
-        echo "<meta http-equiv='refresh' content='2;url=../index.php'/>";
+        header("Location: admin_panel.php");
     }
     else{
         die(mysqli_error($conn));
