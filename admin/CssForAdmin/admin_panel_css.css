@@ -214,10 +214,11 @@ a:hover {
 
 .ส่วนจัดการหน้า {
     max-width: 40%;
+    height: 1900px;
     padding: 8px; /* ลด padding ให้พื้นที่ดูเล็กลง */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    
+    align-content: center;
 }
 
 .ส่วนตัวอย่างหน้า {
@@ -230,7 +231,6 @@ a:hover {
 
 .iframe-content {
     width: 170%;  /* ให้ iframe ขยายเต็มพื้นที่ */
-    height: 200%; /* ให้ iframe มีความสูงเต็มพื้นที่ */
     border: none; /* ลบขอบของ iframe */
     border-radius: 0; /* มุมเหลี่ยมตรง */
     display: block; /* แสดงเป็นบล็อก */
