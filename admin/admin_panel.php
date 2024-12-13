@@ -272,32 +272,33 @@ if (!isset($_SESSION['username'])) {
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
-                    form.style.display = 'none'; // ซ่อนฟอร์มทั้งหมด
+                    form.style.display = 'none'; // ซ่อนฟอร์มทั้งหมดตอนเริ่มต้น
                 }
             }
         };
 
         // ฟังก์ชันสำหรับ toggle การแสดงผลฟอร์มทีละตัว
         function toggleForm(formId) {
-            const formCount = 6;
+            const formToToggle = document.getElementById(formId);
 
-            for (let i = 1; i <= formCount; i++) {
-                const form = document.getElementById(`editForm${i}`);
-                if (form) {
-                    // ซ่อนฟอร์มที่ไม่ใช่ฟอร์มที่กำลังจะเปิด
-                    if (form.id !== formId) {
+            if (formToToggle) {
+                // ตรวจสอบสถานะการแสดงผลของฟอร์ม
+                const isFormVisible = formToToggle.style.display === 'block';
+
+                // ซ่อนฟอร์มทั้งหมด
+                const formCount = 6;
+                for (let i = 1; i <= formCount; i++) {
+                    const form = document.getElementById(`editForm${i}`);
+                    if (form) {
                         form.style.display = 'none';
                     }
                 }
-            }
 
-            // เปิดหรือปิดฟอร์มที่เลือก
-            const formToToggle = document.getElementById(formId);
-            if (formToToggle) {
-                // แสดงฟอร์มถ้าฟอร์มถูกซ่อนอยู่, หรือซ่อนถ้าฟอร์มเปิดอยู่
-                formToToggle.style.display = formToToggle.style.display === 'block' ? 'none' : 'block';
+                // แสดงหรือซ่อนฟอร์มที่เลือก
+                formToToggle.style.display = isFormVisible ? 'none' : 'block';
             }
         }
+
 
 
     </script>
