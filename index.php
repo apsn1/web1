@@ -97,15 +97,67 @@
 
 
     <!-------------------------------------------------------------------------------------------------------------->
+    <?php
+include("db.php");
+// ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
+$sql = "SELECT * FROM header_images";
+$result = mysqli_query($conn, $sql);
+?>
     <header class="masthead bg-primary text-white text-center" id="Home">
         <img src="admin/img/banner/ปกเว็ปสีน้ำเงิน.jpg"
             style="width: 100%; height: auto; display: block; margin: 0;"></img>
         <div class=" container d-flex align-items-center flex-column" id="Home">
 
+<?php
+include("db.php");
+// ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
+$sql = "SELECT * FROM header_images";
+$result = mysqli_query($conn, $sql);
+?>
+
+<header id="Home" >
+    <div class="slider-container">
+        <div class="slider">
+            <?php
+            while($row = mysqli_fetch_assoc($result)) {
+                $imagePath = 'admin/img/header/' . $row['img'];
+                echo '<img src="' . $imagePath . '" alt="header Image">';
+            }
+            ?>
         </div>
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
 
+</header>
 
-    </header>
+<script>
+// JavaScript สำหรับเลื่อนภาพ slider
+let currentIndex = 0;
+
+function moveSlide(direction) {
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slider img');
+    const totalSlides = slides.length;
+
+    currentIndex += direction;
+
+    if (currentIndex >= totalSlides) {
+        currentIndex = 0;
+    } else if (currentIndex < 0) {
+        currentIndex = totalSlides - 1;
+    }
+
+    const offset = -currentIndex * 100; // คำนวณตำแหน่งที่ต้องเลื่อน
+    slider.style.transform = `translateX(${offset}%)`;
+}
+
+// เลื่อนอัตโนมัติทุก 10 วินาที
+setInterval(() => {
+    moveSlide(1);
+}, 10000); //เปลี่ยนวินาที
+</script>
+
 
     <!--------------------------------------------------------------------------------------------------------------->
 
