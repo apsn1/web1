@@ -202,14 +202,36 @@
             </div>
         </section>
         <section class="phoneandidline">
-        <h3> ติดต่อสอบถามเพิ่มเติมได้ที่</h3>
-        <div class="container">
-            <button id="phoneButton" class="btn black-btn">แสดงเบอร์ติดต่อ</button>
-            <button id="lineButton" class="btn line-btn">แสดงไอดีไลน์</button>
-            <div id="contactInfo" class="hidden">
-            </div>
-        </div>
-    </section>
+            <h3>ติดต่อสอบถามเพิ่มเติมได้ที่</h3>
+            <?php
+            include('db.php'); // เชื่อมต่อฐานข้อมูล
+            
+            $sql = "SELECT * FROM minicontacts WHERE type = 'phone'";
+            $resultPhone = $conn->query($sql);
+
+            $sql = "SELECT * FROM minicontacts WHERE type = 'line'";
+            $resultLine = $conn->query($sql);
+
+            if ($resultPhone->num_rows > 0) {
+                while ($row = $resultPhone->fetch_assoc()) {
+                    echo '<p>ข้อมูลโทรศัพท์: ' . htmlspecialchars($row['value']) . '</p>';
+                }
+            } else {
+                echo '<p>ไม่มีข้อมูลโทรศัพท์</p>';
+            }
+
+            if ($resultLine->num_rows > 0) {
+                while ($row = $resultLine->fetch_assoc()) {
+                    echo '<p>ข้อมูลไลน์: ' . htmlspecialchars($row['value']) . '</p>';
+                }
+            } else {
+                echo '<p>ไม่มีข้อมูลไลน์</p>';
+            }
+
+            $conn->close();
+            ?>
+
+        </section>
     </div>
 </body>
 

@@ -181,6 +181,7 @@ if (!isset($_SESSION['username'])) {
                 }
                 ?>
             </form>
+
             <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
             <form id="editForm2" method="POST" action="edit_contact.php" style="display: none;">
                 <input type="hidden" name="id" id="formId" placeholder="Form 2">
@@ -208,12 +209,8 @@ if (!isset($_SESSION['username'])) {
 
 
             <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
-            <!-- ฟอร์มที่ซ่อนอยู่ -->
-            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;" ">
-                <input type=" hidden" name="id" id="formId" placeholder="Form 1
-                    value=" <?php echo htmlspecialchars($minicontacts['id'] ?? ''); ?>">
-                <!-- ส่งค่า id ของข้อมูลที่จะแก้ไข -->
-
+            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;" >
+                
                 <label for="type">ประเภท:</label>
                 <select name="type" id="formType">
                     <option value="phone" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'phone') ? 'selected' : ''; ?>>
