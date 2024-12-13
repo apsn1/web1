@@ -34,6 +34,17 @@ if (!isset($_SESSION['username'])) {
             </form>
         </div>
 
+        <h1>เพิ่มรูปแบนเนอร์</h1>
+    <form method="POST" action="add_header.php" enctype="multipart/form-data">
+        <div class="form-container">
+            <div class="form-group">
+                <input type="file" name="header" required>
+                <button type="submit">อัปโหลด</button>
+            </div>
+            <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
+        </div>
+    </form> 
+
     <h1>จัดการข้อมูลหน้าเว็บ</h1>
     <form method="POST" action="add_content.php">
         <div class="form-container">
