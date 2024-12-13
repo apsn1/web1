@@ -3,7 +3,7 @@
     $file_name = $_FILES['header']['name'];
     $tempname = $_FILES['header']['tmp_name'];
     $folder = 'admin/img/header/'.$file_name;
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/web1/admin/img/header/";
+    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/web/admin/img/header/";
     $target_file = $target_dir . basename($_FILES["header"]["name"]);
     //$file_name = time().$file_name;
     $sql_count = "SELECT COUNT(*) AS total FROM header_images";

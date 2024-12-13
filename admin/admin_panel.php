@@ -18,20 +18,6 @@ if (!isset($_SESSION['username'])) {
 </head>
 
 <body>
-    <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
-    <form method="POST" action="add_navbar.php">
-        <div class="form-container">
-            <div class="form-group">
-                <input type="text" name="name" placeholder="ชื่อหัวข้อ">
-                <button type="submit">อัปโหลด</button>
-            </div>
-
-    </form>
-    <h1>อัพโหลด Logo</h1>
-    <form action="upload_update.php" method="post" enctype="multipart/form-data">
-                <label for="logo">เลือกรูปภาพใหม่:</label>
-                <input type="file" name="logo" id="logo" accept="image/*">
-                <button type="submit">อัปโหลดและอัปเดต</button>
     <div class="allPage">
         <div class="ส่วนจัดการหน้า">
 
@@ -126,6 +112,18 @@ if (!isset($_SESSION['username'])) {
                     echo "ไม่พบโฟลเดอร์ uploads";
                 }
                 ?>
+            </form>
+
+            <button onclick="toggleForm('editForm8')">ฟอมเพิ่มรูปแบนเนอร์</button>
+            <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;">
+                <h1>เพิ่มรูปแบนเนอร์</h1>
+                <div class="form-container">
+                    <div class="form-group">
+                        <input type="file" name="header" required>
+                        <button type="submit">อัปโหลด</button>
+                    </div>
+                    <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
+                </div>
             </form>
             <button onclick="toggleForm('editForm4')">ฟอมจัดการ video</button>
             <form id="editForm4" method="POST" action="add_contact.php" style="display: none;">
@@ -244,7 +242,6 @@ if (!isset($_SESSION['username'])) {
             </form>
 
             <button onclick="toggleForm('editForm7')">ฟอมเพิ่มรูปโปรเจค</button>
-
             <form id="editForm7" method="POST" action="add_imgproject.php" enctype="multipart/form-data"
                 style="display: none;">
                 <label for="image">เลือกภาพ:</label>
@@ -256,33 +253,13 @@ if (!isset($_SESSION['username'])) {
                 <button type="submit">อัปโหลด</button>
             </form>
 
-        </div>
 
-        <h1>เพิ่มรูปแบนเนอร์</h1>
-    <form method="POST" action="add_header.php" enctype="multipart/form-data">
-        <div class="form-container">
-            <div class="form-group">
-                <input type="file" name="header" required>
-                <button type="submit">อัปโหลด</button>
-            </div>
-            <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
-        </div>
-    </form> 
 
-    <h1>จัดการข้อมูลหน้าเว็บ</h1>
-    <form method="POST" action="add_content.php">
-        <div class="form-container">
-            <div class="form-group">
-                <input type="text" name="title" placeholder="ชื่อหัวข้อ" required>
-            </div>
-            <div class="form-group">
-                <textarea name="body" placeholder="เนื้อหา" required></textarea>
-            </div>
+        </div>
         <div class="ส่วนตัวอย่างหน้า">
             <iframe src="../index.php" class="iframe-content"></iframe>
         </div>
     </div>
-
 
     <!-- Form สำหรับแก้ไขข้อมูล -->
 
@@ -348,18 +325,6 @@ if (!isset($_SESSION['username'])) {
 
     </script>
 
-        <button type="submit">เพิ่มข้อมูล</button>
-    </form>
-    <h1>จัดการข้อมูล วิดิโอ</h1>
-    <form action="update_video.php" method="POST">
-        <input type="text" name="video_link" placeholder="YouTube Video Link" required>
-        <div class="form-group">
-        <input type="text" name="video_title" placeholder="ชื่อหัวข้อ Link" required>
-    </div>
-        <button type="submit">อัปเดตวิดีโอ</button>
-        
-    </form>
-    
 </body>
 
 </html>

@@ -97,16 +97,6 @@
 
 
     <!-------------------------------------------------------------------------------------------------------------->
-    <?php
-include("db.php");
-// ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
-$sql = "SELECT * FROM header_images";
-$result = mysqli_query($conn, $sql);
-?>
-    <header class="masthead bg-primary text-white text-center" id="Home">
-        <img src="admin/img/banner/ปกเว็ปสีน้ำเงิน.jpg"
-            style="width: 100%; height: auto; display: block; margin: 0;"></img>
-        <div class=" container d-flex align-items-center flex-column" id="Home">
 
 <?php
 include("db.php");
