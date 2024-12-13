@@ -211,7 +211,7 @@
 
             $sql = "SELECT * FROM minicontacts WHERE type = 'line'";
             $resultLine = $conn->query($sql);
-                    echo "<div class='contactsall'>";
+            echo "<div class='contactsall'>";
             if ($resultPhone->num_rows > 0) {
                 while ($row = $resultPhone->fetch_assoc()) {
                     echo "<div class='contactphone'>";
@@ -235,6 +235,32 @@
             $conn->close();
             ?>
 
+        </section>
+
+
+        <section class="page-section" id="project">
+            <h2 class="Project" style="margin-bottom :70px; text-align: center;">
+                Projects โปรเจกต์ออกแบบหน้ากากอาคารและลูกค้าของเรา
+            </h2>
+            <div class="containerPj">
+                <?php
+                include('db.php'); // เชื่อมต่อฐานข้อมูล
+                
+                $sql = "SELECT * FROM projects";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<div class="imgContainerpj">';
+                        echo '<img class="photo1" src="admin/' . $row['image_path'] . '" alt="' . htmlspecialchars($row['alt_text']) . '"></a>';
+                        echo '<button onclick="deleteImage(' . $row['id'] . ')">ลบ</button>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>ไม่มีโปรเจกต์ที่แสดง</p>';
+                }
+                ?>
+            </div>
         </section>
     </div>
 </body>

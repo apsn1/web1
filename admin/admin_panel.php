@@ -209,8 +209,8 @@ if (!isset($_SESSION['username'])) {
 
 
             <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
-            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;" >
-                
+            <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;">
+
                 <label for="type">ประเภท:</label>
                 <select name="type" id="formType">
                     <option value="phone" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'phone') ? 'selected' : ''; ?>>
@@ -228,6 +228,18 @@ if (!isset($_SESSION['username'])) {
                 <button type="submit">บันทึก</button>
             </form>
 
+            <button onclick="toggleForm('editForm7')">ฟอมเพิ่มรูปโปรเจค</button>
+
+            <form id="editForm7" method="POST" action="add_imgproject.php" enctype="multipart/form-data"
+                style="display: none;">
+                <label for="image">เลือกภาพ:</label>
+                <input type="file" name="image" id="image" required>
+
+                <label for="alt_text">คำอธิบายภาพ (Alt Text):</label>
+                <input type="text" name="alt_text" id="alt_text" required>
+
+                <button type="submit">อัปโหลด</button>
+            </form>
 
         </div>
         <div class="ส่วนตัวอย่างหน้า">
