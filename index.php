@@ -361,6 +361,7 @@
     <div class="d-flex justify-content-around align-items-start mt-5">
         <div>
             <div class="text-center">
+            <h3>LOCATION</h3>
                 <?php
                     $sql = "SELECT * FROM address";
                     $result = mysqli_query($conn, $sql);
@@ -368,7 +369,7 @@
                     if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                 ?>
-                <h3>LOCATION</h3>
+                
                 <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?> <?= $row['street'] ?> แขวง<?=$row['subDistrict'] ?> เขต<?= $row['district'] ?></p>
                 <p><?=$row['province'] ?>, <?=$row['postalCode'] ?></p>
                 <?php

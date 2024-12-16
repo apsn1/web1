@@ -1,12 +1,5 @@
 <?php include('../db.php'); ?>
-<?php
 
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
-}
-?>
 
 <!DOCTYPE html>
 <html>
@@ -333,22 +326,6 @@ if (!isset($_SESSION['username'])) {
 </form>
 <!---------------------------------------------------------------------------------------------------------------------->
 
-
-                <button onclick="toggleForm('editForm9')">ฟอมข้อมูลบทความ</button>
-                <form id="editForm9" method="POST" action="edit_blogs.php" style="display: none;"
-                    enctype="multipart/form-data">
-                    <h1>เพิ่มบทความใหม่</h1>
-                    <label>หัวข้อ:</label>
-                    <input type="text" name="title" required><br><br>
-                    <label>คำอธิบาย:</label>
-                    <textarea name="description" required></textarea><br><br>
-                    <label>รูปภาพ:</label>
-                    <input type="file" name="image" required><br><br>
-                    <button type="submit">บันทึก</button>
-                    <h1>Blog</h1>
-
-                    
-                </form>
 
                 <button onclick="toggleForm('editForm11')">เพิ่มที่อยู่บริษัท</button>
                 <form id="editForm11" method="POST" action="add_address.php" style="display: none;">
