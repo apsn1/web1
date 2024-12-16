@@ -359,7 +359,7 @@
     </div>
 </body>
 <footer >
-    <div class="d-flex justify-content-around align-items-start mt-5">
+    <div class="d-flex justify-content-around align-items-start mt-5 text-white p-5">
         <div>
             <div class="text-center">
             <h3>LOCATION</h3>
@@ -383,6 +383,26 @@
                     <h3>ABOUT US</h3>
                     <p class="text-center">Lorem ipsum dolor sit amet consectetur, </p>
                 </div>
+                <h3>ABOUT US</h3>
+                <?php
+                    $sql = "SELECT * FROM textabout";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                ?>
+
+                <p><?= $row['b1'] ?></p>
+                <p><?= $row['b2'] ?></p>
+                <p><?= $row['b3'] ?></p>
+                <p><?= $row['b4'] ?></p>
+                <p><?= $row['b5'] ?></p>
+                <p><?= $row['b6'] ?></p>
+                <?php
+                    } else {
+                        echo "<p>ไม่มีข้อมูลที่อยู่</p>";
+                    }
+                ?>
         </div>
         
         <div class='ms-5'>
