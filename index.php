@@ -359,7 +359,7 @@
     </div>
 </body>
 <footer >
-    <div class="d-flex justify-content-around align-items-start mt-5">
+    <div class="d-flex justify-content-around align-items-start mt-5 text-white p-5">
         <div>
             <div class="text-center">
             <h3>LOCATION</h3>
