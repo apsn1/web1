@@ -300,6 +300,35 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit">อัปโหลด</button>
                 </form>
 
+ <!---------------------------------------------------------------------------------------------------------------------->
+                <button onclick="toggleForm('editForm9')">About</button>
+                <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
+                    <input type="hidden" name="id" id="formId" placeholder="Form 2">
+                    <input type="hidden" name="aboutusID"
+                        value="<?php echo htmlspecialchars($about['aboutusID'] ?? ''); ?>">
+                    <!-- กำหนด aboutID -->
+
+                    <!-- ข้อความองค์กร -->
+                    <div class="underAbout"></div>
+                    <div class="row">
+                        <div class="col-lg-4 ms-auto">
+                            <label for="onesiamText">LOCATION</label><br>
+                            <textarea id="onesiamText" name="location" rows="5" class="form-control">
+                <?php echo htmlspecialchars($about['location'] ?? ''); ?>
+            </textarea>
+                        </div>
+                        <div class="col-lg-4 me-auto">
+                            <label for="aboutText">ABOUT US</label><br>
+                            <textarea id="aboutText" name="aboutus" rows="5" class="form-control">
+                <?php echo htmlspecialchars($about['aboutus'] ?? ''); ?>
+            </textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
+                    </div>
+                </form>
+<!---------------------------------------------------------------------------------------------------------------------->
+
+
                 <button onclick="toggleForm('editForm9')">ฟอมข้อมูลบทความ</button>
                 <form id="editForm9" method="POST" action="edit_blogs.php" style="display: none;"
                     enctype="multipart/form-data">
