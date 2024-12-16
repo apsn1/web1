@@ -331,7 +331,7 @@
                         ?>
                         <div class="blog-card">
                             <!-- แสดงรูปภาพ -->
-                            <img class="photo1" src="admin/upload_blogs/<?php echo htmlspecialchars($first_image); ?>"
+                            <img class="photo1" src="admin/<?php echo htmlspecialchars($first_image); ?>"
                                 alt="ภาพบทความ">
 
                             <!-- แสดงหัวข้อ -->

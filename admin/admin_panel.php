@@ -302,79 +302,80 @@
                     <label>รูปภาพ:</label>
                     <input type="file" name="images[]" multiple required><br><br>
                     <button type="submit">บันทึก</button>
+                
+                <?php
+                include('../db.php'); // เชื่อมต่อฐานข้อมูล
+                
+                // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
+                $sql = "SELECT * FROM blogs ORDER BY id DESC";
+                $result = $conn->query($sql);
 
-                    <?php
-                    include('../db.php'); // เชื่อมต่อฐานข้อมูล
-                    
-                    // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
-                    $sql = "SELECT * FROM blogs ORDER BY id DESC";
-                    $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        // แปลง JSON ของรูปภาพกลับมาเป็น array
+                        $images = json_decode($row['images'], true);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            // แปลง JSON ของรูปภาพกลับมาเป็น array
-                            $images = json_decode($row['images'], true);
+                        // รูปภาพแรก (ถ้ามี)
+                        $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
+                        ?>
+                        <div class="blog-card">
+                            <!-- แสดงรูปภาพ -->
+                            <img class="photo1" src="<?php echo htmlspecialchars($first_image); ?>"
+                                alt="ภาพบทความ">
 
-                            // รูปภาพแรก (ถ้ามี)
-                            $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
-                            ?>
-                            <div class="blog-card">
-                                <!-- แสดงรูปภาพ -->
-                                <img class="photo1" src="upload_blogs/<?php echo htmlspecialchars($first_image); ?>"
-                                    alt="ภาพบทความ">
+                            <!-- แสดงหัวข้อ -->
+                            <h3><?php echo htmlspecialchars($row['title']); ?></h3>
 
-                                <!-- แสดงหัวข้อ -->
-                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+                            <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
+                            <p>
+                                <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
+                            </p>
 
-                                <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
-                                <p>
-                                    <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
-                                </p>
-
-                                <!-- ปุ่มอ่านเพิ่ม -->
-                                <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
-                                <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
-                            </div>
-                            <?php
-                        }
-                    } else {
-                        echo "<p>ไม่มีบทความในขณะนี้</p>";
+                            <!-- ปุ่มอ่านเพิ่ม -->
+                            <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
+                            <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete"
+                                onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
+                        </div>
+                        <?php
                     }
-                    ?>
+                } else {
+                    echo "<p>ไม่มีบทความในขณะนี้</p>";
+                }
+                ?>
                 </form>
 
- <!---------------------------------------------------------------------------------------------------------------------->
-                  <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
-                  <button onclick="toggleForm('editForm9')">About</button>
+                <!---------------------------------------------------------------------------------------------------------------------->
+                <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
+                <button onclick="toggleForm('editForm9')">About</button>
 
-<!-- ฟอร์มที่ซ่อนอยู่ -->
-<form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
-    <input type="hidden" name="id" id="formId" value="1"> <!-- หรือค่าที่คุณต้องการ -->
+                <!-- ฟอร์มที่ซ่อนอยู่ -->
+                <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
+                    <input type="hidden" name="id" id="formId" value="1"> <!-- หรือค่าที่คุณต้องการ -->
 
-    <label for="bb1">บรรทัดที่1</label><br>
-    <input type="text" id="bb1" name="bb1" required><br><br>
+                    <label for="bb1">บรรทัดที่1</label><br>
+                    <input type="text" id="bb1" name="bb1" required><br><br>
 
-    <label for="bb2">บรรทัดที่2</label><br>
-    <input type="text" id="bb2" name="bb2" required><br><br>
+                    <label for="bb2">บรรทัดที่2</label><br>
+                    <input type="text" id="bb2" name="bb2" required><br><br>
 
-    <label for="bb3">บรรทัดที่3</label><br>
-    <input type="text" id="bb3" name="bb3" required><br><br>
+                    <label for="bb3">บรรทัดที่3</label><br>
+                    <input type="text" id="bb3" name="bb3" required><br><br>
 
-    <label for="bb4">บรรทัดที่4</label><br>
-    <input type="text" id="bb4" name="bb4" required><br><br>
+                    <label for="bb4">บรรทัดที่4</label><br>
+                    <input type="text" id="bb4" name="bb4" required><br><br>
 
-    <label for="bb5">บรรทัดที่5</label><br>
-    <input type="text" id="bb5" name="bb5" required><br><br>
+                    <label for="bb5">บรรทัดที่5</label><br>
+                    <input type="text" id="bb5" name="bb5" required><br><br>
 
-    <label for="bb6">บรรทัดที่6</label><br>
-    <input type="text" id="bb6" name="bb6" required><br><br>
+                    <label for="bb6">บรรทัดที่6</label><br>
+                    <input type="text" id="bb6" name="bb6" required><br><br>
 
-    <label for="bb7">บรรทัดที่7</label><br>
-    <input type="text" id="bb7" name="bb7" required><br><br>
+                    <label for="bb7">บรรทัดที่7</label><br>
+                    <input type="text" id="bb7" name="bb7" required><br><br>
 
-    <input type="submit" value="ส่งข้อมูล">
-</form>
-<!---------------------------------------------------------------------------------------------------------------------->
+                    <input type="submit" value="ส่งข้อมูล">
+                </form>
+                <!---------------------------------------------------------------------------------------------------------------------->
 
 
                 <button onclick="toggleForm('editForm11')">เพิ่มที่อยู่บริษัท</button>
@@ -383,27 +384,28 @@
                         <label for="homeNumber" class="form-label">บ้านเลขที่</label>
                         <input type="text" class="form-control" name="homeNumber" placeholder="กรอกบ้านเลขที่" required>
                     </div>
-                <div class="mb-3">
+                    <div class="mb-3">
                         <label for="street" class="form-label">ถนน</label>
-                <input type="text" class="form-control" name="street" placeholder="กรอกชื่อถนน (ถ้ามี)">
-                </div>
-                <div class="mb-3">
+                        <input type="text" class="form-control" name="street" placeholder="กรอกชื่อถนน (ถ้ามี)">
+                    </div>
+                    <div class="mb-3">
                         <label for="subDistrict" class="form-label">ตำบล/แขวง</label>
                         <input type="text" class="form-control" name="subDistrict" placeholder="กรอกตำบล/แขวง" required>
-                </div>
-                <div class="mb-3">
+                    </div>
+                    <div class="mb-3">
                         <label for="district" class="form-label">อำเภอ/เขต</label>
                         <input type="text" class="form-control" name="district" placeholder="กรอกอำเภอ/เขต" required>
-                </div>
-                <div class="mb-3">
+                    </div>
+                    <div class="mb-3">
                         <label for="province" class="form-label">จังหวัด</label>
                         <input type="text" class="form-control" name="province" required>
-                </div>
-                <div class="mb-3">
+                    </div>
+                    <div class="mb-3">
                         <label for="postalCode" class="form-label">รหัสไปรษณีย์</label>
-                        <input type="text" class="form-control" name="postalCode" placeholder="กรอกรหัสไปรษณีย์" required>
-                </div>
-                        <button type="submit" class="btn btn-primary">เพิ่มข้อมูล</button>
+                        <input type="text" class="form-control" name="postalCode" placeholder="กรอกรหัสไปรษณีย์"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">เพิ่มข้อมูล</button>
                 </form>
             </div>
             <div class="ส่วนตัวอย่างหน้า">
