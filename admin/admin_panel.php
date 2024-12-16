@@ -302,52 +302,51 @@
                     <label>รูปภาพ:</label>
                     <input type="file" name="images[]" multiple required><br><br>
                     <button type="submit">บันทึก</button>
-                
-                <?php
-                include('../db.php'); // เชื่อมต่อฐานข้อมูล
-                
-                // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
-                $sql = "SELECT * FROM blogs ORDER BY id DESC";
-                $result = $conn->query($sql);
+                    <div class="imageblogall">
+                    <?php
+                    include('../db.php'); // เชื่อมต่อฐานข้อมูล
+                    
+                    // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
+                    $sql = "SELECT * FROM blogs ORDER BY id DESC";
+                    $result = $conn->query($sql);
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        // แปลง JSON ของรูปภาพกลับมาเป็น array
-                        $images = json_decode($row['images'], true);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            // แปลง JSON ของรูปภาพกลับมาเป็น array
+                            $images = json_decode($row['images'], true);
 
-                        // รูปภาพแรก (ถ้ามี)
-                        $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
-                        ?>
-                        <div class="blog-card">
-                            <!-- แสดงรูปภาพ -->
-                            <img class="photo1" src="<?php echo htmlspecialchars($first_image); ?>"
-                                alt="ภาพบทความ">
+                            // รูปภาพแรก (ถ้ามี)
+                            $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
+                            ?>
+                            <div class="blog-card">
+                                <!-- แสดงรูปภาพ -->
+                                <img class="photo1" src="<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ"></img>
 
-                            <!-- แสดงหัวข้อ -->
-                            <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+                                <!-- แสดงหัวข้อ -->
+                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
 
-                            <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
-                            <p>
-                                <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
-                            </p>
+                                <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
+                                <p>
+                                    <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
+                                </p>
 
-                            <!-- ปุ่มอ่านเพิ่ม -->
-                            <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
-                            <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete"
-                                onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
-                        </div>
-                        <?php
+                                <!-- ปุ่มอ่านเพิ่ม -->
+                                <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
+                                <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete"
+                                    onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        echo "<p>ไม่มีบทความในขณะนี้</p>";
                     }
-                } else {
-                    echo "<p>ไม่มีบทความในขณะนี้</p>";
-                }
-                ?>
+                    ?>
+                    </div>
                 </form>
 
                 <!---------------------------------------------------------------------------------------------------------------------->
                 <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
                 <button onclick="toggleForm('editForm9')">About</button>
-
                 <!-- ฟอร์มที่ซ่อนอยู่ -->
                 <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" value="1"> <!-- หรือค่าที่คุณต้องการ -->
