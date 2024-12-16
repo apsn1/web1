@@ -356,5 +356,41 @@
 
     </div>
 </body>
+<footer >
+    <div class="d-flex justify-content-around align-items-start mt-5">
+        <div>
+                <div class="text-center">
+                    <h3>LOCATION</h3>
+                    <p >ที่อยู่บริษัท 125(สำนักงานใหญ่) ถ.ศรีนครินทร์ แขวงบางนาใต้ เขตบางนา</p>
+                    <p>กรุงเทพฯลฯ,10260</p>
+                </div>
+                <div class="text-center">
+                    <h3>ABOUT US</h3>
+                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, </p>
+                </div>
+        </div>
+        
+        <div class='ms-5'>
+            <div >
+                <div class="text-center">
+                    <h3>AROUD THE WEB</h3>
+                    <ul>
+                        <il><a href='##'><i class="bi bi-facebook fs-2" ></i></a></li>
+                        <il><a href='##'><i class="bi bi-twitter-x fs-2"></i></a></li>
+                        <il><a href='##'></a></li>
+                        <il><a href='##'></a></li>
+                    </ul>
+                </div>
+                <div class="text-center">
+                    <h3>SOCIAL</h3>
+                    <ul>
+                        <il><a href='##'><i class="bi bi-facebook fs-3 "></i> สยามรู้ดี ผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a></li>
+                        <br>
+                        <il><a href='##'><i class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
+                    </ul>
+            </div>
+        </div>  
+    </div> 
+</footer>
 
 </html>
