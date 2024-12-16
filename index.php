@@ -98,55 +98,55 @@
 
     <!-------------------------------------------------------------------------------------------------------------->
 
-<?php
-include("db.php");
-// ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
-$sql = "SELECT * FROM header_images";
-$result = mysqli_query($conn, $sql);
-?>
+    <?php
+    include("db.php");
+    // ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
+    $sql = "SELECT * FROM header_images";
+    $result = mysqli_query($conn, $sql);
+    ?>
 
-<header id="Home" >
-    <div class="slider-container">
-        <div class="slider">
-            <?php
-            while($row = mysqli_fetch_assoc($result)) {
-                $imagePath = 'admin/img/header/' . $row['img'];
-                echo '<img src="' . $imagePath . '" alt="header Image">';
-            }
-            ?>
+    <header id="Home">
+        <div class="slider-container">
+            <div class="slider">
+                <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $imagePath = 'admin/img/header/' . $row['img'];
+                    echo '<img src="' . $imagePath . '" alt="header Image">';
+                }
+                ?>
+            </div>
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
         </div>
-        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-        <button class="next" onclick="moveSlide(1)">&#10095;</button>
-    </div>
 
-</header>
+    </header>
 
-<script>
-// JavaScript สำหรับเลื่อนภาพ slider
-let currentIndex = 0;
+    <script>
+        // JavaScript สำหรับเลื่อนภาพ slider
+        let currentIndex = 0;
 
-function moveSlide(direction) {
-    const slider = document.querySelector('.slider');
-    const slides = document.querySelectorAll('.slider img');
-    const totalSlides = slides.length;
+        function moveSlide(direction) {
+            const slider = document.querySelector('.slider');
+            const slides = document.querySelectorAll('.slider img');
+            const totalSlides = slides.length;
 
-    currentIndex += direction;
+            currentIndex += direction;
 
-    if (currentIndex >= totalSlides) {
-        currentIndex = 0;
-    } else if (currentIndex < 0) {
-        currentIndex = totalSlides - 1;
-    }
+            if (currentIndex >= totalSlides) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = totalSlides - 1;
+            }
 
-    const offset = -currentIndex * 100; // คำนวณตำแหน่งที่ต้องเลื่อน
-    slider.style.transform = `translateX(${offset}%)`;
-}
+            const offset = -currentIndex * 100; // คำนวณตำแหน่งที่ต้องเลื่อน
+            slider.style.transform = `translateX(${offset}%)`;
+        }
 
-// เลื่อนอัตโนมัติทุก 10 วินาที
-setInterval(() => {
-    moveSlide(1);
-}, 10000); //เปลี่ยนวินาที
-</script>
+        // เลื่อนอัตโนมัติทุก 10 วินาที
+        setInterval(() => {
+            moveSlide(1);
+        }, 10000); //เปลี่ยนวินาที
+    </script>
 
 
     <!--------------------------------------------------------------------------------------------------------------->
@@ -304,6 +304,57 @@ setInterval(() => {
                 ?>
             </div>
         </section>
+        <section class="page-section" id="Blog">
+            <div class="huakor" style="margin-left: 80px; margin-bottom: 50px; text-align: left;">
+                <h1>- Architecting Legacy : Stability and Wealth Through Design</h1><br>
+                <h2>บทความ</h2>
+            </div>
+            <div class="อ่านเพิ่มเติม" style="margin-right: 170px; margin-bottom: 50px; font-size: 22px;">
+                <a href="/templates/page5.html">อ่านเพิ่มเติม</a>
+            </div>
+            <div class="blog-container">
+                <div class="blog-card">
+                    <img src="/images/blog4.jpg" alt="ภาพบทความ">
+                    <h3>แกรรรเอ้ยยย! วงการแพทย์ต้องสั่นสะเทือน</h3>
+                    <p>
+                        เขอขึ้นเทรนอวยยศ ต้าว #ฟาซาด หน่อยเถอะคุณพรี่!
+                        อะไรมันจะดังไกลไปถึง #คลินิกทำฟันย่านพัทยา ขนาดนั้นนน ! นอกจากคลินิกเสริมความงาม คลินิกทำฟัน ก็ยังต้องเหลียว
+                    </p>
+                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
+                </div>
+                <div class="blog-card">
+                    <img src="/images/blog1.jpg" alt="ภาพบทความ">
+                    <h3>7 ร้านที่ลิซ่าพาเยือนเยาวราช</h3>
+                    <p>
+                        เป็นที่โด่งดังและพูดถึงกันอย่างทั่วโลกใน MV ของลิซ่า ลลิษา ฉากถนนเยาวราช หรือไชน่าทาวน์
+                        บางกอก ซึ่งเป็นถนนคนเดิน ที่ดีที่สุดอันดับ 8 ของโลก (2565)...
+                    </p>
+                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
+                </div>
+                <div class="blog-card">
+                    <img src="/images/blog2.png" alt="ภาพบทความ">
+                    <h3>ความพิสดารของตะแกรงฉีก !!</h3>
+                    <p>
+                        ใครจะคิดดดด ว่ากะอิแค่ “ ตะแกรงฉีก ”จะน่าเหลือเชื่อขนาดนี้!
+                        ถึงขั้นสามารถทำให้ธุรกิจฟิตเนสเซ็นเตอร์ จากสถานการณ์เงียบเหงา เจ้าของธุรกิจถอดใจแล้วถอดใจอีก
+                        กลับมาครึกครื้นอีกครั้งได้
+                    </p>
+                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
+                </div>
+                <div class="blog-card">
+                    <img src="/images/blog3.jpg" alt="ภาพบทความ">
+                    <h3>8 การตกแต่งสไตล์จีน ที่ไม่ใช่เฉพาะคนจีนจะใช้ได้</h3>
+                    <p>
+                        ที่ไม่ใช่เฉพาะคนจีนจะใช้ได้
+                        เป็นที่ตื่นตาตื่นใจคนไทยและทั่วโลก และพูดถึงกันอย่างหนาหูกับ MV เพลงล่าสุดของลิซ่า ลลิษา
+                        แน่นอนฉากที่ทำทุกคนจึ้งตาแตกไปตามๆกัน นั่นคือ
+                    </p>
+                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
+                </div>
+                <!-- สามารถเพิ่มบล็อกอื่น ๆ ได้ที่นี่ -->
+            </div>
+        </section>
+        
     </div>
 </body>
 

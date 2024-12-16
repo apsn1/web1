@@ -23,43 +23,43 @@ if (!isset($_SESSION['username'])) {
             จัดการหน้าเว็บ
         </div>
         <div class="allPage">
-            <div class="tabmenuBar"> 
-            <?php
-            $sql = "SELECT *, COALESCE(parent_id, 0) AS parent_id FROM navbar ORDER BY parent_id ASC";
-            $result = $conn->query($sql);
+            <div class="tabmenuBar">
+                <?php
+                $sql = "SELECT *, COALESCE(parent_id, 0) AS parent_id FROM navbar ORDER BY parent_id ASC";
+                $result = $conn->query($sql);
 
-            $menus = [];
-            while ($row = $result->fetch_assoc()) {
-                $parentId = $row['parent_id'];
-                $menus[$parentId][] = $row;
-            }
+                $menus = [];
+                while ($row = $result->fetch_assoc()) {
+                    $parentId = $row['parent_id'];
+                    $menus[$parentId][] = $row;
+                }
 
-            echo "<a href='#'>";
+                echo "<a href='#'>";
 
-            $directory = 'uploads/';
-            if (is_dir($directory)) {
-                $files = scandir($directory);
-                if ($files !== false) {
-                    $files = array_diff($files, array('.', '..'));
-                    $imageFiles = array_filter($files, function ($file) {
-                        $ext = pathinfo($file, PATHINFO_EXTENSION);
-                        return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
-                    });
-                    if (count($imageFiles) > 0) {
-                        $image = reset($imageFiles);
-                        echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-bottom: 50px;'>";
+                $directory = 'uploads/';
+                if (is_dir($directory)) {
+                    $files = scandir($directory);
+                    if ($files !== false) {
+                        $files = array_diff($files, array('.', '..'));
+                        $imageFiles = array_filter($files, function ($file) {
+                            $ext = pathinfo($file, PATHINFO_EXTENSION);
+                            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+                        });
+                        if (count($imageFiles) > 0) {
+                            $image = reset($imageFiles);
+                            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-bottom: 50px;'>";
+                        } else {
+                            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+                        }
                     } else {
-                        echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+                        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
                     }
                 } else {
-                    echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+                    echo "ไม่พบโฟลเดอร์ uploads";
                 }
-            } else {
-                echo "ไม่พบโฟลเดอร์ uploads";
-            }
 
-            echo "</a>";
-            ?>
+                echo "</a>";
+                ?>
                 <div class="tab">แท็บที่ 1</div>
                 <div class="tab">แท็บที่ 2</div>
                 <div class="tab">แท็บที่ 3</div>
@@ -300,7 +300,21 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit">อัปโหลด</button>
                 </form>
 
+                <button onclick="toggleForm('editForm9')">ฟอมข้อมูลบทความ</button>
+                <form id="editForm9" method="POST" action="edit_blogs.php" style="display: none;"
+                    enctype="multipart/form-data">
+                    <h1>เพิ่มบทความใหม่</h1>
+                    <label>หัวข้อ:</label>
+                    <input type="text" name="title" required><br><br>
+                    <label>คำอธิบาย:</label>
+                    <textarea name="description" required></textarea><br><br>
+                    <label>รูปภาพ:</label>
+                    <input type="file" name="image" required><br><br>
+                    <button type="submit">บันทึก</button>
+                    <h1>Blog</h1>
 
+                    
+                </form>
 
             </div>
             <div class="ส่วนตัวอย่างหน้า">
@@ -308,6 +322,8 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
     </div>
+
+
     <!-- Form สำหรับแก้ไขข้อมูล -->
 
 
@@ -337,7 +353,7 @@ if (!isset($_SESSION['username'])) {
 
         // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 8;
+            const formCount = 9;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
