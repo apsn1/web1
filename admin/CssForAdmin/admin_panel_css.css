@@ -239,18 +239,3 @@ button[type="button"]:hover {
     font-size: 18px;
     margin-top: 10px;
 }
-
-.blog-card {
-    width: 100%;
-    max-width: 400px; /* สามารถปรับขนาดนี้ได้ตามต้องการ */
-    margin: 10px;
-    overflow: hidden; /* ทำให้ภาพไม่ล้นออกจาก div */
-    position: relative;
-}
-
-.photo1 {
-    width: 100%; /* ให้ภาพเต็มความกว้างของ div */
-    height: 200px; /* ปรับขนาดสูงให้พอดี */
-    object-fit: cover; /* ทำให้ภาพไม่ยืดหด แต่จะตัดส่วนที่เกินออก */
-}
-

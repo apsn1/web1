@@ -171,7 +171,7 @@ if (!isset($_SESSION['username'])) {
                         <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
                     </div>
                 </form>
-                <button onclick="toggleForm('editForm4')">ฟอมจัดการข้อมูล</button>
+                <button onclick="toggleForm('editForm4')">ฟอมจัดการ video</button>
                 <form id="editForm4" method="POST" action="add_contact.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 4"></input>
                     <h1>จัดการข้อมูลหน้าเว็บ</h1>
@@ -300,82 +300,54 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit">อัปโหลด</button>
                 </form>
 
-                <!---------------------------------------------------------------------------------------------------------------------->
-                <button onclick="toggleForm('editForm9')">About</button>
-                <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
-                    <input type="hidden" name="id" id="formId" placeholder="Form 2">
-                    <input type="hidden" name="aboutusID"
-                        value="<?php echo htmlspecialchars($about['aboutusID'] ?? ''); ?>">
-                    <!-- กำหนด aboutID -->
+ <!---------------------------------------------------------------------------------------------------------------------->
+                  <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
+                  <button onclick="toggleForm('editForm9')">About</button>
 
-                    <!-- ข้อความองค์กร -->
-                    <div class="underAbout"></div>
-                    <div class="row">
-                        <div class="col-lg-4 ms-auto">
-                            <label for="onesiamText">LOCATION</label><br>
-                            <textarea id="onesiamText" name="location" rows="5" class="form-control">
-                <?php echo htmlspecialchars($about['location'] ?? ''); ?>
-            </textarea>
-                        </div>
-                        <div class="col-lg-4 me-auto">
-                            <label for="aboutText">ABOUT US</label><br>
-                            <textarea id="aboutText" name="aboutus" rows="5" class="form-control">
-                <?php echo htmlspecialchars($about['aboutus'] ?? ''); ?>
-            </textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
-                    </div>
-                </form>
-                <!---------------------------------------------------------------------------------------------------------------------->
+<!-- ฟอร์มที่ซ่อนอยู่ -->
+<form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
+    <input type="hidden" name="id" id="formId" value="1"> <!-- หรือค่าที่คุณต้องการ -->
+
+    <label for="bb1">บรรทัดที่1</label><br>
+    <input type="text" id="bb1" name="bb1" required><br><br>
+
+    <label for="bb2">บรรทัดที่2</label><br>
+    <input type="text" id="bb2" name="bb2" required><br><br>
+
+    <label for="bb3">บรรทัดที่3</label><br>
+    <input type="text" id="bb3" name="bb3" required><br><br>
+
+    <label for="bb4">บรรทัดที่4</label><br>
+    <input type="text" id="bb4" name="bb4" required><br><br>
+
+    <label for="bb5">บรรทัดที่5</label><br>
+    <input type="text" id="bb5" name="bb5" required><br><br>
+
+    <label for="bb6">บรรทัดที่6</label><br>
+    <input type="text" id="bb6" name="bb6" required><br><br>
+
+    <label for="bb7">บรรทัดที่7</label><br>
+    <input type="text" id="bb7" name="bb7" required><br><br>
+
+    <input type="submit" value="ส่งข้อมูล">
+</form>
+<!---------------------------------------------------------------------------------------------------------------------->
 
 
-                <button onclick="toggleForm('editForm10')">ฟอมข้อมูลบทความ</button>
-                <form id="editForm10" method="POST" action="edit_blogs.php" enctype="multipart/form-data">
+                <button onclick="toggleForm('editForm9')">ฟอมข้อมูลบทความ</button>
+                <form id="editForm9" method="POST" action="edit_blogs.php" style="display: none;"
+                    enctype="multipart/form-data">
+                    <h1>เพิ่มบทความใหม่</h1>
                     <label>หัวข้อ:</label>
                     <input type="text" name="title" required><br><br>
                     <label>คำอธิบาย:</label>
                     <textarea name="description" required></textarea><br><br>
                     <label>รูปภาพ:</label>
-                    <input type="file" name="images[]" multiple required><br><br>
+                    <input type="file" name="image" required><br><br>
                     <button type="submit">บันทึก</button>
+                    <h1>Blog</h1>
 
-                    <?php
-                    include('../db.php'); // เชื่อมต่อฐานข้อมูล
                     
-                    // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
-                    $sql = "SELECT * FROM blogs ORDER BY id DESC";
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            // แปลง JSON ของรูปภาพกลับมาเป็น array
-                            $images = json_decode($row['images'], true);
-
-                            // รูปภาพแรก (ถ้ามี)
-                            $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
-                            ?>
-                            <div class="blog-card">
-                                <!-- แสดงรูปภาพ -->
-                                <img class="photo1" src="upload_blogs/<?php echo htmlspecialchars($first_image); ?>"
-                                    alt="ภาพบทความ">
-
-                                <!-- แสดงหัวข้อ -->
-                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
-
-                                <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
-                                <p>
-                                    <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
-                                </p>
-
-                                <!-- ปุ่มอ่านเพิ่ม -->
-                                <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
-                            </div>
-                            <?php
-                        }
-                    } else {
-                        echo "<p>ไม่มีบทความในขณะนี้</p>";
-                    }
-                    ?>
                 </form>
 
                 <button onclick="toggleForm('editForm11')">เพิ่มที่อยู่บริษัท</button>
@@ -443,7 +415,7 @@ if (!isset($_SESSION['username'])) {
 
         // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 10;
+            const formCount = 9;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
@@ -461,7 +433,7 @@ if (!isset($_SESSION['username'])) {
                 const isFormVisible = formToToggle.style.display === 'block';
 
                 // ซ่อนฟอร์มทั้งหมด
-                const formCount = 10;
+                const formCount = 6;
                 for (let i = 1; i <= formCount; i++) {
                     const form = document.getElementById(`editForm${i}`);
                     if (form) {
