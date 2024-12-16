@@ -23,6 +23,9 @@ if (!isset($_SESSION['username'])) {
             dfsdfsfsfsdfs
         </div>
         <div class="allPage">
+            <div class="tabmenuBar">
+                dfsdfsdf
+            </div>
             <div class="ส่วนจัดการหน้า">
 
                 <button onclick="toggleForm('editForm6')">ฟอมจัดการหน้าเว็บ</button>
@@ -327,7 +330,16 @@ if (!isset($_SESSION['username'])) {
         }
 
 
+        document.addEventListener('mousemove', function (event) {
+            const menu = document.querySelector('.tabmenuBar');
 
+            // ตรวจจับเมาส์ใกล้ขอบซ้าย (ภายใน 10px)
+            if (event.clientX <= 10) {
+                menu.classList.add('open'); // เปิดเมนู
+            } else if (event.clientX > 200) { // ถ้าเมาส์ออกห่างจากเมนู
+                menu.classList.remove('open'); // ปิดเมนู
+            }
+        });
     </script>
 
 </body>

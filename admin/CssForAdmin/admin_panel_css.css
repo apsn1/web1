@@ -14,7 +14,7 @@ h1 {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #2C4F78;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -24,7 +24,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #2C4F78;
 }
 
 input[type="text"], input[type="file"], select, textarea {
@@ -51,20 +51,40 @@ label {
     height: 100vh; /* Full height */
     margin: 0;
     background: #fff;
-    padding: 20px;
+    padding-left: 50px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: -20px;
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .tabmenu {
-    background-color: #007bff;
+    background-color: #2C4F78;
     color: white;
     padding: 10px 20px;
-    border-radius: 5px;
-    margin-bottom: 20px;
     text-align: center;
     font-size: 18px;
+}
+
+.tabmenuBar {
+    background-color: #2C4F78;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 18px;
+    position: fixed;
+    top: 0;
+    left: -200px; /* ซ่อนเมนูไว้ด้านซ้าย */
+    height: 100%; /* ทำให้เต็มความสูงของจอ */
+    width: 200px; /* กำหนดความกว้างของเมนู */
+    transition: left 0.3s ease; /* เพิ่มเอฟเฟกต์เลื่อน */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.tabmenuBar.open {
+    left: 0; /* เลื่อนออกมาเมื่อเมนูเปิด */
 }
 
 .allPage {
@@ -93,11 +113,15 @@ label {
 
 .iframe-content {
     width: 100%;
-    height: calc(100% - 40px); /* Full height minus padding */
+    height: calc(145% - 120px); /* Full height minus padding */
     border: none;
     border-radius: 10px;
-    transform: scale(0.6);
-    transform-origin: 4 0;
+    transform: scale(0.6); /* ย่อ iframe */
+    transform-origin: top left; /* จุดยึดการย่อ */
+    position: absolute;
+
+    overflow: hidden;
+
 }
 
 /* Form Styles */
@@ -134,7 +158,7 @@ table th, table td {
 }
 
 table th {
-    background-color: #007bff;
+    background-color: #2C4F78;
     color: white;
 }
 
