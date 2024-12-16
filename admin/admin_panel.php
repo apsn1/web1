@@ -301,31 +301,36 @@ if (!isset($_SESSION['username'])) {
                 </form>
 
  <!---------------------------------------------------------------------------------------------------------------------->
-                <button onclick="toggleForm('editForm9')">About</button>
-                <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
-                    <input type="hidden" name="id" id="formId" placeholder="Form 2">
-                    <input type="hidden" name="aboutusID"
-                        value="<?php echo htmlspecialchars($about['aboutusID'] ?? ''); ?>">
-                    <!-- กำหนด aboutID -->
+                  <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
+                  <button onclick="toggleForm('editForm9')">About</button>
 
-                    <!-- ข้อความองค์กร -->
-                    <div class="underAbout"></div>
-                    <div class="row">
-                        <div class="col-lg-4 ms-auto">
-                            <label for="onesiamText">LOCATION</label><br>
-                            <textarea id="onesiamText" name="location" rows="5" class="form-control">
-                <?php echo htmlspecialchars($about['location'] ?? ''); ?>
-            </textarea>
-                        </div>
-                        <div class="col-lg-4 me-auto">
-                            <label for="aboutText">ABOUT US</label><br>
-                            <textarea id="aboutText" name="aboutus" rows="5" class="form-control">
-                <?php echo htmlspecialchars($about['aboutus'] ?? ''); ?>
-            </textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
-                    </div>
-                </form>
+<!-- ฟอร์มที่ซ่อนอยู่ -->
+<form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
+    <input type="hidden" name="id" id="formId" value="1"> <!-- หรือค่าที่คุณต้องการ -->
+
+    <label for="bb1">บรรทัดที่1</label><br>
+    <input type="text" id="bb1" name="bb1" required><br><br>
+
+    <label for="bb2">บรรทัดที่2</label><br>
+    <input type="text" id="bb2" name="bb2" required><br><br>
+
+    <label for="bb3">บรรทัดที่3</label><br>
+    <input type="text" id="bb3" name="bb3" required><br><br>
+
+    <label for="bb4">บรรทัดที่4</label><br>
+    <input type="text" id="bb4" name="bb4" required><br><br>
+
+    <label for="bb5">บรรทัดที่5</label><br>
+    <input type="text" id="bb5" name="bb5" required><br><br>
+
+    <label for="bb6">บรรทัดที่6</label><br>
+    <input type="text" id="bb6" name="bb6" required><br><br>
+
+    <label for="bb7">บรรทัดที่7</label><br>
+    <input type="text" id="bb7" name="bb7" required><br><br>
+
+    <input type="submit" value="ส่งข้อมูล">
+</form>
 <!---------------------------------------------------------------------------------------------------------------------->
 
 
