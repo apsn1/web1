@@ -313,48 +313,47 @@
                 <a href="/templates/page5.html">อ่านเพิ่มเติม</a>
             </div>
             <div class="blog-container">
-                <div class="blog-card">
-                    <img src="/images/blog4.jpg" alt="ภาพบทความ">
-                    <h3>แกรรรเอ้ยยย! วงการแพทย์ต้องสั่นสะเทือน</h3>
-                    <p>
-                        เขอขึ้นเทรนอวยยศ ต้าว #ฟาซาด หน่อยเถอะคุณพรี่!
-                        อะไรมันจะดังไกลไปถึง #คลินิกทำฟันย่านพัทยา ขนาดนั้นนน ! นอกจากคลินิกเสริมความงาม คลินิกทำฟัน ก็ยังต้องเหลียว
-                    </p>
-                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
-                </div>
-                <div class="blog-card">
-                    <img src="/images/blog1.jpg" alt="ภาพบทความ">
-                    <h3>7 ร้านที่ลิซ่าพาเยือนเยาวราช</h3>
-                    <p>
-                        เป็นที่โด่งดังและพูดถึงกันอย่างทั่วโลกใน MV ของลิซ่า ลลิษา ฉากถนนเยาวราช หรือไชน่าทาวน์
-                        บางกอก ซึ่งเป็นถนนคนเดิน ที่ดีที่สุดอันดับ 8 ของโลก (2565)...
-                    </p>
-                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
-                </div>
-                <div class="blog-card">
-                    <img src="/images/blog2.png" alt="ภาพบทความ">
-                    <h3>ความพิสดารของตะแกรงฉีก !!</h3>
-                    <p>
-                        ใครจะคิดดดด ว่ากะอิแค่ “ ตะแกรงฉีก ”จะน่าเหลือเชื่อขนาดนี้!
-                        ถึงขั้นสามารถทำให้ธุรกิจฟิตเนสเซ็นเตอร์ จากสถานการณ์เงียบเหงา เจ้าของธุรกิจถอดใจแล้วถอดใจอีก
-                        กลับมาครึกครื้นอีกครั้งได้
-                    </p>
-                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
-                </div>
-                <div class="blog-card">
-                    <img src="/images/blog3.jpg" alt="ภาพบทความ">
-                    <h3>8 การตกแต่งสไตล์จีน ที่ไม่ใช่เฉพาะคนจีนจะใช้ได้</h3>
-                    <p>
-                        ที่ไม่ใช่เฉพาะคนจีนจะใช้ได้
-                        เป็นที่ตื่นตาตื่นใจคนไทยและทั่วโลก และพูดถึงกันอย่างหนาหูกับ MV เพลงล่าสุดของลิซ่า ลลิษา
-                        แน่นอนฉากที่ทำทุกคนจึ้งตาแตกไปตามๆกัน นั่นคือ
-                    </p>
-                    <a class="btn-read-more" href="/templates/page5.html">อ่านเพิ่ม</a>
-                </div>
-                <!-- สามารถเพิ่มบล็อกอื่น ๆ ได้ที่นี่ -->
+                <?php
+                include('db.php'); // เชื่อมต่อฐานข้อมูล
+                
+                // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
+                $sql = "SELECT * FROM blogs ORDER BY id DESC";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        // แปลง JSON ของรูปภาพกลับมาเป็น array
+                        $images = json_decode($row['images'], true);
+
+                        // รูปภาพแรก (ถ้ามี)
+                        $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
+                        ?>
+                        <div class="blog-card">
+                            <!-- แสดงรูปภาพ -->
+                            <img class="photo1" src="admin/upload_blogs/<?php echo htmlspecialchars($first_image); ?>"
+                                alt="ภาพบทความ">
+
+                            <!-- แสดงหัวข้อ -->
+                            <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+
+                            <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
+                            <p>
+                                <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
+                            </p>
+
+                            <!-- ปุ่มอ่านเพิ่ม -->
+                            <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    echo "<p>ไม่มีบทความในขณะนี้</p>";
+                }
+                ?>
+
             </div>
         </section>
-        
+
     </div>
 </body>
 

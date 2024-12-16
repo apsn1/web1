@@ -171,7 +171,7 @@ if (!isset($_SESSION['username'])) {
                         <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
                     </div>
                 </form>
-                <button onclick="toggleForm('editForm4')">ฟอมจัดการ video</button>
+                <button onclick="toggleForm('editForm4')">ฟอมจัดการข้อมูล</button>
                 <form id="editForm4" method="POST" action="add_contact.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 4"></input>
                     <h1>จัดการข้อมูลหน้าเว็บ</h1>
@@ -300,7 +300,7 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit">อัปโหลด</button>
                 </form>
 
- <!---------------------------------------------------------------------------------------------------------------------->
+                <!---------------------------------------------------------------------------------------------------------------------->
                 <button onclick="toggleForm('editForm9')">About</button>
                 <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 2">
@@ -326,25 +326,57 @@ if (!isset($_SESSION['username'])) {
                         <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
                     </div>
                 </form>
-<!---------------------------------------------------------------------------------------------------------------------->
+                <!---------------------------------------------------------------------------------------------------------------------->
 
 
-                <button onclick="toggleForm('editForm9')">ฟอมข้อมูลบทความ</button>
-                <form id="editForm9" method="POST" action="edit_blogs.php" style="display: none;"
-                    enctype="multipart/form-data">
-                    <h1>เพิ่มบทความใหม่</h1>
+                <button onclick="toggleForm('editForm10')">ฟอมข้อมูลบทความ</button>
+                <form id="editForm10" method="POST" action="edit_blogs.php" enctype="multipart/form-data">
                     <label>หัวข้อ:</label>
                     <input type="text" name="title" required><br><br>
                     <label>คำอธิบาย:</label>
                     <textarea name="description" required></textarea><br><br>
                     <label>รูปภาพ:</label>
-                    <input type="file" name="image" required><br><br>
+                    <input type="file" name="images[]" multiple required><br><br>
                     <button type="submit">บันทึก</button>
-                    <h1>Blog</h1>
 
+                    <?php
+                    include('../db.php'); // เชื่อมต่อฐานข้อมูล
                     
-                </form>
+                    // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
+                    $sql = "SELECT * FROM blogs ORDER BY id DESC";
+                    $result = $conn->query($sql);
 
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            // แปลง JSON ของรูปภาพกลับมาเป็น array
+                            $images = json_decode($row['images'], true);
+
+                            // รูปภาพแรก (ถ้ามี)
+                            $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
+                            ?>
+                            <div class="blog-card">
+                                <!-- แสดงรูปภาพ -->
+                                <img class="photo1" src="upload_blogs/<?php echo htmlspecialchars($first_image); ?>"
+                                    alt="ภาพบทความ">
+
+                                <!-- แสดงหัวข้อ -->
+                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+
+                                <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
+                                <p>
+                                    <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
+                                </p>
+
+                                <!-- ปุ่มอ่านเพิ่ม -->
+                                <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        echo "<p>ไม่มีบทความในขณะนี้</p>";
+                    }
+                    ?>
+                </form>
             </div>
             <div class="ส่วนตัวอย่างหน้า">
                 <iframe src="../index.php" class="iframe-content"></iframe>
@@ -382,7 +414,7 @@ if (!isset($_SESSION['username'])) {
 
         // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 9;
+            const formCount = 10;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
@@ -400,7 +432,7 @@ if (!isset($_SESSION['username'])) {
                 const isFormVisible = formToToggle.style.display === 'block';
 
                 // ซ่อนฟอร์มทั้งหมด
-                const formCount = 6;
+                const formCount = 10;
                 for (let i = 1; i <= formCount; i++) {
                     const form = document.getElementById(`editForm${i}`);
                     if (form) {
