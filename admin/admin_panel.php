@@ -377,6 +377,35 @@ if (!isset($_SESSION['username'])) {
                     }
                     ?>
                 </form>
+
+                <button onclick="toggleForm('editForm11')">เพิ่มที่อยู่บริษัท</button>
+                <form id="editForm11" method="POST" action="add_address.php" style="display: none;">
+                    <div class="mb-3">
+                        <label for="homeNumber" class="form-label">บ้านเลขที่</label>
+                        <input type="text" class="form-control" name="homeNumber" placeholder="กรอกบ้านเลขที่" required>
+                    </div>
+                <div class="mb-3">
+                        <label for="street" class="form-label">ถนน</label>
+                <input type="text" class="form-control" name="street" placeholder="กรอกชื่อถนน (ถ้ามี)">
+                </div>
+                <div class="mb-3">
+                        <label for="subDistrict" class="form-label">ตำบล/แขวง</label>
+                        <input type="text" class="form-control" name="subDistrict" placeholder="กรอกตำบล/แขวง" required>
+                </div>
+                <div class="mb-3">
+                        <label for="district" class="form-label">อำเภอ/เขต</label>
+                        <input type="text" class="form-control" name="district" placeholder="กรอกอำเภอ/เขต" required>
+                </div>
+                <div class="mb-3">
+                        <label for="province" class="form-label">จังหวัด</label>
+                        <input type="text" class="form-control" name="province" required>
+                </div>
+                <div class="mb-3">
+                        <label for="postalCode" class="form-label">รหัสไปรษณีย์</label>
+                        <input type="text" class="form-control" name="postalCode" placeholder="กรอกรหัสไปรษณีย์" required>
+                </div>
+                        <button type="submit" class="btn btn-primary">เพิ่มข้อมูล</button>
+                </form>
             </div>
             <div class="ส่วนตัวอย่างหน้า">
                 <iframe src="../index.php" class="iframe-content"></iframe>

@@ -359,10 +359,22 @@
 <footer >
     <div class="d-flex justify-content-around align-items-start mt-5">
         <div>
-                <div class="text-center">
-                    <h3>LOCATION</h3>
-                    <p >ที่อยู่บริษัท 125(สำนักงานใหญ่) ถ.ศรีนครินทร์ แขวงบางนาใต้ เขตบางนา</p>
-                    <p>กรุงเทพฯลฯ,10260</p>
+            <div class="text-center">
+                <?php
+                    $sql = "SELECT * FROM address";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                ?>
+                <h3>LOCATION</h3>
+                <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?> <?= $row['street'] ?> แขวง<?=$row['subDistrict'] ?> เขต<?= $row['district'] ?></p>
+                <p><?=$row['province'] ?>, <?=$row['postalCode'] ?></p>
+                <?php
+                    } else {
+                        echo "<p>ไม่มีข้อมูลที่อยู่</p>";
+                    }
+                ?>
                 </div>
                 <div class="text-center">
                     <h3>ABOUT US</h3>
