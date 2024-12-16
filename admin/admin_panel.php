@@ -368,7 +368,8 @@ if (!isset($_SESSION['username'])) {
                                 </p>
 
                                 <!-- ปุ่มอ่านเพิ่ม -->
-                                <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
+                                <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
+                                <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
                             </div>
                             <?php
                         }
