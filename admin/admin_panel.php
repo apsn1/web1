@@ -20,11 +20,50 @@ if (!isset($_SESSION['username'])) {
 <body>
     <div class="admin_page">
         <div class="tabmenu">
-            dfsdfsfsfsdfs
+            จัดการหน้าเว็บ
         </div>
         <div class="allPage">
-            <div class="tabmenuBar">
-                dfsdfsdf
+            <div class="tabmenuBar"> 
+            <?php
+            $sql = "SELECT *, COALESCE(parent_id, 0) AS parent_id FROM navbar ORDER BY parent_id ASC";
+            $result = $conn->query($sql);
+
+            $menus = [];
+            while ($row = $result->fetch_assoc()) {
+                $parentId = $row['parent_id'];
+                $menus[$parentId][] = $row;
+            }
+
+            echo "<a href='#'>";
+
+            $directory = 'uploads/';
+            if (is_dir($directory)) {
+                $files = scandir($directory);
+                if ($files !== false) {
+                    $files = array_diff($files, array('.', '..'));
+                    $imageFiles = array_filter($files, function ($file) {
+                        $ext = pathinfo($file, PATHINFO_EXTENSION);
+                        return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+                    });
+                    if (count($imageFiles) > 0) {
+                        $image = reset($imageFiles);
+                        echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-bottom: 50px;'>";
+                    } else {
+                        echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+                    }
+                } else {
+                    echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+                }
+            } else {
+                echo "ไม่พบโฟลเดอร์ uploads";
+            }
+
+            echo "</a>";
+            ?>
+                <div class="tab">แท็บที่ 1</div>
+                <div class="tab">แท็บที่ 2</div>
+                <div class="tab">แท็บที่ 3</div>
+                <div class="tab">แท็บที่ 4</div>
             </div>
             <div class="ส่วนจัดการหน้า">
 

@@ -87,6 +87,16 @@ label {
     left: 0; /* เลื่อนออกมาเมื่อเมนูเปิด */
 }
 
+.tab {
+    padding: 15px 20px;
+    cursor: pointer; /* ทำให้ดูคลิกได้ */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* เส้นแบ่งแท็บ */
+}
+
+.tab:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* ไฮไลต์เมื่อวางเมาส์ */
+}
+
 .allPage {
     display: flex;
     gap: 20px;
@@ -94,12 +104,16 @@ label {
 }
 
 .ส่วนจัดการหน้า {
+    display: flex;
     flex: 1;
     overflow-y: auto;
     background: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    gap: 10px;
+    
 }
 
 .ส่วนตัวอย่างหน้า {
