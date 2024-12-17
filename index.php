@@ -31,83 +31,81 @@
 
 <body id="page-top">
 
-    <?php
-    $sql = "SELECT navbar.*, filemanager.filename 
+<?php
+$sql = "SELECT navbar.*, filemanager.filename 
         FROM navbar 
         LEFT JOIN filemanager ON navbar.link_to = filemanager.id 
         ORDER BY navbar.parent_id ASC";
 
-    $result = $conn->query($sql);
+$result = $conn->query($sql);
 
-    $menus = [];
-    while ($row = $result->fetch_assoc()) {
-        $parentId = $row['parent_id'] ? $row['parent_id'] : 0; // ตรวจสอบ parent_id ถ้าเป็น NULL ให้ใช้ 0
-        $menus[$parentId][] = $row;
-    }
+$menus = [];
+while ($row = $result->fetch_assoc()) {
+    $parentId = $row['parent_id'] ? $row['parent_id'] : 0; // ตรวจสอบ parent_id ถ้าเป็น NULL ให้ใช้ 0
+    $menus[$parentId][] = $row;
+}
 
-    echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
-    echo "<div class='container'>";
-    echo "<a href='#'>";
+echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
+echo "<div class='container'>";
+echo "<a href='#'>";
 
-    // เช็คและแสดงรูปภาพจากโฟลเดอร์ uploads
-    $directory = 'admin/uploads/';
-    if (is_dir($directory)) {
-        $files = scandir($directory);
-        if ($files !== false) {
-            $files = array_diff($files, array('.', '..'));
-            $imageFiles = array_filter($files, function ($file) {
-                $ext = pathinfo($file, PATHINFO_EXTENSION);
-                return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
-            });
-            if (count($imageFiles) > 0) {
-                $image = reset($imageFiles);
-                echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-right: 50px;'>";
-            } else {
-                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
-            }
+// เช็คและแสดงรูปภาพจากโฟลเดอร์ uploads
+$directory = 'admin/uploads/';
+if (is_dir($directory)) {
+    $files = scandir($directory);
+    if ($files !== false) {
+        $files = array_diff($files, array('.', '..'));
+        $imageFiles = array_filter($files, function ($file) {
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+        });
+        if (count($imageFiles) > 0) {
+            $image = reset($imageFiles);
+            echo "<img src='$directory$image' alt='รูปภาพล่าสุด' style='height: 75px; width: 97px; margin-right: 50px;'>";
         } else {
-            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
         }
     } else {
-        echo "ไม่พบโฟลเดอร์ uploads";
+        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
     }
+} else {
+    echo "ไม่พบโฟลเดอร์ uploads";
+}
 
-    echo "</a>";
-    echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation'> Menu <i class='fas fa-bars'></i></button>";
-    echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
-    echo "<ul class='navbar-nav ms-auto'>";
+echo "</a>";
+echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation'> Menu <i class='fas fa-bars'></i></button>";
+echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
+echo "<ul class='navbar-nav ms-auto'>";
 
-    // สร้างเมนูหลัก
-    if (isset($menus[0])) {
-        foreach ($menus[0] as $row) {
-            echo "<li class='nav-item mx-0 mx-lg-1 dropdown'>";
+// สร้างเมนูหลัก
+if (isset($menus[0])) {
+    foreach ($menus[0] as $row) {
+        echo "<li class='nav-item mx-0 mx-lg-1 dropdown'>";
 
-            // เชื่อมโยงกับลิงค์ที่มาจาก link_to ซึ่งเป็นชื่อไฟล์
-            $filename = "Allpage/" . htmlspecialchars($row['link_to']); // ใช้ link_to แทน filename
-            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='" . $filename . "'>" . htmlspecialchars($row['name']) . "</a>";
+        // เชื่อมโยงกับลิงค์ที่มาจาก link_to ซึ่งเป็นชื่อไฟล์
+        $filename = "Allpage/" . htmlspecialchars($row['link_to']); // ใช้ link_to แทน filename
+        echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='" . $filename . "'>" . htmlspecialchars($row['name']) . "</a>";
 
-            // ตรวจสอบเมนูย่อย
-            if (isset($menus[$row['id']])) {
-                echo "<ul class='dropdown-menu'>";
-                foreach ($menus[$row['id']] as $submenu) {
-                    // ลิงค์ของเมนูย่อย
-                    $submenu_link = "Allpage/" . htmlspecialchars($submenu['link_to']); // ใช้ link_to แทน filename
-                    echo "<li><a class='dropdown-item' href='" . $submenu_link . "'>" . htmlspecialchars($submenu['name']) . "</a></li>";
-                }
-                echo "</ul>";
+        // ตรวจสอบเมนูย่อย
+        if (isset($menus[$row['id']])) {
+            echo "<ul class='dropdown-menu'>";
+            foreach ($menus[$row['id']] as $submenu) {
+                // ลิงค์ของเมนูย่อย
+                $submenu_link = "Allpage/" . htmlspecialchars($submenu['link_to']); // ใช้ link_to แทน filename
+                echo "<li><a class='dropdown-item' href='" . $submenu_link . "'>" . htmlspecialchars($submenu['name']) . "</a></li>";
             }
-            echo "</li>";
+            echo "</ul>";
         }
-    } else {
-        echo "<li><a href='#'>ไม่มีเมนู</a></li>";
+        echo "</li>";
     }
+} else {
+    echo "<li><a href='#'>ไม่มีเมนู</a></li>";
+}
 
-    echo "</ul>";
-    echo "</div>";
-    echo "</nav>";
-    ?>
-
-
+echo "</ul>";
+echo "</div>";
+echo "</nav>";
+?>
 
 
 
@@ -394,19 +392,6 @@
                     echo "<p>ไม่มีข้อมูลที่อยู่</p>";
                 }
                 ?>
-                
-                <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?> <?= $row['street'] ?> แขวง<?=$row['subDistrict'] ?> เขต<?= $row['district'] ?></p>
-                <p><?=$row['province'] ?>, <?=$row['postalCode'] ?></p>
-                <?php
-                    } else {
-                        echo "<p>ไม่มีข้อมูลที่อยู่</p>";
-                    } 
-                ?>
-                </div>
-                <div class="text-center">
-                    <h3>ABOUT US</h3>
-                    <p class="text-center">Lorem ipsum dolor sit amet consectetur, </p>
-                </div>
             </div>
             <div class="text-center">
                 <h3>ABOUT US</h3>
