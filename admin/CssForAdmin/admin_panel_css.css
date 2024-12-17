@@ -253,3 +253,100 @@ button[type="button"]:hover {
     object-fit: cover; /* ให้ภาพพอดีกับขนาดที่กำหนด */
     border-radius: 8px; /* เพิ่มมุมโค้งมน (ถ้าต้องการ) */
 }
+.blog-card {
+    background-color: #e9ecef; /* พื้นหลังเทาอ่อน */
+    border: 1px solid #dee2e6; /* ขอบ */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เงา */
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: center;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .blog-card img.photo1 {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .blog-card h3 {
+    font-size: 1.5rem;
+    color: #343a40;
+    margin: 15px 0;
+  }
+  
+  .blog-card p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  
+  .blog-card .btn-read-more {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .blog-card .btn-read-more:hover {
+    background-color: #0056b3;
+  }
+ .blog-card .btn-read-more:hover {
+    background-color: #0056b3;
+}
+.btn-edit, .btn-delete {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+/* ปุ่มแก้ไข */
+.btn-edit {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff; /* สีฟ้า */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3; /* สีฟ้าเข้มเมื่อวางเมาส์ */
+}
+
+/* ปุ่มลบ */
+.btn-delete {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #dc3545; /* สีแดง */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: #a71d2a; /* สีแดงเข้มเมื่อวางเมาส์ */
+}
+
+/* ระยะห่างระหว่างปุ่ม */
+.btn-edit, .btn-delete {
+    margin: 5px;
+}
+/* จัดการขนาดรูปภาพใน blog-card */
+.blog-card img.photo1 {
+    width: 100%; /* ความกว้างเต็มขอบการ์ด */
+    height: 200px; /* ความสูงที่ต้องการ (สามารถปรับได้) */
+    object-fit: cover; /* ตัดรูปให้พอดีกับขนาด โดยไม่ผิดสัดส่วน */
+    border-radius: 8px 8px 0 0; /* มุมโค้งมนเฉพาะด้านบน */
+  }
+  

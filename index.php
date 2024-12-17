@@ -376,7 +376,7 @@
                 <?php
                     } else {
                         echo "<p>ไม่มีข้อมูลที่อยู่</p>";
-                    }
+                    } 
                 ?>
                 </div>
                 <div class="text-center">

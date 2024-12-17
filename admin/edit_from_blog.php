@@ -38,3 +38,113 @@ if (isset($_GET['id'])) {
     echo "ไม่พบข้อมูลที่ต้องการแก้ไข";
 }
 ?>
+<style>
+        /* จัดหน้า */
+/* จัดหน้า */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 30px;
+}
+
+/* กล่องฟอร์ม */
+.form-container {
+    max-width: 400px; /* ขนาดฟอร์มเล็กลง */
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #007BFF; /* กรอบสีฟ้า */
+    border-radius: 8px;
+}
+
+/* หัวข้อ */
+h1 {
+    text-align: center;
+    color: #007BFF;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* label */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* input และ textarea */
+input[type="text"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: #007BFF; /* เปลี่ยนสีเมื่อถูกเลือก */
+    outline: none;
+}
+
+/* ปุ่ม */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* สำหรับหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+    }
+
+    input[type="text"], textarea {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}
+
+/* สไตล์สำหรับการเลือกไฟล์ */
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* เพิ่มให้รูปที่อัพโหลดแสดงเต็มความกว้าง */
+.imges {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+</style>

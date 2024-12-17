@@ -11765,3 +11765,51 @@ header{
 .footer{
   background-color: #2C4F78;
 }
+/* จัดระยะห่างระหว่างแต่ละ blog-card */
+.blog-card {
+  margin-bottom: 30px; /* เพิ่มช่องว่างด้านล่าง */
+  padding: 15px; /* เพิ่มช่องว่างด้านในของการ์ด */
+  border: 1px solid #ddd; /* เพิ่มเส้นขอบบางๆ */
+  border-radius: 8px; /* มุมโค้งมน */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้การ์ดดูสวยงาม */
+  background-color: #fff; /* พื้นหลังสีขาว */
+}
+
+/* หากต้องการจัด blog-card ให้อยู่กึ่งกลาง */
+.blog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* เพิ่มช่องว่างระหว่างการ์ดแต่ละใบ */
+}
+
+/* จัดรูปภาพภายในการ์ด */
+.blog-card img.photo1 {
+  max-width: 100%; /* ทำให้รูปภาพไม่เกินขอบการ์ด */
+  height: auto;
+  border-radius: 8px 8px 0 0; /* มุมบนโค้งมน */
+}
+
+/* ปุ่มอ่านเพิ่ม */
+.btn-read-more {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #f97316; /* สีส้ม */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.btn-read-more:hover {
+  background-color: #ea580c; /* สีส้มเข้มเมื่อโฮเวอร์ */
+}
+/* จัดการขนาดรูปภาพใน blog-card */
+.blog-card img.photo1 {
+  width: 100%; /* ความกว้างเต็มขอบการ์ด */
+  height: 200px; /* ความสูงที่ต้องการ (สามารถปรับได้) */
+  object-fit: cover; /* ตัดรูปให้พอดีกับขนาด โดยไม่ผิดสัดส่วน */
+  border-radius: 8px 8px 0 0; /* มุมโค้งมนเฉพาะด้านบน */
+}
