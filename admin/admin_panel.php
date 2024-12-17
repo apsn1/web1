@@ -53,14 +53,25 @@
 
                 echo "</a>";
                 ?>
-                <div class="tab">แท็บที่ 1</div>
+                <a href="../Allpage/editallpage.php">
+                    <div class="tab">สร้างหน้าเว็บ</div>
+                </a>
                 <div class="tab">แท็บที่ 2</div>
                 <div class="tab">แท็บที่ 3</div>
                 <div class="tab">แท็บที่ 4</div>
             </div>
             <div class="ส่วนจัดการหน้า">
 
+                <?php
+                include('../db.php');  // เชื่อมต่อฐานข้อมูล
+                
+                // ดึงข้อมูลไฟล์จาก table filemanager
+                $sql = "SELECT id, filename FROM filemanager";
+                $result = $conn->query($sql);
+                ?>
+
                 <button onclick="toggleForm('editForm6')">ฟอมจัดการหน้าเว็บ</button>
+
                 <form id="editForm6" method="POST" action="add_navbar.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 6">
                     <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
@@ -81,39 +92,55 @@
                             <button type="button" onclick="addDropdownMenu()">เพิ่มเมนูย่อย</button>
                         </div>
 
+                        <!-- เลือกไฟล์จากฐานข้อมูลสำหรับลิงค์ -->
+                        <label for="link_to">เลือกไฟล์ที่จะลิงค์:</label>
+                        <select name="link_to" required>
+                            <option value="">เลือกไฟล์...</option>
+                            <?php if ($result->num_rows > 0): ?>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                    <option value="<?php echo $row['filename']; ?>">
+                                        <?php echo htmlspecialchars($row['filename']); ?></option>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <option value="">ไม่มีไฟล์ในระบบ</option>
+                            <?php endif; ?>
+                        </select>
+
                         <input type="submit" value="เพิ่มเมนู">
                     </div>
-
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>ชื่อหัวข้อ</th>
-                                <th>เป็นหัวข้อย่อยของ</th>
-                                <th>ลบ</th>
-                                <th>แก้ไข</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $sql = "SELECT * FROM navbar";
-                            $result = $conn->query($sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>" . $row["id"] . "</td>";
-                                    echo "<td>" . $row["name"] . "</td>";
-                                    echo "<td>" . $row["parent_id"] . "</td>";
-                                    echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
-                                    echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='3'>ไม่มีข้อมูล</td></tr>";
+                </form>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ชื่อหัวข้อ</th>
+                            <th>เป็นหัวข้อย่อยของ</th>
+                            <th>ลิงค์ไปยัง</th>
+                            <th>ลบ</th>
+                            <th>แก้ไข</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $sql = "SELECT * FROM navbar";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . $row["id"] . "</td>";
+                                echo "<td>" . $row["name"] . "</td>";
+                                echo "<td>" . $row["parent_id"] . "</td>";
+                                echo "<td>" . $row["link_to"] . "</td>";
+                                echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
+                                echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
+                                echo "</tr>";
                             }
-                            ?>
-                        </tbody>
-                    </table>
+                        } else {
+                            echo "<tr><td colspan='3'>ไม่มีข้อมูล</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
                 </form>
 
 
@@ -303,44 +330,45 @@
                     <input type="file" name="images[]" multiple required><br><br>
                     <button type="submit">บันทึก</button>
                     <div class="imageblogall">
-                    <?php
-                    include('../db.php'); // เชื่อมต่อฐานข้อมูล
-                    
-                    // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
-                    $sql = "SELECT * FROM blogs ORDER BY id DESC";
-                    $result = $conn->query($sql);
+                        <?php
+                        include('../db.php'); // เชื่อมต่อฐานข้อมูล
+                        
+                        // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
+                        $sql = "SELECT * FROM blogs ORDER BY id DESC";
+                        $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            // แปลง JSON ของรูปภาพกลับมาเป็น array
-                            $images = json_decode($row['images'], true);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                // แปลง JSON ของรูปภาพกลับมาเป็น array
+                                $images = json_decode($row['images'], true);
 
-                            // รูปภาพแรก (ถ้ามี)
-                            $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
-                            ?>
-                            <div class="blog-card">
-                                <!-- แสดงรูปภาพ -->
-                                <img class="photo1" src="<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ"></img>
+                                // รูปภาพแรก (ถ้ามี)
+                                $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
+                                ?>
+                                <div class="blog-card">
+                                    <!-- แสดงรูปภาพ -->
+                                    <img class="photo1" src="<?php echo htmlspecialchars($first_image); ?>"
+                                        alt="ภาพบทความ"></img>
 
-                                <!-- แสดงหัวข้อ -->
-                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+                                    <!-- แสดงหัวข้อ -->
+                                    <h3><?php echo htmlspecialchars($row['title']); ?></h3>
 
-                                <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
-                                <p>
-                                    <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
-                                </p>
+                                    <!-- แสดงคำอธิบาย (ตัดคำที่ 150 ตัวอักษร) -->
+                                    <p>
+                                        <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
+                                    </p>
 
-                                <!-- ปุ่มอ่านเพิ่ม -->
-                                <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
-                                <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete"
-                                    onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
-                            </div>
-                            <?php
+                                    <!-- ปุ่มอ่านเพิ่ม -->
+                                    <a href="edit_from_blog.php?id=<?php echo $row['id']; ?>" class="btn-edit">แก้ไข</a>
+                                    <a href="delete_blog.php?id=<?php echo $row['id']; ?>" class="btn-delete"
+                                        onclick="return confirm('คุณต้องการลบบทความนี้หรือไม่?')">ลบ</a>
+                                </div>
+                                <?php
+                            }
+                        } else {
+                            echo "<p>ไม่มีบทความในขณะนี้</p>";
                         }
-                    } else {
-                        echo "<p>ไม่มีบทความในขณะนี้</p>";
-                    }
-                    ?>
+                        ?>
                     </div>
                 </form>
 
