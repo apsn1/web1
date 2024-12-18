@@ -99,7 +99,8 @@
                             <?php if ($result->num_rows > 0): ?>
                                 <?php while ($row = $result->fetch_assoc()): ?>
                                     <option value="<?php echo $row['filename']; ?>">
-                                        <?php echo htmlspecialchars($row['filename']); ?></option>
+                                        <?php echo htmlspecialchars($row['filename']); ?>
+                                    </option>
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <option value="">ไม่มีไฟล์ในระบบ</option>
@@ -108,39 +109,38 @@
 
                         <input type="submit" value="เพิ่มเมนู">
                     </div>
-                </form>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>ชื่อหัวข้อ</th>
-                            <th>เป็นหัวข้อย่อยของ</th>
-                            <th>ลิงค์ไปยัง</th>
-                            <th>ลบ</th>
-                            <th>แก้ไข</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT * FROM navbar";
-                        $result = $conn->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row["id"] . "</td>";
-                                echo "<td>" . $row["name"] . "</td>";
-                                echo "<td>" . $row["parent_id"] . "</td>";
-                                echo "<td>" . $row["link_to"] . "</td>";
-                                echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
-                                echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
-                                echo "</tr>";
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ชื่อหัวข้อ</th>
+                                <th>เป็นหัวข้อย่อยของ</th>
+                                <th>ลิงค์ไปยัง</th>
+                                <th>ลบ</th>
+                                <th>แก้ไข</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT * FROM navbar";
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row["id"] . "</td>";
+                                    echo "<td>" . $row["name"] . "</td>";
+                                    echo "<td>" . $row["parent_id"] . "</td>";
+                                    echo "<td>" . $row["link_to"] . "</td>";
+                                    echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
+                                    echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='3'>ไม่มีข้อมูล</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='3'>ไม่มีข้อมูล</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
                 </form>
 
 
@@ -180,8 +180,8 @@
                     ?>
                 </form>
 
-                <button onclick="toggleForm('editForm8')">ฟอมเพิ่มรูปแบนเนอร์</button>
-                <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;">
+                <button onclick="toggleForm('editForm8')" >ฟอมเพิ่มรูปแบนเนอร์</button>
+                <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;" method="post">
                     <h1>เพิ่มรูปแบนเนอร์</h1>
                     <div class="form-container">
                         <div class="form-group">
@@ -191,8 +191,8 @@
                         <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
                     </div>
                 </form>
-                <button onclick="toggleForm('editForm4')">ฟอมจัดการ video</button>
-                <form id="editForm4" method="POST" action="add_contact.php" style="display: none;">
+                <button onclick="toggleForm('editForm4')">ฟอมจัดการส่วนแสดงหลังจาก banner</button>
+                <form id="editForm4" method="POST" action="add_content.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 4"></input>
                     <h1>จัดการข้อมูลหน้าเว็บ</h1>
                     <div class="form-container">
@@ -406,37 +406,43 @@
 
 
                 <?php
-                    $sql = 'select * from address where addressID = 1';
-                    $result = mysqli_query($conn,$sql);
-                    $row = mysqli_fetch_assoc($result);
+                $sql = 'select * from address where addressID = 1';
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
                 ?>
                 <button onclick="toggleForm('editForm11')">เพิ่มที่อยู่บริษัท</button>
                 <form id="editForm11" method="POST" action="address.php" style="display: none;">
                     <div class="mb-3">
                         <label for="homeNumber" class="form-label">บ้านเลขที่</label>
-                        <input type="text" class="form-control" name="homeNumber" placeholder="กรอกบ้านเลขที่" value="<?php echo isset($row['homeNumber']) ? $row['homeNumber'] : ''; ?>" required>
+                        <input type="text" class="form-control" name="homeNumber" placeholder="กรอกบ้านเลขที่"
+                            value="<?php echo isset($row['homeNumber']) ? $row['homeNumber'] : ''; ?>" required>
                     </div>
-                <div class="mb-3">
+                    <div class="mb-3">
                         <label for="street" class="form-label">ถนน</label>
-                <input type="text" class="form-control" name="street" placeholder="กรอกชื่อถนน (ถ้ามี)" value="<?php echo isset($row['street']) ? $row['street'] : ''; ?>">
-                </div>
-                <div class="mb-3">
+                        <input type="text" class="form-control" name="street" placeholder="กรอกชื่อถนน (ถ้ามี)"
+                            value="<?php echo isset($row['street']) ? $row['street'] : ''; ?>">
+                    </div>
+                    <div class="mb-3">
                         <label for="subDistrict" class="form-label">ตำบล/แขวง</label>
-                        <input type="text" class="form-control" name="subDistrict" placeholder="กรอกตำบล/แขวง" value="<?php echo isset($row['subDistrict']) ? $row['subDistrict'] : ''; ?>"required>
-                </div>
-                <div class="mb-3">
+                        <input type="text" class="form-control" name="subDistrict" placeholder="กรอกตำบล/แขวง"
+                            value="<?php echo isset($row['subDistrict']) ? $row['subDistrict'] : ''; ?>" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="district" class="form-label">อำเภอ/เขต</label>
-                        <input type="text" class="form-control" name="district" placeholder="กรอกอำเภอ/เขต" value="<?php echo isset($row['district']) ? $row['district'] : ''; ?>" required>
-                </div>
-                <div class="mb-3">
+                        <input type="text" class="form-control" name="district" placeholder="กรอกอำเภอ/เขต"
+                            value="<?php echo isset($row['district']) ? $row['district'] : ''; ?>" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="province" class="form-label">จังหวัด</label>
-                        <input type="text" class="form-control" name="province" value="<?php echo isset($row['province']) ? $row['province'] : ''; ?>" required>
-                </div>
-                <div class="mb-3">
+                        <input type="text" class="form-control" name="province"
+                            value="<?php echo isset($row['province']) ? $row['province'] : ''; ?>" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="postalCode" class="form-label">รหัสไปรษณีย์</label>
-                        <input type="text" class="form-control" name="postalCode" placeholder="กรอกรหัสไปรษณีย์" value="<?php echo isset($row['postalCode']) ? $row['postalCode'] : ''; ?>" required>
-                </div>
-                        <button type="submit" class="btn btn-primary">เพิ่มและแก้ไขข้อมูล</button>
+                        <input type="text" class="form-control" name="postalCode" placeholder="กรอกรหัสไปรษณีย์"
+                            value="<?php echo isset($row['postalCode']) ? $row['postalCode'] : ''; ?>" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">เพิ่มและแก้ไขข้อมูล</button>
                 </form>
                 <!------------------------------------------------------------------------------------------------------------------------>
             </div>

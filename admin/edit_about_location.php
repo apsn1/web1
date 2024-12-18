@@ -1,13 +1,5 @@
 <?php
-// เชื่อมต่อฐานข้อมูล MySQL
-$servername = "localhost";  // เปลี่ยนเป็น host ของคุณ
-$username = "root";         // เปลี่ยนเป็น username ของคุณ
-$password = "";             // เปลี่ยนเป็น password ของคุณ
-$dbname = "website_db";     // ชื่อฐานข้อมูลที่สร้างไว้
-
-// สร้างการเชื่อมต่อ
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+include('../db.php'); // เชื่อมต่อฐานข้อมูล
 // ตรวจสอบการเชื่อมต่อ
 if ($conn->connect_error) {
     die("การเชื่อมต่อล้มเหลว: " . $conn->connect_error);

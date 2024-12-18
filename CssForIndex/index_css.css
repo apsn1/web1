@@ -11762,9 +11762,6 @@ header{
 .next {
   right: 10px;
 }
-.footer{
-  background-color: #2C4F78;
-}
 /* จัดระยะห่างระหว่างแต่ละ blog-card */
 .blog-card {
   margin-bottom: 30px; /* เพิ่มช่องว่างด้านล่าง */
@@ -11812,4 +11809,9 @@ header{
   height: 200px; /* ความสูงที่ต้องการ (สามารถปรับได้) */
   object-fit: cover; /* ตัดรูปให้พอดีกับขนาด โดยไม่ผิดสัดส่วน */
   border-radius: 8px 8px 0 0; /* มุมโค้งมนเฉพาะด้านบน */
+}
+
+.allblog{
+  display: flex;
+  justify-content: space-evenly;
 }
