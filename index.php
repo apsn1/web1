@@ -95,25 +95,17 @@
                     echo "<li><a class='dropdown-item' href='" . $submenu_link . "'>" . htmlspecialchars($submenu['name']) . "</a></li>";
                 }
                 echo "</ul>";
+
             }
             echo "</li>";
         }
     } else {
         echo "<li><a href='#'>ไม่มีเมนู</a></li>";
     }
-
     echo "</ul>";
     echo "</div>";
     echo "</nav>";
     ?>
-
-
-
-    <!-- ลิงก์ไปยัง admin.php -->
-
-
-    <!-------------------------------------------------------------------------------------------------------------->
-
     <?php
     include("db.php");
     // ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
@@ -335,7 +327,6 @@
                 // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
                 $sql = "SELECT * FROM blogs ORDER BY id DESC";
                 $result = $conn->query($sql);
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         // แปลง JSON ของรูปภาพกลับมาเป็น array
@@ -346,15 +337,7 @@
                         ?>
                         <div class="blog-card">
                             <!-- แสดงรูปภาพ -->
-                            <img class="photo1" src="admin/<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ">
-                    // รูปภาพแรก (ถ้ามี)
-                    $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
-                    ?>
-                <div class="blog-container">    
-                    <div class="blog-card">
-                        <!-- แสดงรูปภาพ -->
-                        <img class="photo1" src="admin/<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ">
-
+                            <img class="photo1" src="admin/<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ"></img>
                             <!-- แสดงหัวข้อ -->
                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>
 
@@ -363,30 +346,21 @@
                                 <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
                             </p>
 
-                        <!-- ปุ่มอ่านเพิ่ม -->
-                        <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
-                    </div>
-                </div>    
-                    <?php
-                }
-            } else {
-                echo "<p>ไม่มีบทความในขณะนี้</p>";
-            }
-            ?>
                             <!-- ปุ่มอ่านเพิ่ม -->
                             <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
                         </div>
                         <?php
+
                     }
                 } else {
                     echo "<p>ไม่มีบทความในขณะนี้</p>";
                 }
                 ?>
-
             </div>
-
-
         </section>
+    </div>
+
+
 
     </div>
 </body>
@@ -418,7 +392,6 @@
                 <?php
                 $sql = "SELECT * FROM textabout";
                 $result = mysqli_query($conn, $sql);
-
                 if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     ?>
@@ -436,6 +409,7 @@
                 ?>
             </div>
         </div>
+
         <div class='ms-5'>
             <div>
                 <div class="text-center">

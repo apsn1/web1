@@ -1,4 +1,10 @@
-<?php include('../db.php'); ?>
+<?php include('../db.php'); 
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+}
+?>?>
 
 
 <!DOCTYPE html>
@@ -225,7 +231,7 @@
                 </form>
 
                 <button onclick="toggleForm('editForm3')">ฟอมจัดการ video</button>
-                <form id="editForm3" method="POST" action="edit_contact.php" style="display: none;">
+                <form id="editForm3" method="POST" action="update_video.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 3"></input>
                     <h1>จัดการข้อมูล วิดิโอ</h1>
                     <input type="text" name="video_link" placeholder="YouTube Video Link" required></input>
@@ -343,6 +349,7 @@
                                 $images = json_decode($row['images'], true);
 
                                 // รูปภาพแรก (ถ้ามี)
+                       
                                 $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
                                 ?>
                                 <div class="blog-card">
