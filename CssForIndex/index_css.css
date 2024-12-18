@@ -11406,59 +11406,62 @@ img.img-fluid {
 }
 
 .blog-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* จัดให้อยู่ตรงกลาง */
+  display: flex; /* ใช้ Grid Layout */
+  grid-template-columns: repeat(4, 1fr); /* แบ่งเป็น 4 คอลัมน์ขนาดเท่ากัน */
   gap: 20px; /* ระยะห่างระหว่างการ์ด */
-  max-width: 1600px; /* ความกว้างรวมของทั้งหมด */
-  margin: 0 auto;
+  margin: 0 auto; /* จัด Container ให้อยู่กึ่งกลาง */
+  max-width: 1200px; /* กำหนดความกว้างสูงสุด */
+  padding: 20px; /* เพิ่มระยะห่างขอบ Container */
+  box-sizing: border-box;
 }
 
 .blog-card {
-  background: #fff;
-  border: 1px solid #ddd;
+ 
+  background-color: #e9ecef;
+  border: 1px solid #dee2e6;
   border-radius: 8px;
-  width: calc(20% - 20px); /* การ์ด 5 ชิ้นในแถวเดียว */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  text-align: left;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 350px; /* กำหนดความสูงของการ์ด */
 }
 
-.blog-card img {
+.blog-card img.photo1 {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  height: 200px; /* ความสูงของรูปภาพ */
+  object-fit: cover; /* จัดให้รูปภาพพอดีกับพื้นที่ */
+  border-radius: 8px 8px 0 0;
 }
 
 .blog-card h3 {
-  font-size: 18px;
-  margin: 10px;
-  color: #444;
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: #343a40;
 }
 
 .blog-card p {
-  font-size: 13px;
-  color: #666;
+  font-size: 0.9rem;
+  color: #6c757d;
   margin: 0 10px 10px;
 }
 
-.blog-card .btn-read-more {
-  display: block;
-  width: 90%;
-  margin: 0 auto 10px;
-  padding: 8px;
-  background-color: #ff5722;
+.blog-card a.btn-read-more {
+  display: inline-block;
+  margin: 10px auto;
+  padding: 8px 12px;
+  background-color: #007bff;
   color: #fff;
-  border: none;
   border-radius: 5px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
-.blog-card .btn-read-more:hover {
-  background-color: #e64a19;
+.blog-card a.btn-read-more:hover {
+  background-color: #0056b3;
 }
+
 
 #Blog {
 
@@ -11814,4 +11817,7 @@ header{
 .allblog{
   display: flex;
   justify-content: space-evenly;
+}
+.d-flex{
+  background-color: #2C4F78;
 }

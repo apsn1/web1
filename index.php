@@ -347,6 +347,13 @@
                         <div class="blog-card">
                             <!-- แสดงรูปภาพ -->
                             <img class="photo1" src="admin/<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ">
+                    // รูปภาพแรก (ถ้ามี)
+                    $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
+                    ?>
+                <div class="blog-container">    
+                    <div class="blog-card">
+                        <!-- แสดงรูปภาพ -->
+                        <img class="photo1" src="admin/<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ">
 
                             <!-- แสดงหัวข้อ -->
                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>
@@ -356,6 +363,16 @@
                                 <?php echo htmlspecialchars(mb_substr($row['description'], 0, 150)) . '...'; ?>
                             </p>
 
+                        <!-- ปุ่มอ่านเพิ่ม -->
+                        <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
+                    </div>
+                </div>    
+                    <?php
+                }
+            } else {
+                echo "<p>ไม่มีบทความในขณะนี้</p>";
+            }
+            ?>
                             <!-- ปุ่มอ่านเพิ่ม -->
                             <a class="btn-read-more" href="/templates/page5.html?id=<?php echo $row['id']; ?>">อ่านเพิ่ม</a>
                         </div>

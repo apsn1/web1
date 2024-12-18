@@ -63,3 +63,109 @@ echo "Hello, world!";
 </body>
 
 </html>
+<style>
+    /* รีเซ็ต Margin และ Padding */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
+        margin: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    form {
+        background: #fff;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    button {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    ul {
+        list-style: none;
+        margin: 20px auto;
+        padding: 0;
+        max-width: 600px;
+    }
+
+    li {
+        background: #fff;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    li strong {
+        color: #007bff;
+    }
+
+    a {
+        color: #28a745;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        color: #218838;
+        text-decoration: underline;
+    }
+
+    span {
+        color: #dc3545;
+    }
+</style>

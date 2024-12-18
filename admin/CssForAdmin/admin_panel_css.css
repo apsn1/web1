@@ -239,14 +239,26 @@ button[type="button"]:hover {
     font-size: 18px;
     margin-top: 10px;
 }
-
+.page-section{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* สร้าง 4 คอลัมน์ขนาดเท่ากัน */
+    gap: 20px; /* ระยะห่างระหว่างการ์ด */
+    justify-items: end; /* จัดการ์ดชิดขวา */
+    padding: 20px; /* ระยะห่างจากขอบหน้าจอ */
+    margin: 0; /* ลบระยะห่าง default ของ body */
+}
 .blog-card {
-    width: 100%;
-    margin: 10px;
-    overflow: hidden; /* ทำให้ภาพไม่ล้นออกจาก div */
+    flex: 0 1 calc(25% - 20px); /* กำหนดขนาดการ์ดให้เป็น 25% ของพื้นที่ลบ gap */
+    box-sizing: border-box; /* ให้ขนาดรวม padding และ border */
 
 }
-
+.blog-container {
+    display: flex; /* ใช้ Flexbox */
+    flex-wrap: wrap; /* ให้ขึ้นแถวใหม่เมื่อพื้นที่ไม่พอ */
+    justify-content: space-between; /* จัดวางห่างเท่าๆ กัน */
+    gap: 20px; /* ระยะห่างระหว่างการ์ด */
+    margin: 0 auto; /* จัดกึ่งกลาง container */
+}
 .photo1 {
     width: 50%; /* กำหนดความกว้าง */
     height: auto; /* ปรับความสูงอัตโนมัติ */
@@ -254,30 +266,34 @@ button[type="button"]:hover {
     border-radius: 8px; /* เพิ่มมุมโค้งมน (ถ้าต้องการ) */
 }
 .blog-card {
-    background-color: #e9ecef; /* พื้นหลังเทาอ่อน */
-    border: 1px solid #dee2e6; /* ขอบ */
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เงา */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    margin: 20px auto;
-    max-width: 400px;
     text-align: center;
-
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+}
   
-  .blog-card img.photo1 {
+/* ปรับแต่งเพิ่มเติม */
+.blog-card img.photo1 {
     width: 100%;
-    height: auto;
-    border-radius: 8px 8px 0 0;
-  }
+    height: 150px; /* ความสูงที่เหมาะสม */
+    object-fit: cover;
+}
   
   .blog-card h3 {
     font-size: 1.5rem;
     color: #343a40;
     margin: 15px 0;
   }
-  
+  .blog-card h3, .blog-card p {
+    margin: 10px;
+  }
+  .blog-card a {
+    display: inline-block;
+    margin: 5px;
+}
   .blog-card p {
     font-size: 1rem;
     color: #6c757d;
