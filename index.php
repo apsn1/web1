@@ -113,48 +113,55 @@
     $result = mysqli_query($conn, $sql);
     ?>
 
-    <header id="Home">
-        <div class="slider-container">
-            <div class="slider">
-                <?php
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $imagePath = 'admin/img/header/' . $row['img'];
-                    echo '<img src="' . $imagePath . '" alt="header Image">';
-                }
-                ?>
+<header id="Home" class="container text-center my-4">
+    <?php
+    include("db.php");
+
+    $sql = "SELECT * FROM header_images LIMIT 4";
+    $result = mysqli_query($conn, $sql);
+
+    // Check if data exists
+    if ($result->num_rows > 0) {
+        // Initialize arrays to store image paths and button text
+        $images = [];
+        $buttons = [];
+        
+        while ($rows = $result->fetch_assoc()) {
+            $images[] = 'admin/img/header/' . $rows['img'];
+            $buttons[] = $rows['button'];
+        } ?>
+
+<div class="position-relative">
+    <!-- Banner Image -->
+    <img id="bannerImage" class="img-fluid" src="<?php echo $images[0]; ?>" style="max-width: 2000px;">
+
+    <!-- Buttons (Overlayed on the Image) -->
+    <div class="position-absolute bottom-80 start-50 translate-middle d-flex justify-content-evenly">
+        <?php foreach ($buttons as $index => $buttonText): ?>
+            <div>
+                <button class="btn btn-outline-warning " onclick="changeImageById(<?php echo $index; ?>)">
+                    <?php echo $buttonText; ?>
+                </button>
             </div>
-            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="next" onclick="moveSlide(1)">&#10095;</button>
-        </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+        echo "</div>";
 
-    </header>
+     <?php   echo "<script>const images = " . json_encode($images) . ";</script>";
+    } else {
+        echo "<p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>";
+    }
+    ?>
+</header>
 
-    <script>
-        // JavaScript สำหรับเลื่อนภาพ slider
-        let currentIndex = 0;
-
-        function moveSlide(direction) {
-            const slider = document.querySelector('.slider');
-            const slides = document.querySelectorAll('.slider img');
-            const totalSlides = slides.length;
-
-            currentIndex += direction;
-
-            if (currentIndex >= totalSlides) {
-                currentIndex = 0;
-            } else if (currentIndex < 0) {
-                currentIndex = totalSlides - 1;
-            }
-
-            const offset = -currentIndex * 100; // คำนวณตำแหน่งที่ต้องเลื่อน
-            slider.style.transform = `translateX(${offset}%)`;
-        }
-
-        // เลื่อนอัตโนมัติทุก 10 วินาที
-        setInterval(() => {
-            moveSlide(1);
-        }, 10000); //เปลี่ยนวินาที
-    </script>
+<script>
+    // JavaScript function to change the image
+    function changeImageById(index) {
+        const bannerImage = document.getElementById('bannerImage');
+        bannerImage.src = images[index]; // Change the image source
+    }
+</script>
 
 
     <!--------------------------------------------------------------------------------------------------------------->
