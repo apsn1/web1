@@ -474,6 +474,28 @@ if (!isset($_SESSION['username'])) {
                     </div>
                     <button type="submit" class="btn btn-primary">เพิ่มและแก้ไขข้อมูล</button>
                 </form>
+
+
+                <button onclick="toggleForm('editForm13')">อัพเดทลิ้งในส่วนท้าย</button>
+                <form id="editForm13" action="footer_links.php" style="display: none;" method="post">
+                    <h1>อัพเดทลิ้งในส่วนท้าย</h1>
+                    <?php
+                        $sql = 'SELECT * FROM footer_links LIMIT 1';
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                    ?>
+                    <div class="form-container">
+                        <div class="form-group">
+                        <label for="facebook">Facebook Link</label>
+                        <input type="text" name="facebook" id="facebook" placeholder="URL" value="<?= htmlspecialchars($row['facebook']) ?>" />
+                        <label for="tiktok">Tiktok Link</label>
+                        <input type="text" name="tiktok" id="tiktok" placeholder="URL" value="<?= htmlspecialchars($row['tiktok']) ?>" />
+                        <label for="line">Line Add</label>
+                        <input type="text" name="line" id="line" placeholder="URL" value="<?= htmlspecialchars($row['line']) ?>" />
+                        <button type="submit">อัพเดท</button>
+                        </div>
+                    </div>
+                </form>
                 <!------------------------------------------------------------------------------------------------------------------------>
             </div>
             <div class="ส่วนตัวอย่างหน้า">

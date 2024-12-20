@@ -443,23 +443,26 @@
         </div>
 
         <div class='ms-5'>
+        <?php   $sql = 'select * from footer_links';
+                $result = mysqli_query($conn,$sql);
+                $row = $result->fetch_assoc()
+        ?>
             <div>
                 <div class="text-center">
                     <h3>AROUD THE WEB</h3>
                     <ul>
-                        <il><a href='##'><i class="bi bi-facebook fs-2"></i></a></li>
-                            <il><a href='##'><i class="bi bi-twitter-x fs-2"></i></a></li>
-                                <il><a href='##'></a></li>
-                                    <il><a href='##'></a></li>
+                    <il><a href="<?=$row['facebook']?>"><i class="bi bi-facebook fs-2"></i></a></li>
                     </ul>
                 </div>
                 <div class="text-center">
                     <h3>SOCIAL</h3>
                     <ul>
-                        <il><a href='##'><i class="bi bi-facebook fs-3 "></i> สยามรู้ดี
-                                ผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a></li>
+                        <il>
+                            <a href="<?=$row['facebook']?>" style='text-decoration: none;'><i class="bi bi-facebook fs-3"></i> สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a></li>
                             <br>
-                            <il><a href='##'><i class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
+                            <il><a href="<?=$row['tiktok']?>" style='text-decoration: none;'><i class="bi bi-tiktok fs-3" ></i>ONE SIAM</a></li>
+                            <br>
+                            <il><a href="<?=$row['line']?>" style='text-decoration: none;'><i class="bi bi-line fs-3" ></i>ONE SIAM</a></li>
                     </ul>
                 </div>
             </div>
