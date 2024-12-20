@@ -97,6 +97,7 @@ label {
     /* เลื่อนออกมาเมื่อเมนูเปิด */
 }
 
+
 .allPage {
     display: flex;
     gap: 20px;
@@ -410,7 +411,6 @@ button[type="button"]:hover {
     border-radius: 8px 8px 0 0;
     /* มุมโค้งมนเฉพาะด้านบน */
 }
-
 
 .tab {
     padding: 15px;

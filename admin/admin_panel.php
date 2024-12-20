@@ -1,4 +1,4 @@
-<?php include('../db.php'); 
+<?php include('../db.php');
 session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
@@ -59,12 +59,20 @@ if (!isset($_SESSION['username'])) {
 
                 echo "</a>";
                 ?>
-                <a href="../Allpage/editallpage.php">
-                    <div class="tab">สร้างหน้าเว็บ</div>
-                </a>
-                <div class="tab">แท็บที่ 2</div>
-                <div class="tab">แท็บที่ 3</div>
-                <div class="tab">แท็บที่ 4</div>
+                <div class="tab" onclick="window.location.href='admin_panel.php';">จัดการหน้าหลัก</div>
+                <div class="tab" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/editallpage.php';">สร้างหน้าเว็บเพิ่ม</div>
+                <div class="tab" onclick="toggleDropdown(this)">
+                    <span>จัดการหน้าเว็บอื่นๆ</span>
+                    <span class="icon">&#9660;</span>
+                </div>
+                <div class="dropdown-menu" style="display: none;">
+                    <div class="dropdown-item" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/pageedit_panel.php';">หน้าเว็บทั้งหมด
+                    </div>
+                    <div class="dropdown-item" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/images_all.php';">รูปภาพทั้งหมด</div>
+                </div>
+                <div class="tab" onclick="window.location.href='tab3.html';">แท็บที่ 3</div>
+                <div class="tab" onclick="window.location.href='tab4.html';">แท็บที่ 4</div>
+
             </div>
             <div class="ส่วนจัดการหน้า">
 
@@ -186,8 +194,9 @@ if (!isset($_SESSION['username'])) {
                     ?>
                 </form>
 
-                <button onclick="toggleForm('editForm8')" >ฟอมเพิ่มรูปแบนเนอร์</button>
-                <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;" method="post">
+                <button onclick="toggleForm('editForm8')">ฟอมเพิ่มรูปแบนเนอร์</button>
+                <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;"
+                    method="post">
                     <h1>เพิ่มรูปแบนเนอร์</h1>
                     <div class="form-container">
                         <div class="form-group">
@@ -349,7 +358,7 @@ if (!isset($_SESSION['username'])) {
                                 $images = json_decode($row['images'], true);
 
                                 // รูปภาพแรก (ถ้ามี)
-                       
+                        
                                 $first_image = isset($images[0]) ? $images[0] : 'default.jpg'; // ใช้รูป default หากไม่มีรูปภาพ
                                 ?>
                                 <div class="blog-card">
@@ -489,7 +498,7 @@ if (!isset($_SESSION['username'])) {
 
         // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 9;
+            const formCount = 10;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
@@ -507,7 +516,7 @@ if (!isset($_SESSION['username'])) {
                 const isFormVisible = formToToggle.style.display === 'block';
 
                 // ซ่อนฟอร์มทั้งหมด
-                const formCount = 6;
+                const formCount = 10;
                 for (let i = 1; i <= formCount; i++) {
                     const form = document.getElementById(`editForm${i}`);
                     if (form) {
@@ -529,6 +538,28 @@ if (!isset($_SESSION['username'])) {
                 menu.classList.add('open'); // เปิดเมนู
             } else if (event.clientX > 200) { // ถ้าเมาส์ออกห่างจากเมนู
                 menu.classList.remove('open'); // ปิดเมนู
+            }
+        });
+
+        function toggleDropdown(element) {
+            const isOpen = element.classList.contains('open');
+
+            // ปิดเมนูอื่นๆ
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('open'));
+            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
+
+            // เปิด/ปิดเมนูปัจจุบัน
+            if (!isOpen) {
+                element.classList.add('open');
+                element.nextElementSibling.style.display = 'block';
+            }
+        }
+
+        // ปิดเมนูเมื่อคลิกพื้นที่อื่น
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.tab') && !event.target.closest('.dropdown-menu')) {
+                document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('open'));
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
             }
         });
     </script>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,22 +15,24 @@
         <input type="text" id="filename" name="filename" placeholder="ชื่อไฟล์ (ไม่ต้องใส่นามสกุล .php)" required>
         <br><br>
 
-        <!-- ฟิลด์สำหรับกรอกเนื้อหาของไฟล์ -->
-        <label for="content">เนื้อหาภายในไฟล์:</label><br>
-        <textarea id="content" name="content" rows="10" cols="50">
-<?php
-echo "Hello, world!";
-?>
-</textarea>
-        <br><br>
+        <!-- ใช้ hidden input แทน textarea -->
+        <input type="hidden" id="content" name="content" value="
+Hello, world!
+Welcome to My Page.
+This is a default content of the page.
+">
 
-        <!-- ปุ่มสำหรับยืนยันการสร้างไฟล์ -->
+        <!-- ปุ่มส่งข้อมูล -->
         <button type="submit">สร้างไฟล์</button>
     </form>
+
+    <br><br>
+    <!-- ปุ่มสำหรับยืนยันการสร้างไฟล์ -->
+
     <h2>รายการไฟล์ที่บันทึกไว้</h2>
     <?php
-    include('../db.php'); // เชื่อมต่อฐานข้อมูล
-
+    include('../../db.php'); // เชื่อมต่อฐานข้อมูล
+    
     // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
     $sql = "SELECT * FROM filemanager ORDER BY id DESC";
     $result = $conn->query($sql);
@@ -40,8 +41,8 @@ echo "Hello, world!";
         echo '<ul>';
         while ($row = $result->fetch_assoc()):
             // สร้างเส้นทางของไฟล์จากชื่อไฟล์ในฐานข้อมูล
-            $filePath = '' . $row['filename'];
-            
+            $filePath = '../' . $row['filename'];
+
             // ตรวจสอบว่าไฟล์มีอยู่ใน directory หรือไม่
             if (file_exists($filePath)) {
                 // หากไฟล์มีอยู่ แสดงลิงก์ไปยังไฟล์
@@ -57,7 +58,7 @@ echo "Hello, world!";
     endif;
 
     $conn->close();
-?>
+    ?>
 
 
 </body>
