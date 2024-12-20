@@ -63,6 +63,7 @@
                     <div class="dropdown-item" onclick="window.location.href='pageedit_panel.php';">หน้าเว็บทั้งหมด
                     </div>
                     <div class="dropdown-item" onclick="window.location.href='images_all.php';">รูปภาพทั้งหมด</div>
+                    <div class="dropdown-item" onclick="window.location.href='blogs_all.php';">บทความทั้งหมด</div>
                 </div>
                 <div class="tab" onclick="window.location.href='tab3.html';">แท็บที่ 3</div>
                 <div class="tab" onclick="window.location.href='tab4.html';">แท็บที่ 4</div>
