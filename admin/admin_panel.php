@@ -276,6 +276,19 @@ if (!isset($_SESSION['username'])) {
                     }
                     ?>
                 </form>
+  <!--      --------------------------------------------------------------------------------------------        -->
+
+                <body>
+                    <button onclick="toggleForm('editForm12')">ฟอมเพิ่มรูป design</button>
+                    <form id="editForm12" action="edit_upload_design.php" method="post" enctype="multipart/form-data">
+                     <label for="image_file">เลือกรูปภาพ:</label>
+                     <input type="file" name="image_file" id="image_file" required>
+                      <br><br>
+                     <button type="submit" name="submit">อัปโหลดรูป</button>
+                    </form> 
+                </body>
+
+<!--      --------------------------------------------------------------------------------------------        -->
 
                 <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
                 <form id="editForm2" method="POST" action="edit_contact.php" style="display: none;">

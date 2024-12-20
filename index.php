@@ -216,6 +216,32 @@
         ?>
     </div>
 
+    <section class="page-section" id="project">
+    <h2 class="Project" style="margin-bottom:40px; text-align: center;">
+        การสร้างออกเเบบวันน์สยามเป็นอย่างไร
+    </h2>
+    <div class="containerPj" style="display:flex; flex-wrap:wrap;"> 
+        <?php
+        include('db.php'); // เชื่อมต่อฐานข้อมูล
+        
+        $sql = "SELECT * FROM imgdesign";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="imgContainerpj" style="margin:5px; ">';
+                echo '<img class="photo1" src="admin/' . $row['image_path'] . '" style="width:maxpx;">';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>ไม่มีโปรเจกต์ที่แสดง</p>';
+        }
+        ?>
+    </div>
+    </section>
+
+
+
     <div class="about">
         <section class="page-section bg-primary2 text-white mb-0" id="about">
             <div class="container">
