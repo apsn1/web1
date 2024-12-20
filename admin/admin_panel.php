@@ -201,6 +201,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="form-container">
                         <div class="form-group">
                             <input type="file" name="header" required>
+                            <input type='text' name='header_button' placeholder="ข้อความในปุ่ม" required/>
                             <button type="submit">อัปโหลด</button>
                         </div>
                         <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
