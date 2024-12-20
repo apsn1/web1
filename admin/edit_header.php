@@ -12,7 +12,7 @@
     $result = mysqli_query($conn, $sql);
     if ($result->num_rows > 0) {
         while ($rows = $result->fetch_assoc()) {
-            echo "<div>";
+            echo "<div class='imgHD'>";
             // ตรวจสอบเส้นทางของไฟล์รูปภาพ
             $imagePath = 'admin/img/header/' . $rows['img'];
             echo "<br>";

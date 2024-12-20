@@ -459,3 +459,6 @@ button[type="button"]:hover {
 .tab.open+.dropdown-menu {
     display: block;
 }
+.imgHD{
+    text-align: center;
+}
