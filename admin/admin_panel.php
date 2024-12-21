@@ -406,35 +406,106 @@ if (!isset($_SESSION['username'])) {
 
 
                 <!---------------------------------------------------------------------------------------------------------------------->
-                <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
-                <button onclick="toggleForm('editForm9')">About</button>
-                <!-- ฟอร์มที่ซ่อนอยู่ -->
-                <form id="editForm9" method="POST" action="edit_about_location.php" style="display: none;">
-                    <input type="hidden" name="id" id="formId" value="1"> <!-- หรือค่าที่คุณต้องการ -->
+<?php
 
-                    <label for="bb1">บรรทัดที่1</label><br>
-                    <input type="text" id="bb1" name="bb1" required><br><br>
+try {
+    // สร้างตัวแปร PDO เพื่อเชื่อมต่อ
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+    // กำหนดโหมด error
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
+}
 
-                    <label for="bb2">บรรทัดที่2</label><br>
-                    <input type="text" id="bb2" name="bb2" required><br><br>
+// ดึงข้อมูลทั้งหมดจากตาราง messages (เพื่อแสดงรายการ)
+$sql    = "SELECT * FROM messages ORDER BY id DESC";
+$stmt   = $pdo->prepare($sql);
+$stmt->execute();
+$entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    <label for="bb3">บรรทัดที่3</label><br>
-                    <input type="text" id="bb3" name="bb3" required><br><br>
+// ตรวจสอบว่ามี ?edit_id=... ส่งมาไหม (แปลว่าต้องการแก้ไข)
+$editId   = isset($_GET['edit_id']) ? $_GET['edit_id'] : null;
+$editText = "";
 
-                    <label for="bb4">บรรทัดที่4</label><br>
-                    <input type="text" id="bb4" name="bb4" required><br><br>
+// ถ้ามี edit_id ให้ค้นข้อมูลเดิมมาแสดงในฟอร์มแก้ไข
+if ($editId) {
+    $sqlEdit  = "SELECT * FROM messages WHERE id = :id";
+    $stmtEdit = $pdo->prepare($sqlEdit);
+    $stmtEdit->bindParam(':id', $editId, PDO::PARAM_INT);
+    $stmtEdit->execute();
+    $row = $stmtEdit->fetch(PDO::FETCH_ASSOC);
 
-                    <label for="bb5">บรรทัดที่5</label><br>
-                    <input type="text" id="bb5" name="bb5" required><br><br>
+    if ($row) {
+        $editText = $row['text'];
+    }
+}
+?>
+<button onclick="toggleForm('editForm14')">จัดการข้อความ footer</button>
+<form id="editForm14" method="POST" action="text_process.php" style="display: none;">
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - เพิ่ม/แก้ไข/ลบข้อความ</title>
+</head>
+<body>
+    <h1>เพิ่มข้อความ</h1>
+    <!-- ฟอร์มเพิ่มข้อความ -->
+    <form action="text_process.php" method="POST">
+        <?php for ($i = 1; $i <= 1; $i++): ?>
+            <div>
+                <label>เพิ่มข้อความ <?php echo $i; ?>:</label>
+                <input type="text" name="textLine[]">
+            </div>
+        <?php endfor; ?>
+        <br>
+        <button type="submit" name="action" value="add">บันทึกข้อความ</button>
+    </form>
 
-                    <label for="bb6">บรรทัดที่6</label><br>
-                    <input type="text" id="bb6" name="bb6" required><br><br>
+    <hr>
+    <h2>ข้อความที่มีอยู่ footer</h2>
+    <?php if (!empty($entries)): ?>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <th>ข้อความ</th>
+                <th>จัดการ</th>
+            </tr>
+            <?php foreach ($entries as $item): ?>
+            <tr>
+                <!-- แสดงข้อความ -->
+                <td><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></td>
+                <td>
+                    <!-- ปุ่มแก้ไข -> ไปที่ admin_panel.php?edit_id=... -->
+                    <a href="admin_panel.php?edit_id=<?php echo $item['id']; ?>">แก้ไข</a> | 
+                    <!-- ปุ่มลบ -> ไปที่ text_process.php?action=delete&id=... -->
+                    <a href="text_process.php?action=delete&id=<?php echo $item['id']; ?>"
+                       onclick="return confirm('ต้องการลบข้อความนี้หรือไม่?');">ลบ</a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php else: ?>
+        <p>ยังไม่มีข้อความ</p>
+    <?php endif; ?>
+    <hr>
+    <!-- ถ้ามีค่าจาก ?edit_id=... แสดงฟอร์มแก้ไข -->
+    <?php if ($editId): ?>
+        <h3>แก้ไขข้อความ (ID = <?php echo $editId; ?>)</h3>
+        <form action="text_process.php" method="POST">
+            <input type="hidden" name="id" value="<?php echo $editId; ?>">
+            <textarea name="editText" rows="4" cols="60"><?php 
+                echo htmlspecialchars($editText, ENT_QUOTES, 'UTF-8'); 
+            ?></textarea>
+            <br><br>
+            <button type="submit" name="action" value="edit">บันทึกการแก้ไข</button>
+        </form>
+    <?php endif; ?>
 
-                    <label for="bb7">บรรทัดที่7</label><br>
-                    <input type="text" id="bb7" name="bb7" required><br><br>
+    <hr>
 
-                    <input type="submit" value="ส่งข้อมูล">
-                </form>
+</body>
+</html>
+    </form>
                 <!---------------------------------------------------------------------------------------------------------------------->
 
 

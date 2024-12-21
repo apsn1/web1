@@ -418,29 +418,43 @@
                 ?>
             </div>
             <div class="text-center">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<?php
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8",
+                   $username,
+                   $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
+}
 
-                <h3>ABOUT US</h3>
-                <?php
-                $sql = "SELECT * FROM textabout";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    $row = mysqli_fetch_assoc($result);
-                    ?>
-
-                    <p><?= $row['b1'] ?></p>
-                    <p><?= $row['b2'] ?></p>
-                    <p><?= $row['b3'] ?></p>
-                    <p><?= $row['b4'] ?></p>
-                    <p><?= $row['b5'] ?></p>
-                    <p><?= $row['b6'] ?></p>
-                    <?php
-                } else {
-                    echo "<p>ไม่มีข้อมูลที่อยู่</p>";
-                }
-                ?>
-            </div>
-        </div>
-
+// ดึงข้อมูลทั้งหมด (SELECT)
+$sql = "SELECT * FROM messages ORDER BY id DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>หน้าแสดงข้อความทั้งหมด</title>
+</head>
+<body>
+    <h1>About us</h1>
+    <?php if (!empty($entries)): ?>
+        <ul>
+            <?php foreach ($entries as $item): ?>
+                <li><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>ยังไม่มีข้อความใด ๆ</p>
+    <?php endif; ?>
+    <hr>
+</body>
+<!----------------------------------------------------------------------------------------------------------------------------------------->
         <div class='ms-5'>
             <?php $sql = 'select * from footer_links';
             $result = mysqli_query($conn, $sql);
