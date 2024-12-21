@@ -136,6 +136,7 @@
     <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:157vh; ">
     </div>
     <!-- Buttons (Overlayed on the Image) -->
+    <div class="frombt">
     <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-evenly align-items-end" style="bottom:10%;">
         <?php foreach ($buttons as $index => $buttonText): ?>
             <div class="frombtn">
@@ -144,6 +145,7 @@
                 </button>
             </div>
         <?php endforeach; ?>
+        </div>
     </div>
 </div>
 

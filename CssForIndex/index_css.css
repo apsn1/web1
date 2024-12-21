@@ -11589,6 +11589,7 @@ img.img-fluid {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  background-color: black;
 }
 
 .btn {
