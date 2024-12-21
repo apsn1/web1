@@ -6,3 +6,4 @@
                     <label>รูปภาพ:</label>
                     <input type="file" name="images[]" multiple required><br><br>
                     <button type="submit">บันทึก</button>
+                    
