@@ -4,7 +4,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
-?>?>
+?>
 
 
 <!DOCTYPE html>
@@ -60,15 +60,18 @@ if (!isset($_SESSION['username'])) {
                 echo "</a>";
                 ?>
                 <div class="tab" onclick="window.location.href='admin_panel.php';">จัดการหน้าหลัก</div>
-                <div class="tab" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/editallpage.php';">สร้างหน้าเว็บเพิ่ม</div>
+                <div class="tab" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/editallpage.php';">
+                    สร้างหน้าเว็บเพิ่ม</div>
                 <div class="tab" onclick="toggleDropdown(this)">
                     <span>จัดการหน้าเว็บอื่นๆ</span>
                     <span class="icon">&#9660;</span>
                 </div>
                 <div class="dropdown-menu" style="display: none;">
-                    <div class="dropdown-item" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/pageedit_panel.php';">หน้าเว็บทั้งหมด
+                    <div class="dropdown-item"
+                        onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/pageedit_panel.php';">หน้าเว็บทั้งหมด
                     </div>
-                    <div class="dropdown-item" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/images_all.php';">รูปภาพทั้งหมด</div>
+                    <div class="dropdown-item"
+                        onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/images_all.php';">รูปภาพทั้งหมด</div>
                 </div>
                 <div class="tab" onclick="window.location.href='tab3.html';">แท็บที่ 3</div>
                 <div class="tab" onclick="window.location.href='tab4.html';">แท็บที่ 4</div>
@@ -201,7 +204,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="form-container">
                         <div class="form-group">
                             <input type="file" name="header" required>
-                            <input type='text' name='header_button' placeholder="ข้อความในปุ่ม" required/>
+                            <input type='text' name='header_button' placeholder="ข้อความในปุ่ม" required />
                             <button type="submit">อัปโหลด</button>
                         </div>
                         <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
@@ -276,19 +279,16 @@ if (!isset($_SESSION['username'])) {
                     }
                     ?>
                 </form>
-  <!--      --------------------------------------------------------------------------------------------        -->
 
-                <body>
-                    <button onclick="toggleForm('editForm12')">ฟอมเพิ่มรูป design</button>
-                    <form id="editForm12" action="edit_upload_design.php" method="post" enctype="multipart/form-data">
-                     <label for="image_file">เลือกรูปภาพ:</label>
-                     <input type="file" name="image_file" id="image_file" required>
-                      <br><br>
-                     <button type="submit" name="submit">อัปโหลดรูป</button>
-                    </form> 
-                </body>
 
-<!--      --------------------------------------------------------------------------------------------        -->
+                <button onclick="toggleForm('editForm12')">ฟอมเพิ่มรูป design</button>
+                <form id="editForm12" action="edit_upload_design.php" method="post" enctype="multipart/form-data" style="display: none;">
+                    <label for="image_file">เลือกรูปภาพ:</label>
+                    <input type="file" name="image_file" id="image_file" required>
+                    <br><br>
+                    <button type="submit" name="submit">อัปโหลดรูป</button>
+                </form>
+
 
                 <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
                 <form id="editForm2" method="POST" action="edit_contact.php" style="display: none;">
@@ -350,7 +350,7 @@ if (!isset($_SESSION['username'])) {
                 </form>
 
                 <button onclick="toggleForm('editForm10')">ฟอมข้อมูลบทความ</button>
-                <form id="editForm10" method="POST" action="edit_blogs.php" enctype="multipart/form-data">
+                <form id="editForm10" method="POST" action="edit_blogs.php" enctype="multipart/form-data" style="display: none;">
                     <label>หัวข้อ:</label>
                     <input type="text" name="title" required><br><br>
                     <label>คำอธิบาย:</label>
@@ -400,7 +400,9 @@ if (!isset($_SESSION['username'])) {
                         }
                         ?>
                     </div>
+
                 </form>
+        
 
                 <!---------------------------------------------------------------------------------------------------------------------->
                 <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
@@ -480,24 +482,28 @@ if (!isset($_SESSION['username'])) {
                 <form id="editForm13" action="footer_links.php" style="display: none;" method="post">
                     <h1>อัพเดทลิ้งในส่วนท้าย</h1>
                     <?php
-                        $sql = 'SELECT * FROM footer_links LIMIT 1';
-                        $result = mysqli_query($conn, $sql);
-                        $row = mysqli_fetch_assoc($result);
+                    $sql = 'SELECT * FROM footer_links LIMIT 1';
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
                     ?>
                     <div class="form-container">
                         <div class="form-group">
-                        <label for="facebook">Facebook Link</label>
-                        <input type="text" name="facebook" id="facebook" placeholder="URL" value="<?= htmlspecialchars($row['facebook']) ?>" />
-                        <label for="tiktok">Tiktok Link</label>
-                        <input type="text" name="tiktok" id="tiktok" placeholder="URL" value="<?= htmlspecialchars($row['tiktok']) ?>" />
-                        <label for="line">Line Add</label>
-                        <input type="text" name="line" id="line" placeholder="URL" value="<?= htmlspecialchars($row['line']) ?>" />
-                        <button type="submit">อัพเดท</button>
+                            <label for="facebook">Facebook Link</label>
+                            <input type="text" name="facebook" id="facebook" placeholder="URL"
+                                value="<?= htmlspecialchars($row['facebook']) ?>" />
+                            <label for="tiktok">Tiktok Link</label>
+                            <input type="text" name="tiktok" id="tiktok" placeholder="URL"
+                                value="<?= htmlspecialchars($row['tiktok']) ?>" />
+                            <label for="line">Line Add</label>
+                            <input type="text" name="line" id="line" placeholder="URL"
+                                value="<?= htmlspecialchars($row['line']) ?>" />
+                            <button type="submit">อัพเดท</button>
                         </div>
                     </div>
                 </form>
-                <!------------------------------------------------------------------------------------------------------------------------>
+                
             </div>
+
             <div class="ส่วนตัวอย่างหน้า">
                 <iframe src="../index.php" class="iframe-content"></iframe>
             </div>
@@ -534,7 +540,7 @@ if (!isset($_SESSION['username'])) {
 
         // ซ่อนฟอร์มทั้งหมดเมื่อโหลดหน้า
         window.onload = function () {
-            const formCount = 10;
+            const formCount = 12;
             for (let i = 1; i <= formCount; i++) {
                 const form = document.getElementById(`editForm${i}`);
                 if (form) {
@@ -552,7 +558,7 @@ if (!isset($_SESSION['username'])) {
                 const isFormVisible = formToToggle.style.display === 'block';
 
                 // ซ่อนฟอร์มทั้งหมด
-                const formCount = 10;
+                const formCount = 12;
                 for (let i = 1; i <= formCount; i++) {
                     const form = document.getElementById(`editForm${i}`);
                     if (form) {
