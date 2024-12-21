@@ -132,8 +132,8 @@
         } ?>
 
 <div class="position-relative">
-    <div>
-    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:170vh; height: 100vh; ">
+    <div class="banner-container">
+    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:157vh; ">
     </div>
     <!-- Buttons (Overlayed on the Image) -->
     <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-evenly align-items-end" style="bottom:10%;">
