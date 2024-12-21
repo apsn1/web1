@@ -13,7 +13,6 @@ if (!isset($_SESSION['username'])) {
 <head>
     <title>แอดมิน</title>
     <link rel="stylesheet" href="CssForadmin/admin_panel_css.css">
-    <script src="scripts.js"></script>
 </head>
 
 <body>
