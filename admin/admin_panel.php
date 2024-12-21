@@ -89,7 +89,7 @@ if (!isset($_SESSION['username'])) {
 
                 <button onclick="toggleForm('editForm6')">ฟอมจัดการหน้าเว็บ</button>
 
-                <form id="editForm6" method="POST" action="add_navbar.php" style="display: none;">
+                <form id="editForm6" method="POST" action="add_navbar.php" style="display: none; ">
                     <input type="hidden" name="id" id="formId" placeholder="Form 6">
                     <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
                     <div class="form-container">
@@ -145,9 +145,9 @@ if (!isset($_SESSION['username'])) {
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
                                     echo "<td>" . $row["id"] . "</td>";
-                                    echo "<td>" . $row["name"] . "</td>";
-                                    echo "<td>" . $row["parent_id"] . "</td>";
-                                    echo "<td>" . $row["link_to"] . "</td>";
+                                    echo "<td>" . (strlen($row["name"]) > 11 ? substr($row["name"], 0, 20) . "..." : $row["name"]) . "</td>";
+                                    echo "<td>" . substr($row["parent_id"], 0, 20) . "</td>";
+                                    echo "<td>" . (strlen($row["link_to"]) > 11 ? substr($row["link_to"], 0, 20) . "..." : $row["link_to"]) . "</td>";
                                     echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
                                     echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
                                     echo "</tr>";
@@ -282,7 +282,8 @@ if (!isset($_SESSION['username'])) {
 
 
                 <button onclick="toggleForm('editForm12')">ฟอมเพิ่มรูป design</button>
-                <form id="editForm12" action="edit_upload_design.php" method="post" enctype="multipart/form-data" style="display: none;">
+                <form id="editForm12" action="edit_upload_design.php" method="post" enctype="multipart/form-data"
+                    style="display: none;">
                     <label for="image_file">เลือกรูปภาพ:</label>
                     <input type="file" name="image_file" id="image_file" required>
                     <br><br>
@@ -350,7 +351,8 @@ if (!isset($_SESSION['username'])) {
                 </form>
 
                 <button onclick="toggleForm('editForm10')">ฟอมข้อมูลบทความ</button>
-                <form id="editForm10" method="POST" action="edit_blogs.php" enctype="multipart/form-data" style="display: none;">
+                <form id="editForm10" method="POST" action="edit_blogs.php" enctype="multipart/form-data"
+                    style="display: none;">
                     <label>หัวข้อ:</label>
                     <input type="text" name="title" required><br><br>
                     <label>คำอธิบาย:</label>
@@ -402,7 +404,7 @@ if (!isset($_SESSION['username'])) {
                     </div>
 
                 </form>
-        
+
 
                 <!---------------------------------------------------------------------------------------------------------------------->
                 <!-- ปุ่มที่ใช้ในการแสดง/ซ่อนฟอร์ม -->
@@ -501,7 +503,7 @@ if (!isset($_SESSION['username'])) {
                         </div>
                     </div>
                 </form>
-                
+
             </div>
 
             <div class="ส่วนตัวอย่างหน้า">
