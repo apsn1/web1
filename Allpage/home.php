@@ -113,54 +113,55 @@
     $result = mysqli_query($conn, $sql);
     ?>
 
-<header id="Home" class="container text-center my-4">
-    <?php
-    include("../db.php");
+    <header id="Home" class="headerbanner text-center my-4">
+        <?php
+        include("../db.php");
 
-    $sql = "SELECT * FROM header_images LIMIT 4";
-    $result = mysqli_query($conn, $sql);
+        $sql = "SELECT * FROM header_images LIMIT 4";
+        $result = mysqli_query($conn, $sql);
 
-    // Check if data exists
-    if ($result->num_rows > 0) {
-        // Initialize arrays to store image paths and button text
-        $images = [];
-        $buttons = [];
-        
-        while ($rows = $result->fetch_assoc()) {
-            $images[] = '../admin/img/header/' . $rows['img'];
-            $buttons[] = $rows['button'];
-        } ?>
+        // Check if data exists
+        if ($result->num_rows > 0) {
+            // Initialize arrays to store image paths and button text
+            $images = [];
+            $buttons = [];
 
-<div class="position-relative">
-    <div>
-    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:170vh; height: 100vh; ">
-    </div>
-    <!-- Buttons (Overlayed on the Image) -->
-    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-evenly align-items-end" style="bottom:10%;">
-        <?php foreach ($buttons as $index => $buttonText): ?>
-            <div class="frombtn">
-                <button class="btn btn-outline-warning ms-5" onclick="changeImageById(<?php echo $index; ?>)">
-                    <?php echo $buttonText; ?>
-                </button>
+            while ($rows = $result->fetch_assoc()) {
+                $images[] = '../admin/img/header/' . $rows['img'];
+                $buttons[] = $rows['button'];
+            } ?>
+
+            <div class="position-relative">
+                <div>
+                    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:170vh; height: 100vh; ">
+                </div>
+                <!-- Buttons (Overlayed on the Image) -->
+                <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-evenly align-items-end"
+                    style="bottom:10%;">
+                    <?php foreach ($buttons as $index => $buttonText): ?>
+                        <div class="frombtn">
+                            <button class="btn btn-outline-warning ms-5" onclick="changeImageById(<?php echo $index; ?>)">
+                                <?php echo $buttonText; ?>
+                            </button>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        <?php endforeach; ?>
-    </div>
-</div>
 
-     <?php   echo "<script>const images = " . json_encode($images) . ";</script>";
-    } else {
-        echo "<p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>";
-    }
-    ?>
-</header>
+            <?php echo "<script>const images = " . json_encode($images) . ";</script>";
+        } else {
+            echo "<p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>";
+        }
+        ?>
+    </header>
 
-<script>
-    // JavaScript function to change the image
-    function changeImageById(index) {
-        const bannerImage = document.getElementById('bannerImage');
-        bannerImage.src = images[index]; // Change the image source
-    }
-</script>
+    <script>
+        // JavaScript function to change the image
+        function changeImageById(index) {
+            const bannerImage = document.getElementById('bannerImage');
+            bannerImage.src = images[index]; // Change the image source
+        }
+    </script>
 
 
     <!--------------------------------------------------------------------------------------------------------------->
@@ -175,7 +176,7 @@
                 echo "<div class='Colum1'>";
                 echo "<h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['body'] . "</p>";
-        
+
                 echo "</div>";
             }
         } else {
@@ -216,27 +217,27 @@
     </div>
 
     <section class="page-section" id="project">
-    <h2 class="Project" style="margin-bottom:40px; text-align: center;">
-        การสร้างออกเเบบวันน์สยามเป็นอย่างไร
-    </h2>
-    <div class="containerPj" style="display:flex; flex-wrap:wrap;"> 
-        <?php
-        include('../db.php'); // เชื่อมต่อฐานข้อมูล
-        
-        $sql = "SELECT * FROM imgdesign";
-        $result = $conn->query($sql);
+        <h2 class="Project" style="margin-bottom:40px; text-align: center;">
+            การสร้างออกเเบบวันน์สยามเป็นอย่างไร
+        </h2>
+        <div class="containerPj" style="display:flex; flex-wrap:wrap;">
+            <?php
+            include('../db.php'); // เชื่อมต่อฐานข้อมูล
+            
+            $sql = "SELECT * FROM imgdesign";
+            $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<div class="imgContainerpj" style="margin:5px; ">';
-                echo '<img class="photo1" src="admin/' . $row['image_path'] . '" style="width:maxpx;">';
-                echo '</div>';
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="imgContainerpj" style="margin:5px; ">';
+                    echo '<img class="photo1" src="admin/' . $row['image_path'] . '" style="width:maxpx;">';
+                    echo '</div>';
+                }
+            } else {
+                echo '<p>ไม่มีโปรเจกต์ที่แสดง</p>';
             }
-        } else {
-            echo '<p>ไม่มีโปรเจกต์ที่แสดง</p>';
-        }
-        ?>
-    </div>
+            ?>
+        </div>
     </section>
 
 
@@ -368,7 +369,8 @@
                         ?>
                         <div class="blog-card">
                             <!-- แสดงรูปภาพ -->
-                            <img class="photo1" src="../admin/<?php echo htmlspecialchars($first_image); ?>" alt="ภาพบทความ"></img>
+                            <img class="photo1" src="../admin/<?php echo htmlspecialchars($first_image); ?>"
+                                alt="ภาพบทความ"></img>
                             <!-- แสดงหัวข้อ -->
                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>
 
@@ -442,35 +444,39 @@
         </div>
 
         <div class='ms-5'>
-        <?php   $sql = 'select * from footer_links';
-                $result = mysqli_query($conn,$sql);
-                $row = $result->fetch_assoc()
-        ?>
+            <?php $sql = 'select * from footer_links';
+            $result = mysqli_query($conn, $sql);
+            $row = $result->fetch_assoc()
+                ?>
             <div>
                 <div class="text-center">
                     <h3>AROUD THE WEB</h3>
                     <ul>
-                    <il><a href="<?=$row['facebook']?>"><i class="bi bi-facebook fs-2"></i></a></li>
+                        <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"></i></a></li>
                     </ul>
                 </div>
                 <div class="text-center">
                     <h3>SOCIAL</h3>
                     <ul>
                         <il>
-                            <a href="<?=$row['facebook']?>" style='text-decoration: none;'><i class="bi bi-facebook fs-3"></i> สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a></li>
+                            <a href="<?= $row['facebook'] ?>" style='text-decoration: none;'><i
+                                    class="bi bi-facebook fs-3"></i> สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a>
+                            </li>
                             <br>
-                            <il><a href="<?=$row['tiktok']?>" style='text-decoration: none;'><i class="bi bi-tiktok fs-3" ></i>ONE SIAM</a></li>
-                            <br>
-                            <il><a href="<?=$row['line']?>" style='text-decoration: none;'><i class="bi bi-line fs-3" ></i>ONE SIAM</a></li>
+                            <il><a href="<?= $row['tiktok'] ?>" style='text-decoration: none;'><i
+                                        class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
+                                <br>
+                                <il><a href="<?= $row['line'] ?>" style='text-decoration: none;'><i
+                                            class="bi bi-line fs-3"></i>ONE SIAM</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        
+
 </footer>
 <div class="copyright py-4 text-center text-white">
-        <div class="container"><small>บริษัท วันน์สยาม จำกัด และในเครือ
-                ที่อยู่บริษัท 125 (สำนักงานาใหญ่) ถ.ศรีนครินทร์ แขวงบางนาใต้ เขตบางนา กรุงเทพฯลฯ 10260</small></div>
-    </div>
+    <div class="container"><small>บริษัท วันน์สยาม จำกัด และในเครือ
+            ที่อยู่บริษัท 125 (สำนักงานาใหญ่) ถ.ศรีนครินทร์ แขวงบางนาใต้ เขตบางนา กรุงเทพฯลฯ 10260</small></div>
+</div>
 
 </html>

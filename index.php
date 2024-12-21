@@ -113,7 +113,7 @@
     $result = mysqli_query($conn, $sql);
     ?>
 
-<header id="Home" class="container text-center my-4">
+<header id="Home" class="headerbanner text-center my-4">
     <?php
     include("db.php");
 
@@ -133,7 +133,7 @@
 
 <div class="position-relative">
     <div class="banner-container">
-    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:157vh; ">
+    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%; ">
     </div>
     <!-- Buttons (Overlayed on the Image) -->
     <div class="frombt">

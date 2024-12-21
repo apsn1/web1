@@ -11830,8 +11830,6 @@ header{
   object-fit: cover; /* ปรับภาพให้ครอบคลุมพื้นที่โดยไม่บิดเบี้ยว */
 }
 .banner-container {
-  width: 100%; /* กว้างเต็มจอ */
-  height: 700px; /* กำหนดความสูงของพื้นที่ */
   overflow: hidden; /* ซ่อนส่วนเกิน */
   position: relative;
 }
@@ -11839,4 +11837,10 @@ header{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.headerbanner{
+  display: flex;
+  flex-direction: column;
+
 }
