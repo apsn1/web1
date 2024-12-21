@@ -138,7 +138,7 @@
     <!-- Buttons (Overlayed on the Image) -->
     <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-evenly align-items-end" style="bottom:10%;">
         <?php foreach ($buttons as $index => $buttonText): ?>
-            <div>
+            <div class="frombtn">
                 <button class="btn btn-outline-warning ms-5" onclick="changeImageById(<?php echo $index; ?>)">
                     <?php echo $buttonText; ?>
                 </button>

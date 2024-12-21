@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="CssForadmin/admin_panel_css.css"> <!-- เพิ่มลิงค์ไปยังไฟล์ CSS -->
 </head>
 <body>
+    <div class="imgHD">
     <h1>แก้ไขรูปแบนเนอร์</h1>
     <?php
     include("../db.php");
@@ -12,7 +13,7 @@
     $result = mysqli_query($conn, $sql);
     if ($result->num_rows > 0) {
         while ($rows = $result->fetch_assoc()) {
-            echo "<div class='imgHD'>";
+            echo "<div>";
             // ตรวจสอบเส้นทางของไฟล์รูปภาพ
             $imagePath = 'admin/img/header/' . $rows['img'];
             echo "<br>";
@@ -35,5 +36,6 @@
         echo "<p>ไม่มีข้อมูลแบนเนอร์</p>";
     }
     ?>
+    </div>
 </body>
 </html>

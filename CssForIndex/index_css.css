@@ -11585,6 +11585,10 @@ img.img-fluid {
   padding: 20px;
   text-align: center;
 }
+.frombtn{
+  display: flex;
+  justify-content: space-between;
+}
 
 .btn {
   padding: 10px 20px;
@@ -11592,6 +11596,7 @@ img.img-fluid {
   color: white;
   cursor: pointer;
   margin: 10px;
+  width: 100px;
 }
 
 /* ปุ่มสีดำ */
