@@ -9,7 +9,7 @@
 
 <body>
     <h2>สร้างไฟล์ PHP</h2>
-    <form action="../admin/create_file.php" method="post">
+    <form action="../../admin/create_file.php" method="post">
         <!-- ฟิลด์สำหรับกรอกชื่อไฟล์ -->
         <label for="filename">ชื่อไฟล์ (เช่น index1.php):</label>
         <input type="text" id="filename" name="filename" placeholder="ชื่อไฟล์ (ไม่ต้องใส่นามสกุล .php)" required>
