@@ -13521,7 +13521,7 @@ img.img-fluid {
   width: 150px;
   height: 50px;
 }
-}
+
 
 /* ปุ่มสีดำ */
 .black-btn {
@@ -13863,4 +13863,9 @@ header {
   background-color: rgba(200, 200, 200, 0.3); /* สีเทาอ่อนจางๆ เมื่อกด */
   color: #000; /* ข้อความยังคงเป็นสีดำ */
   border-color: transparent; /* ไม่มีขอบ */
+}
+
+.all-footer{
+  display: flex;
+  justify-content: row;
 }

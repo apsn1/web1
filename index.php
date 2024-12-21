@@ -397,7 +397,7 @@
 </body>
 <footer class="footer text-center">
     <div class="d-flex justify-content-around align-items-start mt-5 text-white p-5">
-        <div>
+        <div class="all-footer">
             <div class="text-center">
                 <h3>LOCATION</h3>
                 <?php
@@ -416,10 +416,7 @@
                     echo "<p>ไม่มีข้อมูลที่อยู่</p>";
                 }
                 ?>
-            </div>
-            <div class="text-center">
-<!----------------------------------------------------------------------------------------------------------------------------------------->
-<?php
+                <?php
 try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8",
                    $username,
@@ -435,13 +432,8 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
+
     <title>หน้าแสดงข้อความทั้งหมด</title>
-</head>
-<body>
     <h1>About us</h1>
     <?php if (!empty($entries)): ?>
         <ul>
@@ -453,7 +445,11 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>ยังไม่มีข้อความใด ๆ</p>
     <?php endif; ?>
     <hr>
-</body>
+            </div>
+            <div class="text-center">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+
+
 <!----------------------------------------------------------------------------------------------------------------------------------------->
         <div class='ms-5'>
             <?php $sql = 'select * from footer_links';
@@ -492,3 +488,5 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 </html>
+
+

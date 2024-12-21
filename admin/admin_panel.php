@@ -405,107 +405,100 @@ if (!isset($_SESSION['username'])) {
                 </form>
 
 
-                <!---------------------------------------------------------------------------------------------------------------------->
-<?php
 
-try {
-    // สร้างตัวแปร PDO เพื่อเชื่อมต่อ
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
-    // กำหนดโหมด error
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
-}
+                <button onclick="toggleForm('editForm14')">จัดการข้อความ footer</button>
+                <form id="editForm14" method="POST" action="text_process.php" style="display: none;">
+                    <?php
 
-// ดึงข้อมูลทั้งหมดจากตาราง messages (เพื่อแสดงรายการ)
-$sql    = "SELECT * FROM messages ORDER BY id DESC";
-$stmt   = $pdo->prepare($sql);
-$stmt->execute();
-$entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    try {
+                        // สร้างตัวแปร PDO เพื่อเชื่อมต่อ
+                        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+                        // กำหนดโหมด error
+                        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    } catch (PDOException $e) {
+                        die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
+                    }
 
-// ตรวจสอบว่ามี ?edit_id=... ส่งมาไหม (แปลว่าต้องการแก้ไข)
-$editId   = isset($_GET['edit_id']) ? $_GET['edit_id'] : null;
-$editText = "";
+                    // ดึงข้อมูลทั้งหมดจากตาราง messages (เพื่อแสดงรายการ)
+                    $sql = "SELECT * FROM messages ORDER BY id DESC";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+                    $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ถ้ามี edit_id ให้ค้นข้อมูลเดิมมาแสดงในฟอร์มแก้ไข
-if ($editId) {
-    $sqlEdit  = "SELECT * FROM messages WHERE id = :id";
-    $stmtEdit = $pdo->prepare($sqlEdit);
-    $stmtEdit->bindParam(':id', $editId, PDO::PARAM_INT);
-    $stmtEdit->execute();
-    $row = $stmtEdit->fetch(PDO::FETCH_ASSOC);
+                    // ตรวจสอบว่ามี ?edit_id=... ส่งมาไหม (แปลว่าต้องการแก้ไข)
+                    $editId = isset($_GET['edit_id']) ? $_GET['edit_id'] : null;
+                    $editText = "";
 
-    if ($row) {
-        $editText = $row['text'];
-    }
-}
-?>
-<button onclick="toggleForm('editForm14')">จัดการข้อความ footer</button>
-<form id="editForm14" method="POST" action="text_process.php" style="display: none;">
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin - เพิ่ม/แก้ไข/ลบข้อความ</title>
-</head>
-<body>
-    <h1>เพิ่มข้อความ</h1>
-    <!-- ฟอร์มเพิ่มข้อความ -->
-    <form action="text_process.php" method="POST">
-        <?php for ($i = 1; $i <= 1; $i++): ?>
-            <div>
-                <label>เพิ่มข้อความ <?php echo $i; ?>:</label>
-                <input type="text" name="textLine[]">
-            </div>
-        <?php endfor; ?>
-        <br>
-        <button type="submit" name="action" value="add">บันทึกข้อความ</button>
-    </form>
+                    // ถ้ามี edit_id ให้ค้นข้อมูลเดิมมาแสดงในฟอร์มแก้ไข
+                    if ($editId) {
+                        $sqlEdit = "SELECT * FROM messages WHERE id = :id";
+                        $stmtEdit = $pdo->prepare($sqlEdit);
+                        $stmtEdit->bindParam(':id', $editId, PDO::PARAM_INT);
+                        $stmtEdit->execute();
+                        $row = $stmtEdit->fetch(PDO::FETCH_ASSOC);
 
-    <hr>
-    <h2>ข้อความที่มีอยู่ footer</h2>
-    <?php if (!empty($entries)): ?>
-        <table border="1" cellpadding="5" cellspacing="0">
-            <tr>
-                <th>ข้อความ</th>
-                <th>จัดการ</th>
-            </tr>
-            <?php foreach ($entries as $item): ?>
-            <tr>
-                <!-- แสดงข้อความ -->
-                <td><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></td>
-                <td>
-                    <!-- ปุ่มแก้ไข -> ไปที่ admin_panel.php?edit_id=... -->
-                    <a href="admin_panel.php?edit_id=<?php echo $item['id']; ?>">แก้ไข</a> | 
-                    <!-- ปุ่มลบ -> ไปที่ text_process.php?action=delete&id=... -->
-                    <a href="text_process.php?action=delete&id=<?php echo $item['id']; ?>"
-                       onclick="return confirm('ต้องการลบข้อความนี้หรือไม่?');">ลบ</a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php else: ?>
-        <p>ยังไม่มีข้อความ</p>
-    <?php endif; ?>
-    <hr>
-    <!-- ถ้ามีค่าจาก ?edit_id=... แสดงฟอร์มแก้ไข -->
-    <?php if ($editId): ?>
-        <h3>แก้ไขข้อความ (ID = <?php echo $editId; ?>)</h3>
-        <form action="text_process.php" method="POST">
-            <input type="hidden" name="id" value="<?php echo $editId; ?>">
-            <textarea name="editText" rows="4" cols="60"><?php 
-                echo htmlspecialchars($editText, ENT_QUOTES, 'UTF-8'); 
-            ?></textarea>
-            <br><br>
-            <button type="submit" name="action" value="edit">บันทึกการแก้ไข</button>
-        </form>
-    <?php endif; ?>
+                        if ($row) {
+                            $editText = $row['text'];
+                        }
+                    }
+                    ?>
 
-    <hr>
 
-</body>
-</html>
-    </form>
+                    <title>Admin - เพิ่ม/แก้ไข/ลบข้อความ</title>
+                    <h1>เพิ่มข้อความ</h1>
+                    <!-- ฟอร์มเพิ่มข้อความ -->
+       
+                        <?php for ($i = 1; $i <= 1; $i++): ?>
+                            <div>
+                                <label>เพิ่มข้อความ <?php echo $i; ?>:</label>
+                                <input type="text" name="textLine[]">
+                            </div>
+                        <?php endfor; ?>
+                        <br>
+                        <button type="submit" name="action" value="add">บันทึกข้อความ</button>
+
+
+                    <hr>
+                    <h2>ข้อความที่มีอยู่ footer</h2>
+                    <?php if (!empty($entries)): ?>
+                        <table border="1" cellpadding="5" cellspacing="0">
+                            <tr>
+                                <th>ข้อความ</th>
+                                <th>จัดการ</th>
+                            </tr>
+                            <?php foreach ($entries as $item): ?>
+                                <tr>
+                                    <!-- แสดงข้อความ -->
+                                    <td><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td>
+                                        <!-- ปุ่มแก้ไข -> ไปที่ admin_panel.php?edit_id=... -->
+                                        <a href="admin_panel.php?edit_id=<?php echo $item['id']; ?>">แก้ไข</a> |
+                                        <!-- ปุ่มลบ -> ไปที่ text_process.php?action=delete&id=... -->
+                                        <a href="text_process.php?action=delete&id=<?php echo $item['id']; ?>"
+                                            onclick="return confirm('ต้องการลบข้อความนี้หรือไม่?');">ลบ</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php else: ?>
+                        <p>ยังไม่มีข้อความ</p>
+                    <?php endif; ?>
+                    <hr>
+                    <!-- ถ้ามีค่าจาก ?edit_id=... แสดงฟอร์มแก้ไข -->
+                    <?php if ($editId): ?>
+                        <h3>แก้ไขข้อความ (ID = <?php echo $editId; ?>)</h3>
+                        <form action="text_process.php" method="POST">
+                            <input type="hidden" name="id" value="<?php echo $editId; ?>">
+                            <textarea name="editText" rows="4" cols="60"><?php
+                            echo htmlspecialchars($editText, ENT_QUOTES, 'UTF-8');
+                            ?></textarea>
+                            <br><br>
+                            <button type="submit" name="action" value="edit">บันทึกการแก้ไข</button>
+                        </form>
+                    <?php endif; ?>
+
+
+                </form>
                 <!---------------------------------------------------------------------------------------------------------------------->
 
 
