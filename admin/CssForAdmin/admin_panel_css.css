@@ -144,7 +144,6 @@ label {
 
 /* Form Styles */
 form {
-    width: 500px;
     background: #f4f4f9;
     padding: 20px;
     border-radius: 10px;
@@ -265,7 +264,7 @@ button[type="button"]:hover {
     /* กำหนดขนาดการ์ดให้เป็น 25% ของพื้นที่ลบ gap */
     box-sizing: border-box;
     /* ให้ขนาดรวม padding และ border */
-
+    margin-bottom: 20px;
 }
 
 .blog-container {

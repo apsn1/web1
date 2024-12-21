@@ -11588,15 +11588,16 @@ img.img-fluid {
 .frombtn{
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .btn {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 20px 20px;
+  font-size: 24px;
   color: white;
   cursor: pointer;
   margin: 10px;
-  width: 100px;
+  width: 200px;
 }
 
 /* ปุ่มสีดำ */
