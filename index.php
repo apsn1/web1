@@ -492,22 +492,25 @@
                 <div class="text-center">
                     <h3>AROUD THE WEB</h3>
                     <ul>
-                        <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"></i></a></li>
+                        <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"  style='color: #339fff;></i></a></li>
                     </ul>
                 </div>
                 <div class="text-center">
                     <h3>SOCIAL</h3>
                     <ul>
                         <il>
-                            <a href="<?= $row['facebook'] ?>" style='text-decoration: none;'><i
+                            <a href="<?= $row['facebook'] ?>" style='text-decoration: none;  color: #339fff;'><i
                                     class="bi bi-facebook fs-3"></i> สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a>
                             </li>
                             <br>
-                            <il><a href="<?= $row['tiktok'] ?>" style='text-decoration: none;'><i
+                            <il><a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i
                                         class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
                                 <br>
-                                <il><a href="<?= $row['line'] ?>" style='text-decoration: none;'><i
+                                <il><a href="<?= $row['line'] ?>" style='text-decoration: none; #00f31e;'><i
                                             class="bi bi-line fs-3"></i>ONE SIAM</a></li>
+                                            <br>
+                                <il><a href="##" style='text-decoration: none; color: #f60505;'><i
+                                            class="bi bi-youtube fs-3"></i>ONE SIAM</a></li>
                     </ul>
                 </div>
             </div>

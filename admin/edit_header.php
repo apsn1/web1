@@ -15,7 +15,7 @@
         while ($rows = $result->fetch_assoc()) {
             echo "<div>";
             // ตรวจสอบเส้นทางของไฟล์รูปภาพ
-            $imagePath = 'admin/img/header/' . $rows['img'];
+            $imagePath = 'img/header/' . $rows['img'];
             echo "<br>";
             echo "<img src='" . $imagePath . "' width='700px' >"; 
             echo "<p>" . $rows['img'] . "</p>";
