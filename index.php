@@ -27,6 +27,13 @@
     <link rel="stylesheet" href="CssForIndex/index_css.css">
     <title>หน้าเว็บหลัก</title>
     <script src="scripts.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome (สำหรับไอคอน) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Bootstrap JS Bundle (รวม Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -67,7 +74,8 @@
     }
 
 
-    echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
+    echo "<nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>";
+
     echo "<div class='container'>";
 
     // 5.1 แสดงโลโก้ (ถ้ามี)
@@ -144,53 +152,60 @@
     ?>
 
 
-
-    <?php
-    include("db.php");
-    // ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
-    $sql = "SELECT * FROM header_images";
-    $result = mysqli_query($conn, $sql);
-    ?>
-
-    <header id="Home" class="custom-headerbanner text-center my-4">
+    <header id="Home" class="custom-headerbanner text-center" style="
+    margin-top: 0px;
+    margin-bottom: 0px;
+">
         <?php
         include("db.php");
 
         $sql = "SELECT * FROM header_images LIMIT 4";
         $result = mysqli_query($conn, $sql);
 
-        // Check if data exists
-        if ($result->num_rows > 0) {
-            // Initialize arrays to store image paths and button text
+        if ($result && $result->num_rows > 0) {
             $images = [];
             $buttons = [];
 
             while ($rows = $result->fetch_assoc()) {
                 $images[] = 'admin/img/header/' . $rows['img'];
                 $buttons[] = $rows['button'];
-            } ?>
-
+            }
+            ?>
             <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
                 <div class="custom-banner-container">
-                    <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%; ">
+                    <img id="bannerImage" src="<?php echo htmlspecialchars($images[0]); ?>" style="width:100%;">
                 </div>
                 <!-- ปุ่ม (วางซ้อนบนภาพ) -->
                 <div class="custom-position-absolute custom-button-container">
                     <?php foreach ($buttons as $index => $buttonText): ?>
                         <button class="custom-btn custom-btn-outline-warning" onclick="changeImageById(<?php echo $index; ?>)">
-                            <?php echo $buttonText; ?>
+                            <?php echo htmlspecialchars($buttonText); ?>
                         </button>
                     <?php endforeach; ?>
                 </div>
             </div>
 
+            <script>
+                // เก็บภาพทั้งหมดในตัวแปร images
+                const images = <?php echo json_encode($images); ?>;
 
-            <?php echo "<script>const images = " . json_encode($images) . ";</script>";
+                // ฟังก์ชันเปลี่ยนรูปภาพ
+                function changeImageById(index) {
+                    const bannerImage = document.getElementById("bannerImage");
+                    if (index >= 0 && index < images.length) {
+                        bannerImage.src = images[index]; // เปลี่ยนแหล่งที่มาของรูปภาพ
+                    } else {
+                        console.error("Index out of range"); // Debug หาก index ไม่ถูกต้อง
+                    }
+                }
+            </script>
+            <?php
         } else {
             echo "<p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>";
         }
         ?>
     </header>
+
 
     <!--------------------------------------------------------------------------------------------------------------->
 
@@ -420,9 +435,25 @@
             </div>
         </section>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNav");
+
+            window.addEventListener("scroll", () => {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (currentScroll < 100) {
+                    // เมื่อเลื่อนน้อยกว่า 100px - โปร่งใส
+                    navbar.classList.add("transparent");
+                } else {
+                    // เมื่อเลื่อนเกิน 100px - มีพื้นหลัง
+                    navbar.classList.remove("transparent");
+                }
+            });
+        });
 
 
-
+    </script>
     </div>
 </body>
 <footer class="footer text-center">
@@ -482,36 +513,37 @@
                 <!----------------------------------------------------------------------------------------------------------------------------------------->
 
 
-<!----------------------------------------------------------------------------------------------------------------------------------------->
-        <div class='ms-5'>
-            <?php $sql = 'select * from footer_links';
-            $result = mysqli_query($conn, $sql);
-            $row = $result->fetch_assoc()
-                ?>
-            <div>
-                <div class="text-center">
-                    <h3>AROUD THE WEB</h3>
-                    <ul>
-                        <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"></i></a></li>
-                    </ul>
+                <!----------------------------------------------------------------------------------------------------------------------------------------->
+                <div class='ms-5'>
+                    <?php $sql = 'select * from footer_links';
+                    $result = mysqli_query($conn, $sql);
+                    $row = $result->fetch_assoc()
+                        ?>
+                    <div>
+                        <div class="text-center">
+                            <h3>AROUD THE WEB</h3>
+                            <ul>
+                                <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="text-center">
+                            <h3>SOCIAL</h3>
+                            <ul>
+                                <il>
+                                    <a href="<?= $row['facebook'] ?>" style='text-decoration: none;'><i
+                                            class="bi bi-facebook fs-3"></i>
+                                        สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a>
+                                    </li>
+                                    <br>
+                                    <il><a href="<?= $row['tiktok'] ?>" style='text-decoration: none;'><i
+                                                class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
+                                        <br>
+                                        <il><a href="<?= $row['line'] ?>" style='text-decoration: none;'><i
+                                                    class="bi bi-line fs-3"></i>ONE SIAM</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <h3>SOCIAL</h3>
-                    <ul>
-                        <il>
-                            <a href="<?= $row['facebook'] ?>" style='text-decoration: none;'><i
-                                    class="bi bi-facebook fs-3"></i> สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a>
-                            </li>
-                            <br>
-                            <il><a href="<?= $row['tiktok'] ?>" style='text-decoration: none;'><i
-                                        class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
-                                <br>
-                                <il><a href="<?= $row['line'] ?>" style='text-decoration: none;'><i
-                                            class="bi bi-line fs-3"></i>ONE SIAM</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
 </footer>
 <div class="copyright py-4 text-center text-white">

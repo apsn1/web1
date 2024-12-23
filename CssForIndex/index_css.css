@@ -8566,36 +8566,6 @@ fieldset:disabled .btn {
   margin-bottom: 0 !important;
 }
 
-.my-1 {
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.25rem !important;
-}
-
-.my-2 {
-  margin-top: 0.5rem !important;
-  margin-bottom: 0.5rem !important;
-}
-
-.my-3 {
-  margin-top: 1rem !important;
-  margin-bottom: 1rem !important;
-}
-
-.my-4 {
-  margin-top: 1.5rem !important;
-  margin-bottom: 1.5rem !important;
-}
-
-.my-5 {
-  margin-top: 3rem !important;
-  margin-bottom: 3rem !important;
-}
-
-.my-auto {
-  margin-top: auto !important;
-  margin-bottom: auto !important;
-}
-
 .mt-0 {
   margin-top: 0 !important;
 }
@@ -9141,18 +9111,19 @@ fieldset:disabled .btn {
   background-color: #232F4C;
 }
 
-.bg-secondary {
+
+/* Navbar ปกติ */
+.bg-secondary1 {
   background-image: linear-gradient(to right, #232F4C, #C2C2BD, #E0B445);
   background-size: 100% 100%;
-  /* ป้องกันการเปลี่ยนแปลงขนาด */
-  transition: background-image 0.5s ease;
-  /* เพิ่ม transition สำหรับ background */
+  transition: background-image 0.5s ease, opacity 0.5s ease;
 }
 
-.bg-secondary.transparent {
-  background-image: linear-gradient(to right, rgba(35, 47, 76, 0), rgba(194, 194, 189, 0), rgba(224, 180, 69, 0));
-  /* โปร่งใส */
+/* Background หาย */
+.bg-secondary1.transparent {
+  background-image: none; /* ลบพื้นหลัง */
 }
+
 
 .bg-success {
   --bs-bg-opacity: 1;
