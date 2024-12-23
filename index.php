@@ -37,6 +37,26 @@
 </head>
 
 <body id="page-top">
+
+    <div id="notification-icon">
+        <?php
+        $directory = 'admin/img/logo/';
+        $files = glob($directory . '*'); // ดึงไฟล์ทั้งหมดในโฟลเดอร์
+        $latestFile = '';
+
+        if (!empty($files)) {
+            usort($files, function ($a, $b) {
+                return filemtime($b) - filemtime($a); // เรียงไฟล์ตามวันที่แก้ไขล่าสุด
+            });
+            $latestFile = $files[0]; // ไฟล์ล่าสุด
+        }
+        ?>
+
+        <img src="<?php echo $latestFile; ?>" alt="Notification Icon" />
+    </div>
+
+    <button id="scrollToTop">↑ ขึ้นบนสุด</button>
+
     <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
@@ -453,6 +473,26 @@
         });
 
 
+        document.addEventListener("DOMContentLoaded", function () {
+            const scrollToTopBtn = document.getElementById("scrollToTop");
+
+            // ตรวจสอบการเลื่อนหน้า
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 200) { // แสดงปุ่มเมื่อเลื่อนลงเกิน 200px
+                    scrollToTopBtn.classList.add("show");
+                } else {
+                    scrollToTopBtn.classList.remove("show");
+                }
+            });
+
+            // เมื่อคลิกปุ่ม ให้เลื่อนขึ้นไปด้านบน
+            scrollToTopBtn.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth", // เลื่อนอย่างนุ่มนวล
+                });
+            });
+        });
     </script>
     </div>
 </body>
@@ -523,27 +563,29 @@
                         <div class="text-center">
                             <h3>AROUD THE WEB</h3>
                             <ul>
-                                <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"  style='color: #339fff;></i></a></li>
+                                <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"
+                                            style='color: #339fff;'></i></a></li>
                             </ul>
                         </div>
                         <div class="text-center">
                             <h3>SOCIAL</h3>
                             <ul>
                                 <il>
-                                    <a href="<?= $row['facebook'] ?>" style='text-decoration: none;  color: #339fff;'><i
-                                            class="bi bi-facebook fs-3"></i>
+                                    <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:
+                                            #339fff;"><i class="bi bi-facebook fs-3"></i>
                                         สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a>
                                     </li>
                                     <br>
-                                    <il><a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i
+                                    <il><a href="<?= $row['tiktok'] ?>"
+                                            style='text-decoration: none; color: #ffffff;'><i
                                                 class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
                                         <br>
                                         <il><a href="<?= $row['line'] ?>" style='text-decoration: none; #00f31e;'><i
                                                     class="bi bi-line fs-3"></i>ONE SIAM</a></li>
-                                                    <br>
-                                <il><a href="##" style='text-decoration: none; color: #f60505;'><i
-                                            class="bi bi-youtube fs-3"></i>ONE SIAM</a></li>
-                    </ul>
+                                            <br>
+                                            <il><a href="##" style='text-decoration: none; color: #f60505;'><i
+                                                        class="bi bi-youtube fs-3"></i>ONE SIAM</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
