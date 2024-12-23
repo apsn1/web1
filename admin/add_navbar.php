@@ -1,34 +1,26 @@
 <?php
-include('../db.php');  // รวมไฟล์การเชื่อมต่อฐานข้อมูล
+include('../db.php');  // เชื่อมต่อฐานข้อมูล
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $conn->real_escape_string($_POST['name']);  // ป้องกัน SQL Injection
-    $is_dropdown = isset($_POST['is_dropdown']) ? 1 : 0;  // เช็คว่าเป็น dropdown หรือไม่
-    $dropdown_names = isset($_POST['dropdown_name']) ? $_POST['dropdown_name'] : [];  // เมนูย่อย
-    $link_to = isset($_POST['link_to']) ? $_POST['link_to'] : '';  // รับชื่อไฟล์จากฟอร์ม
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // รับค่าจากฟอร์ม
+    $parent_id = $_POST['parent_id'];  // เลข id เมนูหลัก (1,2,3,4)
+    $sub_name  = $_POST['sub_name'];   // ชื่อเมนูย่อย
+    $link_to   = $_POST['link_to'];    // ไฟล์ที่จะลิงค์
 
-    // เพิ่มเมนูหลัก
-    $parent_id = ($is_dropdown) ? 'NULL' : 'NULL';  // ใช้ NULL แทน 0 สำหรับเมนูหลัก
-    $sql = "INSERT INTO navbar (name, is_dropdown, parent_id, link_to) VALUES ('$name', '$is_dropdown', $parent_id, '$link_to')";
+    // สั่ง INSERT ลงตาราง navbar
+    // โดยไม่สนว่า $parent_id มี row จริงในตารางหรือไม่
+    // เพราะไม่ได้ใช้ Foreign Key Constraint
+    $sqlInsert = "INSERT INTO navbar (name, parent_id, link_to)
+                  VALUES ('$sub_name', '$parent_id', '$link_to')";
 
-    if ($conn->query($sql)) {
-        $parent_id = $conn->insert_id;  // รับ id ของเมนูหลักที่เพิ่มใหม่
-
-        // เพิ่มเมนูย่อย ถ้ามี
-        if ($is_dropdown && !empty($dropdown_names)) {
-            foreach ($dropdown_names as $dropdown_name) {
-                $dropdown_name = $conn->real_escape_string($dropdown_name);
-                $sql = "INSERT INTO navbar (name, is_dropdown, parent_id, link_to) VALUES ('$dropdown_name', 0, '$parent_id', '$link_to')";
-                if (!$conn->query($sql)) {
-                    echo "เกิดข้อผิดพลาดในการเพิ่มเมนูย่อย: " . $conn->error;
-                    exit;
-                }
-            }
-        }
-
-        echo "เพิ่มเมนูสำเร็จ!";
+    if ($conn->query($sqlInsert) === TRUE) {
+        echo "เพิ่มเมนูย่อยเรียบร้อยแล้ว";
     } else {
         echo "เกิดข้อผิดพลาด: " . $conn->error;
     }
+
+    // Redirect กลับไปหน้าหลัก
+    header("Location: index_navbar.php");
+    exit;
 }
 ?>

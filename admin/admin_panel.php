@@ -79,86 +79,110 @@ if (!isset($_SESSION['username'])) {
             <div class="ส่วนจัดการหน้า">
 
                 <?php
-                include('../db.php');  // เชื่อมต่อฐานข้อมูล
-                
-                // ดึงข้อมูลไฟล์จาก table filemanager
-                $sql = "SELECT id, filename FROM filemanager";
-                $result = $conn->query($sql);
+                // 1) เชื่อมต่อฐานข้อมูล
+                include('../db.php');
+
+                // 2) สมมติยังต้องการเลือกไฟล์จากตาราง filemanager
+                $sqlFile = "SELECT id, filename FROM filemanager";
+                $resultFile = $conn->query($sqlFile);
+
+                // 3) ดึงข้อมูลเมนูย่อยทั้งหมดจาก navbar
+                $sqlNavbar = "SELECT * FROM navbar ORDER BY id ASC";
+                $resultNavbar = $conn->query($sqlNavbar);
+
+                // 4) กำหนดเมนูหลัก (Main Menu) แบบ Hard-coded
+                $mainMenus = [
+                    ['id' => 1, 'name' => 'หน้าหลัก'],
+                    ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
+                    ['id' => 3, 'name' => 'บริการ'],
+                    ['id' => 4, 'name' => 'ติดต่อเรา']
+                ];
+
+                // 4.1 สร้าง mapping แบบง่าย: id => name
+                $mainMenusMap = [];
+                foreach ($mainMenus as $m) {
+                    // เช่น 1 => "หน้าหลัก"
+                    $mainMenusMap[$m['id']] = $m['name'];
+                }
                 ?>
 
-                <button onclick="toggleForm('editForm6')">ฟอมจัดการหน้าเว็บ</button>
+                <!-- ฟอร์มจัดการเมนู -->
+                <button onclick="toggleForm('editForm6')">ฟอร์มจัดการเมนู</button>
 
-                <form id="editForm6" method="POST" action="add_navbar.php" style="display: none; ">
-                    <input type="hidden" name="id" id="formId" placeholder="Form 6">
-                    <h1>จัดการหน้าเมนูหน้าเว็บ</h1>
-                    <div class="form-container">
-                        <label for="name">ชื่อเมนูหลัก:</label>
-                        <input type="text" name="name" placeholder="ชื่อเมนูหลัก" required>
+                <form id="editForm6" method="POST" action="add_navbar.php" style="display: none;">
+                    <h1>จัดการเมนูย่อยหน้าเว็บ</h1>
 
-                        <label for="is_dropdown">ทำให้เมนูเป็น Dropdown?</label>
-                        <input type="checkbox" name="is_dropdown" id="is_dropdown" onclick="toggleDropdownFields(this)">
+                    <!-- เลือกเมนูหลัก (Hard-coded) -->
+                    <label for="parent_id">เลือกเมนูหลัก:</label>
+                    <select name="parent_id" id="parent_id" required>
+                        <option value="">-- เลือกเมนูหลัก --</option>
+                        <?php
+                        foreach ($mainMenus as $menu) {
+                            echo "<option value='" . $menu['id'] . "'>" . $menu['name'] . "</option>";
+                        }
+                        ?>
+                    </select>
 
-                        <!-- ช่องกรอกเมนูย่อย -->
-                        <div class="dropdown-fields" style="display: none;">
-                            <label for="dropdown_name">ชื่อเมนูย่อย:</label>
-                            <input type="text" name="dropdown_name[]" placeholder="ชื่อเมนูย่อย 1">
-                            <div class="additional-dropdown-fields"></div>
+                    <!-- ชื่อเมนูย่อย -->
+                    <label for="sub_name">ชื่อเมนูย่อย:</label>
+                    <input type="text" name="sub_name" id="sub_name" placeholder="ชื่อเมนูย่อย" required>
 
-                            <!-- ปุ่มเพิ่มเมนูย่อย -->
-                            <button type="button" onclick="addDropdownMenu()">เพิ่มเมนูย่อย</button>
-                        </div>
+                    <!-- เลือกไฟล์ที่จะลิงก์ (ดึงจาก table filemanager) -->
+                    <label for="link_to">เลือกไฟล์ที่จะลิงค์:</label>
+                    <select name="link_to" id="link_to" required>
+                        <option value="">-- เลือกไฟล์ --</option>
+                        <?php
+                        if ($resultFile->num_rows > 0) {
+                            while ($rowFile = $resultFile->fetch_assoc()) {
+                                echo "<option value='" . $rowFile['filename'] . "'>"
+                                    . htmlspecialchars($rowFile['filename'])
+                                    . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>ไม่มีไฟล์ในระบบ</option>";
+                        }
+                        ?>
+                    </select>
 
-                        <!-- เลือกไฟล์จากฐานข้อมูลสำหรับลิงค์ -->
-                        <label for="link_to">เลือกไฟล์ที่จะลิงค์:</label>
-                        <select name="link_to" required>
-                            <option value="">เลือกไฟล์...</option>
-                            <?php if ($result->num_rows > 0): ?>
-                                <?php while ($row = $result->fetch_assoc()): ?>
-                                    <option value="<?php echo $row['filename']; ?>">
-                                        <?php echo htmlspecialchars($row['filename']); ?>
-                                    </option>
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <option value="">ไม่มีไฟล์ในระบบ</option>
-                            <?php endif; ?>
-                        </select>
+                    <input type="submit" value="เพิ่มเมนูย่อย">
 
-                        <input type="submit" value="เพิ่มเมนู">
-                    </div>
+                    <!-- ตารางแสดงข้อมูล -->
                     <table border="1">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>ชื่อหัวข้อ</th>
-                                <th>เป็นหัวข้อย่อยของ</th>
+                                <th>ชื่อหัวข้อหลัก (จาก $mainMenus)</th>
+                                <th>ชื่อหัวข้อย่อย (name)</th>
                                 <th>ลิงค์ไปยัง</th>
-                                <th>ลบ</th>
                                 <th>แก้ไข</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT * FROM navbar";
-                            $result = $conn->query($sql);
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
+                            if ($resultNavbar->num_rows > 0) {
+                                while ($row = $resultNavbar->fetch_assoc()) {
+                                    // $row["parent_id"] จะเป็น 1,2,3,4 ถ้าเป็นเมนูย่อยของเมนูหลัก
+                                    // ถ้าเป็นค่าอื่น / null / 0 ก็จะแสดง "-"
+                                    $parentName = isset($mainMenusMap[$row["parent_id"]])
+                                        ? $mainMenusMap[$row["parent_id"]]
+                                        : '-';
+
+                                    // แสดงผลเป็น row
                                     echo "<tr>";
-                                    echo "<td>" . $row["id"] . "</td>";
-                                    echo "<td>" . (strlen($row["name"]) > 11 ? substr($row["name"], 0, 20) . "..." : $row["name"]) . "</td>";
-                                    echo "<td>" . substr($row["parent_id"], 0, 20) . "</td>";
-                                    echo "<td>" . (strlen($row["link_to"]) > 11 ? substr($row["link_to"], 0, 20) . "..." : $row["link_to"]) . "</td>";
-                                    echo "<td> <a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>" . "</td>";
-                                    echo "<td> <a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a>" . "</td>";
+                                    echo "<td>" . htmlspecialchars($parentName) . "</td>";  // ชื่อเมนูหลัก
+                                    echo "<td>" . htmlspecialchars($row["name"]) . "</td>"; // ชื่อเมนูย่อย
+                                    echo "<td>" . htmlspecialchars($row["link_to"]) . "</td>"; // ลิงก์
+                            
+                                    echo "<td><a href='delete_navbar.php?del=" . $row["id"] . "'>ลบ</a>";
+                                    echo "<a href='update_navbar.php?edit=" . $row["id"] . "'>แก้ไข</a></td>";
                                     echo "</tr>";
                                 }
                             } else {
-                                echo "<tr><td colspan='3'>ไม่มีข้อมูล</td></tr>";
+                                echo "<tr><td colspan='5'>ไม่มีข้อมูล</td></tr>";
                             }
                             ?>
                         </tbody>
                     </table>
                 </form>
-
 
                 <button onclick="toggleForm('editForm5')">ฟอม อัพโหลด logo</button>
                 <form id="editForm5" action="upload_update.php" method="post" enctype="multipart/form-data"
@@ -447,15 +471,15 @@ if (!isset($_SESSION['username'])) {
                     <title>Admin - เพิ่ม/แก้ไข/ลบข้อความ</title>
                     <h1>เพิ่มข้อความ</h1>
                     <!-- ฟอร์มเพิ่มข้อความ -->
-       
-                        <?php for ($i = 1; $i <= 1; $i++): ?>
-                            <div>
-                                <label>เพิ่มข้อความ <?php echo $i; ?>:</label>
-                                <input type="text" name="textLine[]">
-                            </div>
-                        <?php endfor; ?>
-                        <br>
-                        <button type="submit" name="action" value="add">บันทึกข้อความ</button>
+
+                    <?php for ($i = 1; $i <= 1; $i++): ?>
+                        <div>
+                            <label>เพิ่มข้อความ <?php echo $i; ?>:</label>
+                            <input type="text" name="textLine[]">
+                        </div>
+                    <?php endfor; ?>
+                    <br>
+                    <button type="submit" name="action" value="add">บันทึกข้อความ</button>
 
 
                     <hr>
@@ -669,6 +693,16 @@ if (!isset($_SESSION['username'])) {
                 document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
             }
         });
+
+        function toggleForm(formId) {
+            var form = document.getElementById(formId);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+
     </script>
 
 </body>

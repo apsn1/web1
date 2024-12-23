@@ -149,3 +149,9 @@ window.addEventListener('scroll', () => {
             preview.src = URL.createObjectURL(event.target.files[0]);
         }
     
+
+          // JavaScript function to change the image
+          function changeImageById(index) {
+            const bannerImage = document.getElementById('bannerImage');
+            bannerImage.src = images[index]; // Change the image source
+        }
