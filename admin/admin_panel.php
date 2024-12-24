@@ -59,7 +59,7 @@ if (!isset($_SESSION['username'])) {
                 echo "</a>";
                 ?>
                 <div class="tab" onclick="window.location.href='admin_panel.php';">จัดการหน้าหลัก</div>
-                <div class="tab" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/edit_page_Blog.php';">
+                <div class="tab" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/insertfile.php';">
                     สร้างหน้าเว็บเพิ่ม</div>
                 <div class="tab" onclick="toggleDropdown(this)">
                     <span>จัดการหน้าเว็บอื่นๆ</span>

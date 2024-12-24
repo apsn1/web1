@@ -6,7 +6,7 @@
 
 <head>
     <title>แอดมิน</title>
-    <link rel="stylesheet" href="cssforpanel.css/pageedit_css.css">
+    <link rel="stylesheet" href="cssforpanel/page_blog.css">
     <script src="scripts.js"></script>
 </head>
 
