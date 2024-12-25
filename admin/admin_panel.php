@@ -11,6 +11,27 @@ if (!isset($_SESSION['username'])) {
 <html>
 
 <head>
+<?php
+    // Path to the folder
+    $folderPath = "uploads/";
+
+    // Get all files in the folder
+    $files = glob($folderPath . "*");
+
+    // Sort files by modified time, newest first
+    usort($files, function ($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+
+    // Get the latest file
+    $latestFile = !empty($files) ? basename($files[0]) : null;
+
+    if ($latestFile) {
+        echo '<link rel="icon" type="image/x-icon" href="' . $folderPath . $latestFile . '">';
+    } else {
+        echo "No files found in the folder.";
+    }
+    ?>
     <title>แอดมิน</title>
     <link rel="stylesheet" href="CssForadmin/admin_panel_css.css">
 </head>

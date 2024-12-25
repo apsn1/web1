@@ -13,6 +13,26 @@ if (isset($_GET['id'])) {
         $row = $result->fetch_assoc();
 
         if ($row) {
+            ?> <?php
+            // Path to the folder
+            $folderPath = "uploads/";
+        
+            // Get all files in the folder
+            $files = glob($folderPath . "*");
+        
+            // Sort files by modified time, newest first
+            usort($files, function ($a, $b) {
+                return filemtime($b) - filemtime($a);
+            });
+        
+            // Get the latest file
+            $latestFile = !empty($files) ? basename($files[0]) : null;
+        
+            if ($latestFile) {
+                echo '<link rel="icon" type="image/x-icon" href="' . $folderPath . $latestFile . '">';
+            } else {
+                echo "No files found in the folder.";
+            }
             ?>
             <form action="edit_blog.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">

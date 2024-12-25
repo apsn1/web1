@@ -10,7 +10,27 @@
     <title>one siameRudee</title>
     <!-- Favicon-->
 
-    <link rel="icon" type="image/x-icon" href="/images/logoOld1.png">
+    <?php
+    // Path to the folder
+    $folderPath = "admin/uploads/";
+
+    // Get all files in the folder
+    $files = glob($folderPath . "*");
+
+    // Sort files by modified time, newest first
+    usort($files, function ($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+
+    // Get the latest file
+    $latestFile = !empty($files) ? basename($files[0]) : null;
+
+    if ($latestFile) {
+        echo '<link rel="icon" type="image/x-icon" href="' . $folderPath . $latestFile . '">';
+    } else {
+        echo "No files found in the folder.";
+    }
+    ?>
     <!-- เพิ่มไฟล์ CSS ของ Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">

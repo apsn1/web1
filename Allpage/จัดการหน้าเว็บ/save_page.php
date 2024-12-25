@@ -42,20 +42,34 @@ include('../db.php');
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta name='description' content='$seo_description'>
     <meta name='keywords' content='$seo_keyword'>
+
+<?php
+    // Path to the folder
+    \$folderPath = "../admin/uploads/";
+
+    // Get all files in the folder
+    \$files = glob(\$folderPath . "*");
+
+    // Sort files by modified time, newest first
+    usort(\$files, function (\$a, \$b) {
+        return filemtime(\$b) - filemtime(\$a);
+    });
+
+    // Get the latest file
+    \$latestFile = !empty(\$files) ? basename(\$files[0]) : null;
+
+    if (\$latestFile) {
+        echo '<link rel="icon" type="image/x-icon" href="' . \$folderPath . \$latestFile . '">';
+    } else {
+        echo "No files found in the folder.";
+    }
+?>
+</div>
     <title>$seo_title</title>
-    <style>
-        [contenteditable] {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
-            min-height: 50px;
-        }
-        [contenteditable]:focus {
-            outline: 2px solid #007bff;
-        }
-    </style>
+    
 </head>
-<body>
+<body>  
+      <link rel="stylesheet" href="จัดการหน้าเว็บ/cssforpanel/page_about.css">
 <div id="notification-icon">
     <?php
     \$directory = '../admin/img/logo/';
@@ -70,8 +84,9 @@ include('../db.php');
     }
     ?>
     <img src="<?php echo \$latestFile; ?>" alt="Notification Icon" /> 
-    <button id="scrollToTop">↑ ขึ้นบนสุด</button>
-
+    
+</div>
+<button id="scrollToTop">↑ ขึ้นบนสุด</button>
     <?php
     // กำหนดเมนูหลัก
     \$mainMenus = [
@@ -235,6 +250,45 @@ echo "</a>";
         <small>บริษัท วันน์สยาม จำกัด และในเครือ ที่อยู่บริษัท 125 (สำนักงานาใหญ่) ถ.ศรีนครินทร์ แขวงบางนาใต้ เขตบางนา กรุงเทพฯลฯ 10260</small>
     </div>
 </div>
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNav");
+
+            window.addEventListener("scroll", () => {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (currentScroll < 100) {
+                    // เมื่อเลื่อนน้อยกว่า 100px - โปร่งใส
+                    navbar.classList.add("transparent");
+                } else {
+                    // เมื่อเลื่อนเกิน 100px - มีพื้นหลัง
+                    navbar.classList.remove("transparent");
+                }
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const scrollToTopBtn = document.getElementById("scrollToTop");
+
+            // ตรวจสอบการเลื่อนหน้า
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 200) { // แสดงปุ่มเมื่อเลื่อนลงเกิน 200px
+                    scrollToTopBtn.classList.add("show");
+                } else {
+                    scrollToTopBtn.classList.remove("show");
+                }
+            });
+
+            // เมื่อคลิกปุ่ม ให้เลื่อนขึ้นไปด้านบน
+            scrollToTopBtn.addEventListener("click", function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth", // เลื่อนอย่างนุ่มนวล
+                });
+            });
+        });
+    </script>
 </body>
 </html>
 HTML; // ต้องไม่มี space หรือ tab ก่อนหน้า
