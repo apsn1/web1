@@ -176,18 +176,18 @@ echo "</a>";
 </div>
 
 <header>
-    <h1 contenteditable="true">$title</h1>
-    <h2 contenteditable="true">$headder</h2>
+    <h1 >$title</h1>
+    <h2 >$headder</h2>
 </header>
 <div class="content">
-    <p contenteditable="true">$body_top</p>
+    <p >$body_top</p>
     <div class="left">
         <img src="จัดการหน้าเว็บ/$img_left" alt="Left Image" style="max-width: 300px;">
-        <p contenteditable="true">$text_left</p>
+        <p >$text_left</p>
     </div>
     <div class="right">
         <img src="จัดการหน้าเว็บ/$img_right" alt="Right Image" style="max-width: 300px;">
-        <p contenteditable="true">$text_right</p>
+        <p >$text_right</p>
     </div>
 </div>
 <!-------เพิ่มโค๊ดข้างล่าง----------------->
