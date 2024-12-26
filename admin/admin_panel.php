@@ -241,10 +241,10 @@ if (!isset($_SESSION['username'])) {
                     ?>
                 </form>
 
-                <button onclick="toggleForm('editForm8')">ฟอมเพิ่มรูปแบนเนอร์</button>
+                <button onclick="toggleForm('editForm8')">ฟอมเพิ่มรูปปกเว็บไซต์</button>
                 <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;"
                     method="post">
-                    <h1>เพิ่มรูปแบนเนอร์</h1>
+                    <h1>เพิ่มรูปปกเว็บไซต์</h1>
                     <div class="form-container">
                         <div class="form-group">
                             <input type="file" name="header" required>

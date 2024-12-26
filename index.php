@@ -192,62 +192,48 @@
     ?>
 
 
-    <header id="Home" class="custom-headerbanner text-center" style="
-    margin-top: 0px;
-    margin-bottom: 0px;
-">
-        <?php
-        include("db.php");
+    <header id="Home" class="custom-headerbanner text-center my-4">
+    <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
+        <div class="custom-banner-container">
+            <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%;">
+        </div>
+        <!-- ปุ่ม (วางซ้อนบนภาพ) -->
+        <div class="custom-position-absolute custom-button-container">
+            <?php foreach ($buttons as $index => $buttonText): ?>
+                <button class="custom-btn custom-btn-outline-warning" onclick="changeImageById(<?php echo $index; ?>)">
+                    <?php echo $buttonText; ?>
+                </button>
+            <?php endforeach; ?>
+        </div>
+    </div>
 
-        $sql = "SELECT * FROM header_images LIMIT 4";
-        $result = mysqli_query($conn, $sql);
+    <?php if (!empty($images)): ?>
+        <script>
+            const images = <?php echo json_encode($images); ?>;
+            let currentIndex = 0;
+            const bannerImage = document.getElementById('bannerImage');
 
-        if ($result && $result->num_rows > 0) {
-            $images = [];
-            $buttons = [];
-
-            while ($rows = $result->fetch_assoc()) {
-                $images[] = 'admin/img/header/' . $rows['img'];
-                $buttons[] = $rows['button'];
+            // Function to change image by index
+            function changeImageById(index) {
+                currentIndex = index;
+                bannerImage.src = images[currentIndex];
             }
-            ?>
-            <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
-                <div class="custom-banner-container">
-                    <img id="bannerImage" src="<?php echo htmlspecialchars($images[0]); ?>" style="width:100%;">
-                </div>
-                <!-- ปุ่ม (วางซ้อนบนภาพ) -->
-                <div class="custom-position-absolute custom-button-container">
-                    <?php foreach ($buttons as $index => $buttonText): ?>
-                        <button class="custom-btn custom-btn-outline-warning" onclick="changeImageById(<?php echo $index; ?>)">
-                            <?php echo htmlspecialchars($buttonText); ?>
-                        </button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
 
-            <script>
-                // เก็บภาพทั้งหมดในตัวแปร images
-                const images = <?php echo json_encode($images); ?>;
+            // Auto Slide Function
+            function autoSlide() {
+                currentIndex = (currentIndex + 1) % images.length; // Loop back to the first image
+                bannerImage.src = images[currentIndex];
+            }
 
-                // ฟังก์ชันเปลี่ยนรูปภาพ
-                function changeImageById(index) {
-                    const bannerImage = document.getElementById("bannerImage");
-                    if (index >= 0 && index < images.length) {
-                        bannerImage.src = images[index]; // เปลี่ยนแหล่งที่มาของรูปภาพ
-                    } else {
-                        console.error("Index out of range"); // Debug หาก index ไม่ถูกต้อง
-                    }
-                }
-            </script>
-            <?php
-        } else {
-            echo "<p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>";
-        }
-        ?>
+            // Set Auto Slide Interval (3 seconds)
+            setInterval(autoSlide, 3000);
+        </script>
+    <?php else: ?>
+        <p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>
+    <?php endif; ?>
     </header>
 
-
-    <!--------------------------------------------------------------------------------------------------------------->
+    
 
     <div class="Colum15year">
 
