@@ -192,7 +192,26 @@
     ?>
 
 
-    <header id="Home" class="custom-headerbanner text-center my-4">
+    <?php
+include("db.php");
+// ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
+$sql = "SELECT * FROM header_images LIMIT 4";
+$result = mysqli_query($conn, $sql);
+
+// Check if data exists
+if ($result->num_rows > 0) {
+    // Initialize arrays to store image paths and button text
+    $images = [];
+    $buttons = [];
+
+    while ($rows = $result->fetch_assoc()) {
+        $images[] = 'admin/img/header/' . $rows['img'];
+        $buttons[] = $rows['button'];
+    } 
+}
+?>
+
+<header id="Home" class="custom-headerbanner text-center my-4">
     <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
         <div class="custom-banner-container">
             <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%;">
@@ -225,13 +244,14 @@
                 bannerImage.src = images[currentIndex];
             }
 
-            // Set Auto Slide Interval (3 seconds)
+            // Set Auto Slide Interval (5 seconds)
             setInterval(autoSlide, 3000);
         </script>
     <?php else: ?>
         <p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>
     <?php endif; ?>
-    </header>
+</header>
+<!------------------------------------------------------------------------------------------------->
 
     
 
