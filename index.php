@@ -135,7 +135,7 @@
                 $image = reset($imageFiles);
                 echo "<img src='{$directory}{$image}' 
                       alt='รูปภาพล่าสุด' 
-                      style='height: 75px; width: 97px; margin-right: 50px;'>";
+                      style='height: 95px; margin-right: 500px;'>";
             } else {
                 echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
             }
@@ -211,7 +211,7 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<header id="Home" class="custom-headerbanner text-center my-4">
+<header id="Home" class="custom-headerbanner text-center ">
     <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
         <div class="custom-banner-container">
             <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%;">

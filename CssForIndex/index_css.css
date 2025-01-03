@@ -9582,36 +9582,6 @@ fieldset:disabled .btn {
     margin-bottom: 0 !important;
   }
 
-  .my-sm-1 {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  .my-sm-2 {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .my-sm-3 {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .my-sm-4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .my-sm-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
-  }
-
-  .my-sm-auto {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
-  }
-
   .mt-sm-0 {
     margin-top: 0 !important;
   }
@@ -10232,36 +10202,6 @@ fieldset:disabled .btn {
   .my-md-0 {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-  }
-
-  .my-md-1 {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  .my-md-2 {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .my-md-3 {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .my-md-4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .my-md-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
-  }
-
-  .my-md-auto {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
   }
 
   .mt-md-0 {
@@ -10886,36 +10826,6 @@ fieldset:disabled .btn {
     margin-bottom: 0 !important;
   }
 
-  .my-lg-1 {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  .my-lg-2 {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .my-lg-3 {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .my-lg-4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .my-lg-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
-  }
-
-  .my-lg-auto {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
-  }
-
   .mt-lg-0 {
     margin-top: 0 !important;
   }
@@ -11533,41 +11443,6 @@ fieldset:disabled .btn {
     margin-left: auto !important;
   }
 
-  .my-xl-0 {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .my-xl-1 {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  .my-xl-2 {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .my-xl-3 {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .my-xl-4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .my-xl-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
-  }
-
-  .my-xl-auto {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
-  }
-
   .mt-xl-0 {
     margin-top: 0 !important;
   }
@@ -12183,41 +12058,6 @@ fieldset:disabled .btn {
   .mx-xxl-auto {
     margin-right: auto !important;
     margin-left: auto !important;
-  }
-
-  .my-xxl-0 {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .my-xxl-1 {
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  .my-xxl-2 {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .my-xxl-3 {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .my-xxl-4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
-  }
-
-  .my-xxl-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
-  }
-
-  .my-xxl-auto {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
   }
 
   .mt-xxl-0 {
@@ -13761,7 +13601,6 @@ header {
 
 .custom-headerbanner {
   text-align: center;
-  margin: 1rem 0;
 }
 
 .custom-position-relative {
