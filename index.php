@@ -193,67 +193,67 @@
 
 
     <?php
-include("db.php");
-// ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
-$sql = "SELECT * FROM header_images LIMIT 4";
-$result = mysqli_query($conn, $sql);
+    include("db.php");
+    // ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
+    $sql = "SELECT * FROM header_images LIMIT 4";
+    $result = mysqli_query($conn, $sql);
 
-// Check if data exists
-if ($result->num_rows > 0) {
-    // Initialize arrays to store image paths and button text
-    $images = [];
-    $buttons = [];
+    // Check if data exists
+    if ($result->num_rows > 0) {
+        // Initialize arrays to store image paths and button text
+        $images = [];
+        $buttons = [];
 
-    while ($rows = $result->fetch_assoc()) {
-        $images[] = 'admin/img/header/' . $rows['img'];
-        $buttons[] = $rows['button'];
-    } 
-}
-?>
+        while ($rows = $result->fetch_assoc()) {
+            $images[] = 'admin/img/header/' . $rows['img'];
+            $buttons[] = $rows['button'];
+        }
+    }
+    ?>
 
-<header id="Home" class="custom-headerbanner text-center ">
-    <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
-        <div class="custom-banner-container">
-            <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%;">
+    <header id="Home" class="custom-headerbanner text-center ">
+        <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
+            <div class="custom-banner-container">
+                <img id="bannerImage" src="<?php echo $images[0]; ?>" style="width:100%;">
+            </div>
+            <!-- ปุ่ม (วางซ้อนบนภาพ) -->
+            <div class="custom-position-absolute custom-button-container">
+                <?php foreach ($buttons as $index => $buttonText): ?>
+                    <button class="custom-btn custom-btn-outline-warning" onclick="changeImageById(<?php echo $index; ?>)">
+                        <?php echo $buttonText; ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
         </div>
-        <!-- ปุ่ม (วางซ้อนบนภาพ) -->
-        <div class="custom-position-absolute custom-button-container">
-            <?php foreach ($buttons as $index => $buttonText): ?>
-                <button class="custom-btn custom-btn-outline-warning" onclick="changeImageById(<?php echo $index; ?>)">
-                    <?php echo $buttonText; ?>
-                </button>
-            <?php endforeach; ?>
-        </div>
-    </div>
 
-    <?php if (!empty($images)): ?>
-        <script>
-            const images = <?php echo json_encode($images); ?>;
-            let currentIndex = 0;
-            const bannerImage = document.getElementById('bannerImage');
+        <?php if (!empty($images)): ?>
+            <script>
+                const images = <?php echo json_encode($images); ?>;
+                let currentIndex = 0;
+                const bannerImage = document.getElementById('bannerImage');
 
-            // Function to change image by index
-            function changeImageById(index) {
-                currentIndex = index;
-                bannerImage.src = images[currentIndex];
-            }
+                // Function to change image by index
+                function changeImageById(index) {
+                    currentIndex = index;
+                    bannerImage.src = images[currentIndex];
+                }
 
-            // Auto Slide Function
-            function autoSlide() {
-                currentIndex = (currentIndex + 1) % images.length; // Loop back to the first image
-                bannerImage.src = images[currentIndex];
-            }
+                // Auto Slide Function
+                function autoSlide() {
+                    currentIndex = (currentIndex + 1) % images.length; // Loop back to the first image
+                    bannerImage.src = images[currentIndex];
+                }
 
-            // Set Auto Slide Interval (5 seconds)
-            setInterval(autoSlide, 3000);
-        </script>
-    <?php else: ?>
-        <p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>
-    <?php endif; ?>
-</header>
-<!------------------------------------------------------------------------------------------------->
+                // Set Auto Slide Interval (5 seconds)
+                setInterval(autoSlide, 3000);
+            </script>
+        <?php else: ?>
+            <p class='text-danger'>ไม่มีข้อมูลแบนเนอร์</p>
+        <?php endif; ?>
+    </header>
+    <!------------------------------------------------------------------------------------------------->
 
-    
+
 
     <div class="Colum15year">
 
@@ -274,39 +274,212 @@ if ($result->num_rows > 0) {
         }
         ?>
     </div>
+
+    <?php
+    // -- ส่วนดึงข้อมูลจากฐานข้อมูล --
+    // สมมติ $conn คือ connection ที่เชื่อมต่อฐานข้อมูลได้เรียบร้อย
+    $sql = "SELECT * FROM videos";
+    $result = $conn->query($sql);
+    ?>
+
+    <style>
+        .videoBar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* เต็มความสูงหน้าจอ */
+            margin: 0;
+            /* กันขอบเริ่มต้นของ body */
+            padding: 0;
+
+            margin-top: 90px;
+
+        }
+
+        /* กล่องใส่ thumbnail (16:9) */
+        .video-container {
+            position: relative;
+            width: 960px;
+            /* กำหนดขนาดกว้าง (ปรับตามต้องการ) */
+            height: 504px;
+            /* 16:9 => 360 / (16/9) = 202.5 */
+            background-size: cover;
+            /* ให้รูปขยายเต็มพื้นที่ */
+            background-position: center;
+            cursor: pointer;
+            /* เปลี่ยน cursor เป็นรูปมือ */
+            overflow: hidden;
+            /* ตัดส่วนเกินออก */
+            padding-top: 20px;
+        }
+
+        /* ปุ่ม Play ตรงกลาง (Icon) */
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ลูกศรสามเหลี่ยมสไตล์ YouTube */
+        .play-button::before {
+            content: "";
+            display: block;
+            border-style: solid;
+            border-width: 10px 0 10px 16px;
+            border-color: transparent transparent transparent #fff;
+            margin-left: 5px;
+        }
+    </style>
+
     <div class="videoBar">
         <?php
-        $sql = "SELECT * FROM videos";
-        $result = $conn->query($sql);
-
-        // ตรวจสอบว่ามีข้อมูลในฐานข้อมูลหรือไม่
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                // ตรวจสอบว่ามีลิงก์วิดีโอ
                 $currentVideo = $row['video_link'];
                 if ($currentVideo) {
-                    echo "<div class='video-container'>";
-                    echo "<div class='video'>";
-                    echo "<iframe src='" . htmlspecialchars($currentVideo) . "' frameborder='0' allowfullscreen></iframe>";
-                    echo "</div>";
-                    echo "</div>";
+                    // ------------------------------
+                    // สกัด YouTube ID
+                    // ------------------------------
+                    $youtubeId = "";
+                    if (strpos($currentVideo, "watch?v=") !== false) {
+                        // ตัวอย่าง: https://www.youtube.com/watch?v=xxxxxxx
+                        $parts = explode("watch?v=", $currentVideo);
+                        $youtubeIdParts = explode("&", $parts[1]);
+                        $youtubeId = $youtubeIdParts[0];
+                    } elseif (strpos($currentVideo, "youtu.be/") !== false) {
+                        // ตัวอย่าง: https://youtu.be/xxxxxxx
+                        $parts = explode("youtu.be/", $currentVideo);
+                        $youtubeIdParts = explode("?", $parts[1]);
+                        $youtubeId = $youtubeIdParts[0];
+                    } elseif (strpos($currentVideo, "youtube.com/embed/") !== false) {
+                        // ตัวอย่าง: https://www.youtube.com/embed/xxxxxxx
+                        $parts = explode("youtube.com/embed/", $currentVideo);
+                        $youtubeIdParts = explode("?", $parts[1]);
+                        $youtubeId = $youtubeIdParts[0];
+                    }
 
-                    echo "<div class='Textdownvideo'>";
-                    echo "<div class='TextVideo' style='margin-top: 10px; margin-bottom: 20px; text-align: center; font-size: 22px;'>";
-                    echo "<a class='nav-link py-3 px-0 px-lg-3 rounded'>" . $row['video_title'] . "</a>";
-                    echo "</div>";
-                    echo "</div>";
+                    // ------------------------------
+                    // ถ้าได้ YouTube ID => สร้าง URL Thumbnail
+                    // ------------------------------
+                    if (!empty($youtubeId)) {
+                        $thumbnailUrl = "https://img.youtube.com/vi/" . $youtubeId . "/0.jpg";
 
+                        // -- แสดง Thumbnail แบบเต็มพื้นที่ เป็น background --
+                        echo "<div class='video-container' "
+                            . "     style='background-image: url(\"" . htmlspecialchars($thumbnailUrl) . "\");' "
+                            . "     onclick='openFullVideo(\"" . htmlspecialchars($currentVideo) . "\");'>";
+
+                        echo "  <div class='play-button'></div>";
+
+                        echo "</div>";
+                    }
+                    // ถ้าไม่ใช่ลิงก์ YouTube (หรือสกัด ID ไม่ได้)
+                    // อาจกำหนดรูป placeholder หรือไฟล์ mp4 แล้วแต่ต้องการ
+                    else {
+                        echo "<div>ไม่ใช่ลิงก์ YouTube หรือรูปแบบไม่ถูกต้อง</div>";
+                    }
                 }
             }
         } else {
             echo "<div>ไม่มีข้อมูล</div>";
         }
-
         ?>
     </div>
 
-    <section class="page-section" id="project">
+    <!-- Popup (Overlay) สำหรับแสดงวิดีโอแบบเต็ม -->
+    <div id="videoPopup" style="
+    display:none; 
+    position:fixed; 
+    z-index:9999; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    height:100%; 
+    background-color: rgba(0,0,0,0.7); 
+    ">
+        <!-- กล่องวิดีโอกลางจอ -->
+        <div style="
+        position:absolute; 
+        top:50%; 
+        left:50%; 
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 800px;
+        background: rgba(0,0,0,0.5); 
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 8px;">
+            <!-- ปุ่มปิด Popup -->
+            <div style="text-align:right;">
+                <button onclick="closeFullVideo()" style="
+                    cursor:pointer; 
+                    background: #f00; 
+                    color: #fff;
+                    border: none; 
+                    border-radius: 4px; 
+                    padding: 8px 12px;
+                ">
+                    ปิด ✕
+                </button>
+            </div>
+
+            <!-- iframe สำหรับแสดงวิดีโอตัวเต็ม -->
+            <iframe id="popupIframe" width="100%" height="450px" frameborder="0" allowfullscreen
+                style="background:#000;">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- ส่วน JavaScript สำหรับจัดการ Popup & autoplay -->
+    <script>
+        function openFullVideo(videoUrl) {
+            const popup = document.getElementById('videoPopup');
+            const iframe = document.getElementById('popupIframe');
+
+            let youtubeId = "";
+
+            // ตรวจสอบรูปแบบลิงก์ YouTube
+            if (videoUrl.includes("youtube.com/watch?v=")) {
+                youtubeId = videoUrl.split("watch?v=")[1].split("&")[0];
+            } else if (videoUrl.includes("youtu.be/")) {
+                youtubeId = videoUrl.split("youtu.be/")[1].split("?")[0];
+            } else if (videoUrl.includes("youtube.com/embed/")) {
+                youtubeId = videoUrl.split("youtube.com/embed/")[1].split("?")[0];
+            }
+
+            if (youtubeId) {
+                // เพิ่ม autoplay=1 (และ mute=1 หากต้องการเริ่มแบบปิดเสียง)
+                const embedUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+                iframe.src = embedUrl;
+            } else {
+                // กรณีไม่ใช่ลิงก์ YouTube
+                iframe.src = videoUrl;
+            }
+
+            popup.style.display = 'block';
+        }
+
+        function closeFullVideo() {
+            const popup = document.getElementById('videoPopup');
+            const iframe = document.getElementById('popupIframe');
+            popup.style.display = 'none';
+
+            // ล้าง src เพื่อหยุดวิดีโอ
+            iframe.src = "";
+        }
+    </script>
+
+    <section class="page-section" id="project" vstyle="
+    padding-top: 0px;
+">
         <h2 class="Project" style="margin-bottom:40px; text-align: center;">
             การสร้างออกเเบบวันน์สยามเป็นอย่างไร
         </h2>
@@ -423,7 +596,7 @@ if ($result->num_rows > 0) {
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo '<div class="imgContainerpj">';
+                        echo '<div class="imgContainerpj1">';
                         echo '<img class="photo1" src="admin/' . $row['image_path'] . '" alt="' . htmlspecialchars($row['alt_text']) . '"></a>';
                         echo '<button onclick="deleteImage(' . $row['id'] . ')">ลบ</button>';
                         echo '</div>';
