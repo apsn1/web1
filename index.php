@@ -81,9 +81,12 @@
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
-        ['id' => 3, 'name' => 'บริการ'],
-        ['id' => 4, 'name' => 'ติดต่อเรา']
+        ['id' => 2, 'name' => 'เกี่ยวกับเรา'], 
+        ['id' => 3, 'name' => 'สินค้า'],
+        ['id' => 4, 'name' => 'โปรเจค'],
+        ['id' => 5, 'name' => 'โซเซี่ยล'],
+        ['id' => 6, 'name' => 'บทความ'],
+        ['id' => 7, 'name' => 'ติดต่อเรา']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
@@ -168,20 +171,20 @@
         // ตรวจสอบว่ามีเมนูย่อยหรือไม่
         if (isset($subMenus[$mainId])) {
             // มีเมนูย่อย แสดงเป็น Dropdown
-            echo "<li class='nav-item dropdown mx-0 mx-lg-1'>";
+            echo "<li class='nav-item dropdown mx-0 '>";
             echo "<a class='nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
                 . htmlspecialchars($mainName) . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
                 $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to']);
                 $submenuName = htmlspecialchars($submenu['name']);
-                echo "<li><a class='dropdown-item' href='{$submenuLink}'>{$submenuName}</a></li>";
+                echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
             }
             echo "</ul>";
             echo "</li>";
         } else {
             // ไม่มีเมนูย่อย แสดงเป็นปกติ ไม่ใช่ Dropdown
-            echo "<li class='nav-item mx-0 mx-lg-1'>";
+            echo "<li class='nav-item mx-0 '>";
             echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#'>"
                 . htmlspecialchars($mainName) . "</a>";
             echo "</li>";

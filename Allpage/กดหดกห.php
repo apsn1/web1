@@ -6,8 +6,8 @@ include('../db.php');
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <meta name='description' content='ด'>
-    <meta name='keywords' content='ด'>
+    <meta name='description' content='ดดด'>
+    <meta name='keywords' content='ดดด'>
 
 <?php
     // Path to the folder
@@ -31,7 +31,7 @@ include('../db.php');
     }
 ?>
 </div>
-    <title>ด</title>
+    <title>ดดด</title>
     
 </head>
 <body>  
@@ -118,7 +118,7 @@ if (is_dir($directory)) {
     echo "ไม่พบโฟลเดอร์ uploads";
 }
 
-echo "</a>";
+echo "</a>";z,m?>
 
     // ปุ่ม Toggle สำหรับ Mobile
     echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' 
@@ -157,18 +157,18 @@ echo "</a>";
 </div>
 
 <header>
-    <h1 >กหดหกด</h1>
-    <h2 >หกดหกดหก</h2>
+    <h1 >กหดหกดกห</h1>
+    <h2 >กหดหกดหก</h2>
 </header>
 <div class="content">
-    <p >ก</p>
+    <p >กหดหกด</p>
     <div class="left">
         <img src="จัดการหน้าเว็บ/images_all/462567104_2075481142880694_1501017219490596836_n.jpg" alt="Left Image" style="max-width: 300px;">
-        <p >กกก</p>
+        <p >ดหกดหกดห</p>
     </div>
     <div class="right">
         <img src="จัดการหน้าเว็บ/images_all/462578066_1269579590828770_2829080610683077338_n.jpg" alt="Right Image" style="max-width: 300px;">
-        <p >กกก</p>
+        <p >กดหกดห</p>
     </div>
 </div>
 <!-------เพิ่มโค๊ดข้างล่าง----------------->

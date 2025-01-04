@@ -7,8 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sub_name  = $_POST['sub_name'];   // ชื่อเมนูย่อย
     $link_to   = $_POST['link_to'];    // ไฟล์ที่จะลิงค์
 
-    // สั่ง INSERT ลงตาราง navbar
-    // โดยไม่สนว่า $parent_id มี row จริงในตารางหรือไม่
     // เพราะไม่ได้ใช้ Foreign Key Constraint
     $sqlInsert = "INSERT INTO navbar (name, parent_id, link_to)
                   VALUES ('$sub_name', '$parent_id', '$link_to')";
@@ -20,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Redirect กลับไปหน้าหลัก
-    header("Location: index_navbar.php");
+    header("Location: admin_panel.php");
     exit;
 }
 ?>

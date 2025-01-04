@@ -103,8 +103,8 @@ if (!isset($_SESSION['username'])) {
                 // 1) เชื่อมต่อฐานข้อมูล
                 include('../db.php');
 
-                // 2) สมมติยังต้องการเลือกไฟล์จากตาราง filemanager
-                $sqlFile = "SELECT id, filename FROM filemanager";
+                // 2) สมมติยังต้องการเลือกไฟล์จากตาราง page_aboutme
+                $sqlFile = "SELECT id ,name FROM page_aboutme";
                 $resultFile = $conn->query($sqlFile);
 
                 // 3) ดึงข้อมูลเมนูย่อยทั้งหมดจาก navbar
@@ -114,9 +114,12 @@ if (!isset($_SESSION['username'])) {
                 // 4) กำหนดเมนูหลัก (Main Menu) แบบ Hard-coded
                 $mainMenus = [
                     ['id' => 1, 'name' => 'หน้าหลัก'],
-                    ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
-                    ['id' => 3, 'name' => 'บริการ'],
-                    ['id' => 4, 'name' => 'ติดต่อเรา']
+                    ['id' => 2, 'name' => 'เกี่ยวกับเรา'], 
+                    ['id' => 3, 'name' => 'สินค้า'],
+                    ['id' => 4, 'name' => 'โปรเจค'],
+                    ['id' => 5, 'name' => 'โซเซี่ยล'],
+                    ['id' => 6, 'name' => 'บทความ'],
+                    ['id' => 7, 'name' => 'ติดต่อเรา']
                 ];
 
                 // 4.1 สร้าง mapping แบบง่าย: id => name
@@ -155,8 +158,8 @@ if (!isset($_SESSION['username'])) {
                         <?php
                         if ($resultFile->num_rows > 0) {
                             while ($rowFile = $resultFile->fetch_assoc()) {
-                                echo "<option value='" . $rowFile['filename'] . "'>"
-                                    . htmlspecialchars($rowFile['filename'])
+                                echo "<option value='" . $rowFile['name'] . "'>"
+                                    . htmlspecialchars($rowFile['name'])
                                     . "</option>";
                             }
                         } else {
