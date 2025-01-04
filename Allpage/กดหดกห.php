@@ -57,9 +57,12 @@ include('../db.php');
     // กำหนดเมนูหลัก
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
-        ['id' => 3, 'name' => 'บริการ'],
-        ['id' => 4, 'name' => 'ติดต่อเรา']
+        ['id' => 2, 'name' => 'เกี่ยวกับเรา'], 
+        ['id' => 3, 'name' => 'สินค้า'],
+        ['id' => 4, 'name' => 'โปรเจค'],
+        ['id' => 5, 'name' => 'โซเซี่ยล'],
+        ['id' => 6, 'name' => 'บทความ'],
+        ['id' => 7, 'name' => 'ติดต่อเรา']
     ];
 
     // แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
@@ -118,9 +121,9 @@ if (is_dir($directory)) {
     echo "ไม่พบโฟลเดอร์ uploads";
 }
 
-echo "</a>";z,m?>
+echo "</a>"?>
 
-    // ปุ่ม Toggle สำหรับ Mobile
+ <?php   // ปุ่ม Toggle สำหรับ Mobile
     echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' 
         type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' 
         aria-controls='navbarResponsive' aria-expanded='false' 
