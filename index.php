@@ -518,27 +518,15 @@
                     $sql = "SELECT * FROM about";
                     $result = $conn->query($sql);
 
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc(); // ดึงข้อมูลแถวแรกเก็บใน $row
-                        echo "<div class='col-lg-4 ms-auto'>";
-                        echo "<h4>องค์กร บริษัท วันน์สยาม จำกัด</h4>";
-                        echo "<p>" . htmlspecialchars($row['onesiamText'] ?? 'ไม่มีข้อมูล') . "</p>";
-                        echo "</div>";
-
-                        echo "<div class='col-lg-4 me-auto'>";
-                        echo "<h4>เกี่ยวกับบริษัท</h4>";
-                        echo "<p>" . htmlspecialchars($row['aboutText'] ?? 'ไม่มีข้อมูล') . "</p>";
-                        echo "</div>";
+                    if (mysqli_num_rows($result) > 0) {
+                        $row = mysqli_fetch_assoc($result);
+                        ?>
+    
+                 <p> <?= $row['abouthead'] ?> <br>   
+                 <?= $row['abouttitle'] ?> </p>
+                        <?php
                     } else {
-                        echo "<div class='col-lg-4 ms-auto'>";
-                        echo "<h4>องค์กร บริษัท วันน์สยาม จำกัด</h4>";
-                        echo "<p>ข้อมูลยังไม่มี</p>";
-                        echo "</div>";
-
-                        echo "<div class='col-lg-4 me-auto'>";
-                        echo "<h4>เกี่ยวกับบริษัท</h4>";
-                        echo "<p>ข้อมูลยังไม่มี</p>";
-                        echo "</div>";
+                        echo "<p>ไม่มีข้อมูลที่อยู่</p>";
                     }
                     ?>
                     <!-- About Section Button-->
