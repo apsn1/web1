@@ -8527,7 +8527,7 @@ fieldset:disabled .btn {
 }
 
 .mx-0 {
-  margin-right: 0 !important;
+  margin-right: 4 !important;
   margin-left: 0 !important;
 }
 
@@ -8700,36 +8700,6 @@ fieldset:disabled .btn {
 
 .p-5 {
   padding: 3rem !important;
-}
-
-.px-0 {
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-}
-
-.px-1 {
-  padding-right: 0.25rem !important;
-  padding-left: 0.25rem !important;
-}
-
-.px-2 {
-  padding-right: 0.5rem !important;
-  padding-left: 0.5rem !important;
-}
-
-.px-3 {
-  padding-right: 1rem !important;
-  padding-left: 1rem !important;
-}
-
-.px-4 {
-  padding-right: 1.5rem !important;
-  padding-left: 1.5rem !important;
-}
-
-.px-5 {
-  padding-right: 3rem !important;
-  padding-left: 3rem !important;
 }
 
 .py-0 {
@@ -9718,36 +9688,6 @@ fieldset:disabled .btn {
     padding: 3rem !important;
   }
 
-  .px-sm-0 {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-
-  .px-sm-1 {
-    padding-right: 0.25rem !important;
-    padding-left: 0.25rem !important;
-  }
-
-  .px-sm-2 {
-    padding-right: 0.5rem !important;
-    padding-left: 0.5rem !important;
-  }
-
-  .px-sm-3 {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-  }
-
-  .px-sm-4 {
-    padding-right: 1.5rem !important;
-    padding-left: 1.5rem !important;
-  }
-
-  .px-sm-5 {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
-  }
-
   .py-sm-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -10340,36 +10280,6 @@ fieldset:disabled .btn {
     padding: 3rem !important;
   }
 
-  .px-md-0 {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-
-  .px-md-1 {
-    padding-right: 0.25rem !important;
-    padding-left: 0.25rem !important;
-  }
-
-  .px-md-2 {
-    padding-right: 0.5rem !important;
-    padding-left: 0.5rem !important;
-  }
-
-  .px-md-3 {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-  }
-
-  .px-md-4 {
-    padding-right: 1.5rem !important;
-    padding-left: 1.5rem !important;
-  }
-
-  .px-md-5 {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
-  }
-
   .py-md-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -10939,10 +10849,6 @@ fieldset:disabled .btn {
   .px-lg-2 {
 
     padding-left: 0.5rem !important;
-  }
-
-  .px-lg-3 {
-    padding-left: 1rem !important;
   }
 
   .px-lg-4 {
@@ -11541,36 +11447,6 @@ fieldset:disabled .btn {
     padding: 3rem !important;
   }
 
-  .px-xl-0 {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-
-  .px-xl-1 {
-    padding-right: 0.25rem !important;
-    padding-left: 0.25rem !important;
-  }
-
-  .px-xl-2 {
-    padding-right: 0.5rem !important;
-    padding-left: 0.5rem !important;
-  }
-
-  .px-xl-3 {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-  }
-
-  .px-xl-4 {
-    padding-right: 1.5rem !important;
-    padding-left: 1.5rem !important;
-  }
-
-  .px-xl-5 {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
-  }
-
   .py-xl-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -12154,40 +12030,6 @@ fieldset:disabled .btn {
     padding: 1.5rem !important;
   }
 
-  .p-xxl-5 {
-    padding: 3rem !important;
-  }
-
-  .px-xxl-0 {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-
-  .px-xxl-1 {
-    padding-right: 0.25rem !important;
-    padding-left: 0.25rem !important;
-  }
-
-  .px-xxl-2 {
-    padding-right: 0.5rem !important;
-    padding-left: 0.5rem !important;
-  }
-
-  .px-xxl-3 {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-  }
-
-  .px-xxl-4 {
-    padding-right: 1.5rem !important;
-    padding-left: 1.5rem !important;
-  }
-
-  .px-xxl-5 {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
-  }
-
   .py-xxl-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -12506,6 +12348,7 @@ html {
 
 #mainNav .navbar-nav {
   margin-top: 1rem;
+
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link {
@@ -13657,4 +13500,59 @@ header {
 
 #scrollToTop:hover {
   background-color: #e67e22; /* สีเมื่อ hover */
+}
+
+.videoBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* เต็มความสูงหน้าจอ */
+  margin: 0;
+  /* กันขอบเริ่มต้นของ body */
+  padding: 0;
+
+  margin-top: 90px;
+
+}
+
+/* กล่องใส่ thumbnail (16:9) */
+.video-container {
+  position: relative;
+  width: 960px;
+  /* กำหนดขนาดกว้าง (ปรับตามต้องการ) */
+  height: 504px;
+  /* 16:9 => 360 / (16/9) = 202.5 */
+  background-size: cover;
+  /* ให้รูปขยายเต็มพื้นที่ */
+  background-position: center;
+  cursor: pointer;
+  /* เปลี่ยน cursor เป็นรูปมือ */
+  overflow: hidden;
+  /* ตัดส่วนเกินออก */
+  padding-top: 20px;
+}
+
+/* ปุ่ม Play ตรงกลาง (Icon) */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ลูกศรสามเหลี่ยมสไตล์ YouTube */
+.play-button::before {
+  content: "";
+  display: block;
+  border-style: solid;
+  border-width: 10px 0 10px 16px;
+  border-color: transparent transparent transparent #fff;
+  margin-left: 5px;
 }

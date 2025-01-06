@@ -1,38 +1,4 @@
 <?php
-// เชื่อมต่อฐานข้อมูล
-include('../../db.php');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // รับข้อมูลจากฟอร์ม
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $body_top = mysqli_real_escape_string($conn, $_POST['body_top']);
-    $text_left = mysqli_real_escape_string($conn, $_POST['text_left']);
-    $img_left = mysqli_real_escape_string($conn, $_POST['img_left']);
-    $img_right = mysqli_real_escape_string($conn, $_POST['img_right']);
-    $img_onTop = mysqli_real_escape_string($conn, $_POST['img_onTop']);
-    $text_right = mysqli_real_escape_string($conn, $_POST['text_right']);
-    $seo_title = mysqli_real_escape_string($conn, $_POST['seo_title']);
-    $seo_description = mysqli_real_escape_string($conn, $_POST['seo_description']);
-    $seo_keyword = mysqli_real_escape_string($conn, $_POST['seo_keyword']);
-
-    // ตรวจสอบว่า name ไม่ว่าง
-    if (empty($name)) {
-        die('ชื่อหน้าไม่สามารถเว้นว่างได้');
-    }
-
-    // เพิ่มข้อมูลลงฐานข้อมูล
-    $query = "INSERT INTO page_aboutme
-        (name, body_top, img_onTop, text_left, img_left, img_right, text_right, seo_title, seo_description, seo_keyword) 
-        VALUES 
-        ( '$name','$img_onTop','$body_top', '$text_left', '$img_left', '$img_right', '$text_right', '$seo_title', '$seo_description', '$seo_keyword')";
-
-    if (mysqli_query($conn, $query)) {
-        // ถ้าบันทึกสำเร็จ สร้างไฟล์ใหม่
-        $file_name = "../" . $name . ".php";
-
-        // ใช้ Nowdoc/HereDoc เพื่อความสะดวกในการใส่โค้ด HTML
-        $file_content = <<<HTML
-<?php
 include('../db.php');
 ?>
 <!DOCTYPE html>
@@ -40,26 +6,26 @@ include('../db.php');
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <meta name='description' content='$seo_description'>
-    <meta name='keywords' content='$seo_keyword'>
+    <meta name='description' content='fdfdf'>
+    <meta name='keywords' content='dfdfd'>
 
 <?php
     // Path to the folder
-    \$folderPath = "../admin/uploads/";
+    $folderPath = "../admin/uploads/";
 
     // Get all files in the folder
-    \$files = glob(\$folderPath . "*");
+    $files = glob($folderPath . "*");
 
     // Sort files by modified time, newest first
-    usort(\$files, function (\$a, \$b) {
-        return filemtime(\$b) - filemtime(\$a);
+    usort($files, function ($a, $b) {
+        return filemtime($b) - filemtime($a);
     });
 
     // Get the latest file
-    \$latestFile = !empty(\$files) ? basename(\$files[0]) : null;
+    $latestFile = !empty($files) ? basename($files[0]) : null;
 
-    if (\$latestFile) {
-        echo '<link rel="icon" type="image/x-icon" href="' . \$folderPath . \$latestFile . '">';
+    if ($latestFile) {
+        echo '<link rel="icon" type="image/x-icon" href="' . $folderPath . $latestFile . '">';
     } else {
         echo "No files found in the folder.";
     }
@@ -89,7 +55,7 @@ include('../db.php');
     <!-- Bootstrap JS Bundle (รวม Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </div>
-    <title>$seo_title</title>
+    <title>fdfd</title>
     
 </head>
 <body>  
@@ -97,25 +63,25 @@ include('../db.php');
 
 <div id="notification-icon">
     <?php
-    \$directory = '../admin/img/logo/';
-    \$files = glob(\$directory . '*');
-    \$latestFile = '';
+    $directory = '../admin/img/logo/';
+    $files = glob($directory . '*');
+    $latestFile = '';
 
-    if (!empty(\$files)) {
-        usort(\$files, function (\$a, \$b) {
-            return filemtime(\$b) - filemtime(\$a);
+    if (!empty($files)) {
+        usort($files, function ($a, $b) {
+            return filemtime($b) - filemtime($a);
         });
-        \$latestFile = \$files[0];
+        $latestFile = $files[0];
     }
     ?>
-    <img src="<?php echo \$latestFile; ?>" alt="Notification Icon" /> 
+    <img src="<?php echo $latestFile; ?>" alt="Notification Icon" /> 
 </div>
 
 <button id="scrollToTop">↑ ขึ้นบนสุด</button>
 
 <?php
     // กำหนดเมนูหลัก
-    \$mainMenus = [
+    $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก'],
         ['id' => 2, 'name' => 'เกี่ยวกับเรา'], 
         ['id' => 3, 'name' => 'สินค้า'],
@@ -126,26 +92,26 @@ include('../db.php');
     ];
 
     // แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
-    \$mainIds = array_column(\$mainMenus, 'id');
-    \$inClause = implode(',', \$mainIds);
+    $mainIds = array_column($mainMenus, 'id');
+    $inClause = implode(',', $mainIds);
 
     // Query ดึงเมนูย่อยจากตาราง navbar
-    \$sql = "SELECT * 
+    $sql = "SELECT * 
             FROM navbar
-            WHERE parent_id IN (\$inClause)
+            WHERE parent_id IN ($inClause)
             ORDER BY parent_id ASC, id ASC";
 
-    \$result = \$conn->query(\$sql);
+    $result = $conn->query($sql);
 
-    // เก็บเมนูย่อยลงใน \$subMenus โดย key = parent_id
-    \$subMenus = [];
-    if (\$result->num_rows > 0) {
-        while (\$row = \$result->fetch_assoc()) {
-            \$pid = \$row['parent_id'];
-            if (!isset(\$subMenus[\$pid])) {
-                \$subMenus[\$pid] = [];
+    // เก็บเมนูย่อยลงใน $subMenus โดย key = parent_id
+    $subMenus = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $pid = $row['parent_id'];
+            if (!isset($subMenus[$pid])) {
+                $subMenus[$pid] = [];
             }
-            \$subMenus[\$pid][] = \$row;
+            $subMenus[$pid][] = $row;
         }
     }
 
@@ -154,24 +120,24 @@ include('../db.php');
 
     // แสดงโลโก้
     echo "<a href='#'>";
-    \$directory = '../admin/uploads/';
+    $directory = '../admin/uploads/';
 
-    if (is_dir(\$directory)) {
+    if (is_dir($directory)) {
         // สแกนไฟล์ในโฟลเดอร์
-        \$files = scandir(\$directory);
+        $files = scandir($directory);
         // ตัด . และ .. ออก
-        \$files = array_diff(\$files, array('.', '..'));
+        $files = array_diff($files, array('.', '..'));
 
         // กรองให้เหลือไฟล์ภาพเท่านั้น
-        \$imageFiles = array_filter(\$files, function(\$file) {
-            \$ext = pathinfo(\$file, PATHINFO_EXTENSION);
-            return in_array(strtolower(\$ext), ['jpg', 'jpeg', 'png', 'gif']);
+        $imageFiles = array_filter($files, function($file) {
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
         });
 
         // หากเจอไฟล์ภาพอย่างน้อย 1 ไฟล์
-        if (!empty(\$imageFiles)) {
-            \$latestImage = reset(\$imageFiles); // หยิบไฟล์แรกของ array
-            echo "<img src='{\$directory}{\$latestImage}' alt='โลโก้' style='height: 75px; width: 97px; margin-right: 50px;'>";
+        if (!empty($imageFiles)) {
+            $latestImage = reset($imageFiles); // หยิบไฟล์แรกของ array
+            echo "<img src='{$directory}{$latestImage}' alt='โลโก้' style='height: 75px; width: 97px; margin-right: 50px;'>";
         } else {
             echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
         }
@@ -191,24 +157,24 @@ include('../db.php');
     echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
     echo "<ul class='navbar-nav ms-auto'>";
 
-    foreach (\$mainMenus as \$main) {
-        \$mainId = \$main['id'];
-        \$mainName = htmlspecialchars(\$main['name']);
+    foreach ($mainMenus as $main) {
+        $mainId = $main['id'];
+        $mainName = htmlspecialchars($main['name']);
 
-        if (isset(\$subMenus[\$mainId])) {
+        if (isset($subMenus[$mainId])) {
             echo "<li class='nav-item dropdown mx-0 mx-lg-1'>";
             echo "<a class='nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
-                . htmlspecialchars(\$mainName) . "</a>";
+                . htmlspecialchars($mainName) . "</a>";
             echo "<ul class='dropdown-menu'>";
-            foreach (\$subMenus[\$mainId] as \$submenu) {
-                \$submenuLink = htmlspecialchars(\$submenu['link_to']);
-                \$submenuName = htmlspecialchars(\$submenu['name']);
-                echo "<li><a class='dropdown-item' href='\$submenuLink'>\$submenuName</a></li>";
+            foreach ($subMenus[$mainId] as $submenu) {
+                $submenuLink = htmlspecialchars($submenu['link_to']);
+                $submenuName = htmlspecialchars($submenu['name']);
+                echo "<li><a class='dropdown-item' href='$submenuLink'>$submenuName</a></li>";
             }
             echo "</ul></li>";
         } else {
             echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded' href='#'>"
-                . htmlspecialchars(\$mainName) . "</a></li>";
+                . htmlspecialchars($mainName) . "</a></li>";
         }
     }
 
@@ -216,21 +182,21 @@ include('../db.php');
     echo "</div></div></nav>";
 ?>
 <div class="ontop">
-        <img src="จัดการหน้าเว็บ/<?php echo htmlspecialchars('$img_onTop', ENT_QUOTES, 'UTF-8'); ?>"
+        <img src="จัดการหน้าเว็บ/<?php echo htmlspecialchars('images_all/462567104_2075481142880694_1501017219490596836_n.jpg', ENT_QUOTES, 'UTF-8'); ?>"
              alt="onTop Image" style="max-width: 300px;">
     </div>
 
 <div class="content">
-    <p><?php echo htmlspecialchars("$body_top", ENT_QUOTES, 'UTF-8'); ?></p>
+    <p><?php echo htmlspecialchars("sfsddfdfd", ENT_QUOTES, 'UTF-8'); ?></p>
     <div class="left">
-        <img src="จัดการหน้าเว็บ/<?php echo htmlspecialchars('$img_left', ENT_QUOTES, 'UTF-8'); ?>" 
+        <img src="จัดการหน้าเว็บ/<?php echo htmlspecialchars('images_all/462578066_1269579590828770_2829080610683077338_n.jpg', ENT_QUOTES, 'UTF-8'); ?>" 
              alt="Left Image" style="max-width: 300px;">
-        <p><?php echo htmlspecialchars("$text_left", ENT_QUOTES, 'UTF-8'); ?></p>
+        <p><?php echo htmlspecialchars("fdfdfdf", ENT_QUOTES, 'UTF-8'); ?></p>
     </div>
     <div class="right">
-        <img src="จัดการหน้าเว็บ/<?php echo htmlspecialchars('$img_right', ENT_QUOTES, 'UTF-8'); ?>"
+        <img src="จัดการหน้าเว็บ/<?php echo htmlspecialchars('images_all/462574549_504611285935765_4198341142524739233_n.jpg', ENT_QUOTES, 'UTF-8'); ?>"
              alt="Right Image" style="max-width: 300px;">
-        <p><?php echo htmlspecialchars("$text_right", ENT_QUOTES, 'UTF-8'); ?></p>
+        <p><?php echo htmlspecialchars("dfdfdfd", ENT_QUOTES, 'UTF-8'); ?></p>
     </div>
 </div>
 
@@ -241,20 +207,20 @@ include('../db.php');
         <div>
             <h4 class='text-center'>LOCATION</h4>
             <?php
-            \$sql = "SELECT * FROM address";
-            \$result = mysqli_query(\$conn, \$sql);
-            if (\$result && mysqli_num_rows(\$result) > 0) {
-                \$row = mysqli_fetch_assoc(\$result);
+            $sql = "SELECT * FROM address";
+            $result = mysqli_query($conn, $sql);
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
                 ?>
                 <p>
-                    ที่อยู่บริษัท <?= htmlspecialchars(\$row['homeNumber']) ?>
-                    <?= htmlspecialchars(\$row['street']) ?> 
-                    แขวง<?= htmlspecialchars(\$row['subDistrict']) ?>
-                    เขต<?= htmlspecialchars(\$row['district']) ?>
+                    ที่อยู่บริษัท <?= htmlspecialchars($row['homeNumber']) ?>
+                    <?= htmlspecialchars($row['street']) ?> 
+                    แขวง<?= htmlspecialchars($row['subDistrict']) ?>
+                    เขต<?= htmlspecialchars($row['district']) ?>
                 </p>
                 <p>
-                    <?= htmlspecialchars(\$row['province']) ?>, 
-                    <?= htmlspecialchars(\$row['postalCode']) ?>
+                    <?= htmlspecialchars($row['province']) ?>, 
+                    <?= htmlspecialchars($row['postalCode']) ?>
                 </p>
                 <?php
             } else {
@@ -266,16 +232,16 @@ include('../db.php');
         <div>
             <h4>Contact Us</h4>
             <?php
-            \$sql = "SELECT * FROM contacts";
-            \$result = mysqli_query(\$conn,\$sql);
-            if (\$result && mysqli_num_rows(\$result) > 0) {
-                \$row = \$result->fetch_assoc();
+            $sql = "SELECT * FROM contacts";
+            $result = mysqli_query($conn,$sql);
+            if ($result && mysqli_num_rows($result) > 0) {
+                $row = $result->fetch_assoc();
 
                 echo "<div class='contactsall'>";
                 echo "<div class='contactphone my-2 '>";
-                echo "<i class='bi bi-telephone-fill'> " . htmlspecialchars(\$row['phone']) . "</i><br>";
-                echo "<i class='bi bi-line'> " . htmlspecialchars(\$row['line']) . "</i><br>";
-                echo "<i class='bi bi-envelope-at-fill'> " . htmlspecialchars(\$row['email']) . "</i><br>";
+                echo "<i class='bi bi-telephone-fill'> " . htmlspecialchars($row['phone']) . "</i><br>";
+                echo "<i class='bi bi-line'> " . htmlspecialchars($row['line']) . "</i><br>";
+                echo "<i class='bi bi-envelope-at-fill'> " . htmlspecialchars($row['email']) . "</i><br>";
                 echo "</div>";
                 echo "</div>";
             } else {
@@ -287,27 +253,27 @@ include('../db.php');
         <div>
             <?php
             try {
-                \$pdo = new PDO(
-                    "mysql:host=\$servername;dbname=\$dbname;charset=utf8",
-                    \$username,
-                    \$password
+                $pdo = new PDO(
+                    "mysql:host=$servername;dbname=$dbname;charset=utf8",
+                    $username,
+                    $password
                 );
-                \$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException \$e) {
-                die("เชื่อมต่อฐานข้อมูลไม่ได้: " . \$e->getMessage());
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
             }
-            \$sql = "SELECT * FROM messages ORDER BY id DESC";
-            \$stmt = \$pdo->prepare(\$sql);
-            \$stmt->execute();
-            \$entries = \$stmt->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "SELECT * FROM messages ORDER BY id DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
 
             <h4 class='text-center'>About us</h4>
             
-            <?php if (!empty(\$entries)): ?>
+            <?php if (!empty($entries)): ?>
                 <ul style='list-style-type: none;'>
-                    <?php foreach (\$entries as \$item): ?>
-                        <li><?php echo htmlspecialchars(\$item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
+                    <?php foreach ($entries as $item): ?>
+                        <li><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
@@ -317,21 +283,21 @@ include('../db.php');
         <!---Social---->
         <div>
             <?php 
-            \$sql = 'SELECT * FROM footer_links';
-            \$result = mysqli_query(\$conn, \$sql);
-            \$row = (\$result && mysqli_num_rows(\$result) > 0) ? \$result->fetch_assoc() : null;
+            $sql = 'SELECT * FROM footer_links';
+            $result = mysqli_query($conn, $sql);
+            $row = ($result && mysqli_num_rows($result) > 0) ? $result->fetch_assoc() : null;
             ?>
             <h4 class='text-center'>SOCIAL</h4>
             
             <ul class='d-flex justify-content-evenly'>
                 <li class='mx-2'>
-                    <a href="<?php echo \$row ? htmlspecialchars(\$row['facebook']) : '#'; ?>" 
+                    <a href="<?php echo $row ? htmlspecialchars($row['facebook']) : '#'; ?>" 
                        style="text-decoration: none; color:#339fff;">
                        <i class="bi bi-facebook fs-3"></i>
                     </a>
                 </li>
                 <li class='mx-2'>
-                    <a href="<?php echo \$row ? htmlspecialchars(\$row['tiktok']) : '#'; ?>" 
+                    <a href="<?php echo $row ? htmlspecialchars($row['tiktok']) : '#'; ?>" 
                        style='text-decoration: none; color: #ffffff;'>
                        <i class="bi bi-tiktok fs-3"></i>
                     </a>
@@ -401,16 +367,3 @@ include('../db.php');
 </script>
 </body>
 </html>
-HTML; // ต้องไม่มี space หรือ tab ก่อนหน้า
-
-        // เขียนไฟล์ใหม่
-        if (file_put_contents($file_name, $file_content)) {
-            echo "บันทึกสำเร็จและสร้างไฟล์ใหม่: $file_name";
-        } else {
-            echo "บันทึกสำเร็จ แต่สร้างไฟล์ใหม่ไม่สำเร็จ!";
-        }
-    } else {
-        echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . mysqli_error($conn);
-    }
-}
-?>

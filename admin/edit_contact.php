@@ -1,52 +1,30 @@
 <?php
-include('../db.php'); // เชื่อมต่อฐานข้อมูล
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // กรองข้อมูลที่รับมา
-    $type = htmlspecialchars(trim($_POST['type']));
-    $value = htmlspecialchars(trim($_POST['value']));
+include('../db.php');
 
-    // ตรวจสอบว่ามีข้อมูลประเภทนี้อยู่ในฐานข้อมูลแล้วหรือไม่
-    $stmt_check = $conn->prepare("SELECT id FROM minicontacts WHERE type = ?");
-    $stmt_check->bind_param("s", $type);
-    $stmt_check->execute();
-    $result = $stmt_check->get_result();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if ($result->num_rows > 0) {
-        // มีข้อมูลอยู่แล้ว ทำการอัปเดต
-        $row = $result->fetch_assoc();
-        $id = $row['id'];
+    $phone = isset($_POST['phone']) ? mysqli_real_escape_string($conn, trim($_POST['phone'])) : '';
+    $lineID = isset($_POST['lineID']) ? mysqli_real_escape_string($conn, trim($_POST['lineID'])) : '';
+    $email = isset($_POST['email']) ? mysqli_real_escape_string($conn, trim($_POST['email'])) : '';
 
-        $stmt_update = $conn->prepare("UPDATE minicontacts SET value = ? WHERE id = ?");
-        $stmt_update->bind_param("si", $value, $id);
+    $sql = "SELECT * FROM contacts LIMIT 1";
+    $result = mysqli_query($conn, $sql);
 
-        if ($stmt_update->execute()) {
-            header("Location: ../index.php"); // กลับไปที่หน้าหลัก
-            exit();
-        } else {
-            echo "เกิดข้อผิดพลาดในการอัปเดต: " . $stmt_update->error;
-        }
+    if ($result && mysqli_num_rows($result) > 0) {
 
-        $stmt_update->close();
+        $sql = "UPDATE contacts SET phone = '$phone', line = '$lineID', email = '$email'";
     } else {
-        // ไม่มีข้อมูล ทำการเพิ่มใหม่
-        $stmt_insert = $conn->prepare("INSERT INTO minicontacts (type, value) VALUES (?, ?)");
-        $stmt_insert->bind_param("ss", $type, $value);
-
-        if ($stmt_insert->execute()) {
-            header("Location: ../index.php"); // กลับไปที่หน้าหลัก
-            exit();
-        } else {
-            echo "เกิดข้อผิดพลาดในการเพิ่มข้อมูล: " . $stmt_insert->error;
-        }
-
-        $stmt_insert->close();
+        $sql = "INSERT INTO contacts (phone, line, email) VALUES ('$phone', '$lineID', '$email')";
     }
 
-    // ปิด statement
-    $stmt_check->close();
+    if (mysqli_query($conn, $sql)) {
+        header("Location: admin_panel.php");
+        exit();
+    } else {
+        echo "Error: " . mysqli_error($conn);
+        header("Location: add_address.php");
+        exit();
+    }
 }
-
-// ปิดการเชื่อมต่อฐานข้อมูล
-$conn->close();
 ?>
