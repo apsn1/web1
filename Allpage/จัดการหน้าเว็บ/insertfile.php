@@ -37,16 +37,7 @@
                 <label for="name">ชื่อหน้า:</label>
                 <input type="text" id="name" name="name" placeholder="ชื่อหน้า (เช่น about หรือ contact)" required>
                 <br><br>
-
-                <!-- ฟิลด์สำหรับกรอกชื่อหัวข้อ -->
-                <label for="title">ชื่อ title:</label>
-                <input type="text" id="title" name="title" placeholder="ส่วน title ของหน้า" required>
-                <br><br>
-
-                <label for="headder">ชื่อหัวข้อ:</label>
-                <input type="text" id="headder" name="headder" placeholder="หัวข้อหลักของหน้า" required>
-                <br><br>
-
+                
                 <!-- ฟิลด์สำหรับกรอกข้อความด้านบน -->
                 <label for="body_top">ข้อความด้านบน:</label>
                 <textarea id="body_top" name="body_top" rows="4" cols="50"

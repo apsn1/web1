@@ -160,10 +160,6 @@ echo "</a>"?>
     ?>
 </div>
 
-<header>
-    <h1 >กหดหกดกห</h1>
-    <h2 >กหดหกดหก</h2>
-</header>
 <div class="content">
     <p >เกี่ยวกับเรา</p>
     <div class="left">
