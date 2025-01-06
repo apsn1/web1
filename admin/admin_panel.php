@@ -364,27 +364,6 @@ if (!isset($_SESSION['username'])) {
                     </div>
                 </form>
 
-
-                <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
-                <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;">
-
-                    <label for="type">ประเภท:</label>
-                    <select name="type" id="formType">
-                        <option value="phone" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'phone') ? 'selected' : ''; ?>>
-                            เบอร์โทรศัพท์
-                        </option>
-                        <option value="line" <?php echo (isset($minicontacts['type']) && $minicontacts['type'] == 'line') ? 'selected' : ''; ?>>
-                            ไอดีไลน์
-                        </option>
-                    </select>
-
-                    <label for="value">ข้อมูล:</label>
-                    <input type="text" name="value" id="formValue"
-                        value="<?php echo htmlspecialchars($minicontacts['value'] ?? ''); ?>" required>
-
-                    <button type="submit">บันทึก</button>
-                </form>
-
                 <button onclick="toggleForm('editForm7')">ฟอมเพิ่มรูปโปรเจค</button>
                 <form id="editForm7" method="POST" action="add_imgproject.php" enctype="multipart/form-data"
                     style="display: none;">

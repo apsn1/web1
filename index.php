@@ -81,7 +81,7 @@
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา'], 
+        ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
         ['id' => 3, 'name' => 'สินค้า'],
         ['id' => 4, 'name' => 'โปรเจค'],
         ['id' => 5, 'name' => 'โซเซี่ยล'],
@@ -161,7 +161,7 @@
 
     // 5.3 ส่วนเนื้อหาของ Navbar
     echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
-    echo "<ul class='navbar-nav ms-auto'>";
+    echo "<ul class='navbar-nav'>";
 
     // 6) วนลูปสร้าง “เมนูหลัก” จาก $mainMenus
     foreach ($mainMenus as $main) {
@@ -172,7 +172,7 @@
         if (isset($subMenus[$mainId])) {
             // มีเมนูย่อย แสดงเป็น Dropdown
             echo "<li class='nav-item dropdown mx-0 '>";
-            echo "<a class='nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
+            echo "<a class='nav-link dropdown-toggle py-3 ' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
                 . htmlspecialchars($mainName) . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
@@ -268,8 +268,6 @@
                 echo "<div class='Colum1'>";
                 echo "<h3>" . $row['title'] . "</h3>";
                 echo "<p>" . $row['body'] . "</p>";
-                echo "<div class='action'><a href='admin/delete_content.php?del=" . $row['contentID'] . "'>ลบ</a></div>";
-                echo "<td> <div class='action'><a href='admin/update_content.php?edit=" . $row['contentID'] . "'>แก้ไขข้อมูล</a></div>" . "</td>";
                 echo "</div>";
             }
         } else {
@@ -284,63 +282,6 @@
     $sql = "SELECT * FROM videos";
     $result = $conn->query($sql);
     ?>
-
-    <style>
-        .videoBar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* เต็มความสูงหน้าจอ */
-            margin: 0;
-            /* กันขอบเริ่มต้นของ body */
-            padding: 0;
-
-            margin-top: 90px;
-
-        }
-
-        /* กล่องใส่ thumbnail (16:9) */
-        .video-container {
-            position: relative;
-            width: 960px;
-            /* กำหนดขนาดกว้าง (ปรับตามต้องการ) */
-            height: 504px;
-            /* 16:9 => 360 / (16/9) = 202.5 */
-            background-size: cover;
-            /* ให้รูปขยายเต็มพื้นที่ */
-            background-position: center;
-            cursor: pointer;
-            /* เปลี่ยน cursor เป็นรูปมือ */
-            overflow: hidden;
-            /* ตัดส่วนเกินออก */
-            padding-top: 20px;
-        }
-
-        /* ปุ่ม Play ตรงกลาง (Icon) */
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.6);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ลูกศรสามเหลี่ยมสไตล์ YouTube */
-        .play-button::before {
-            content: "";
-            display: block;
-            border-style: solid;
-            border-width: 10px 0 10px 16px;
-            border-color: transparent transparent transparent #fff;
-            margin-left: 5px;
-        }
-    </style>
 
     <div class="videoBar">
         <?php
@@ -479,10 +420,13 @@
             iframe.src = "";
         }
     </script>
-
-    <section class="page-section" id="project" vstyle="
+<br>
+<br>
+    <section class="page-section" id="project" style="
     padding-top: 0px;
-">
+    padding-bottom: 0px;
+"
+>
         <h2 class="Project" style="margin-bottom:40px; text-align: center;">
             การสร้างออกเเบบวันน์สยามเป็นอย่างไร
         </h2>
@@ -495,7 +439,7 @@
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo '<div class="imgContainerpj" style="margin:5px; ">';
+                    echo '<div class="imgContainerpj">';
                     echo '<img class="photo1" src="admin/' . $row['image_path'] . '" style="width:maxpx;">';
                     echo '</div>';
                 }
@@ -509,7 +453,9 @@
 
 
     <div class="about">
-        <section class="page-section bg-primary2 text-white mb-0" id="about">
+        <section class="page-section bg-primary2 text-white mb-0" style="
+    padding-top: 50px;
+    padding-bottom: 50px; " id="about">
             <div class="container">
                 <div class="row">
                     <?php
@@ -548,49 +494,15 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="phoneandidline">
-            <h3>ติดต่อสอบถามเพิ่มเติมได้ที่</h3>
-            <?php
-            include('db.php'); // เชื่อมต่อฐานข้อมูล
             
-            $sql = "SELECT * FROM minicontacts WHERE type = 'phone'";
-            $resultPhone = $conn->query($sql);
-
-            $sql = "SELECT * FROM minicontacts WHERE type = 'line'";
-            $resultLine = $conn->query($sql);
-            echo "<div class='contactsall'>";
-            if ($resultPhone->num_rows > 0) {
-                while ($row = $resultPhone->fetch_assoc()) {
-                    echo "<div class='contactphone'>";
-                    echo "<p>ข้อมูลโทรศัพท์: " . htmlspecialchars($row['value']) . "</p>";
-                    echo "</div>";
-                }
-            } else {
-                echo "<p>ไม่มีข้อมูลโทรศัพท์</p>";
-            }
-
-            if ($resultLine->num_rows > 0) {
-                while ($row = $resultLine->fetch_assoc()) {
-                    echo "<div class='contactline'>";
-                    echo "<p>ข้อมูลไลน์: " . htmlspecialchars($row['value']) . "</p>";
-                    echo "</div>";
-                }
-            } else {
-                echo '<p>ไม่มีข้อมูลไลน์</p>';
-            }
-            echo "</div>";
-            $conn->close();
-            ?>
-
         </section>
-
-
+      <br>
+            <br>
         <section class="page-section" id="project">
             <h2 class="Project" style="margin-bottom :70px; text-align: center;">
                 Projects โปรเจกต์ออกแบบหน้ากากอาคารและลูกค้าของเรา
             </h2>
-            <div class="containerPj">
+            <div class="containerPj" style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
                 <?php
                 include('db.php'); // เชื่อมต่อฐานข้อมูล
                 
