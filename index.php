@@ -698,20 +698,18 @@
     </script>
     </div>
 </body>
-<footer class="footer text-center">
-    <div class="d-flex justify-content-around align-items-start mt-5 text-white p-5">
-        <div class="all-footer">
-            <div class="text-center">
-                <h3>LOCATION</h3>
+<footer class="footer">
+    <div class='d-flex justify-content-evenly'>
+        <!---Location---->
+        <div>
+            <h4 class='text-center'>LOCATION</h4>
                 <?php
                 $sql = "SELECT * FROM address";
                 $result = mysqli_query($conn, $sql);
-
                 if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     ?>
-
-                    <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?>     <?= $row['street'] ?> แขวง<?= $row['subDistrict'] ?>
+                    <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?>    <?= $row['street'] ?> แขวง<?= $row['subDistrict'] ?>
                         เขต<?= $row['district'] ?></p>
                     <p><?= $row['province'] ?>, <?= $row['postalCode'] ?></p>
                     <?php
@@ -719,6 +717,30 @@
                     echo "<p>ไม่มีข้อมูลที่อยู่</p>";
                 }
                 ?>
+        </div>
+        <!---Contact---->
+        <div>
+            <h4>Contact Us</h4>
+            <?php
+            $sql = "SELECT * FROM contacts";
+            $result = mysqli_query($conn,$sql);
+            $row = $result->fetch_assoc();
+
+            echo "<div class='contactsall'>";
+        
+                    echo "<div class='contactphone my-2 '>";
+                    echo "<i class='bi bi-telephone-fill'>"." ". htmlspecialchars($row['phone'])."</i><br>";
+                    echo "<i class='bi bi-line'>"." ". htmlspecialchars($row['line'])."</i><br>";
+                    echo "<i class='bi bi-envelope-at-fill'>"." ". htmlspecialchars($row['email'])."</i><br>";
+                    echo "</div>";
+            
+
+            
+            echo "</div>";
+            ?>
+        </div>
+        <!---aboutUS---->
+        <div>
                 <?php
                 try {
                     $pdo = new PDO(
@@ -730,68 +752,45 @@
                 } catch (PDOException $e) {
                     die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
                 }
-
-                // ดึงข้อมูลทั้งหมด (SELECT)
                 $sql = "SELECT * FROM messages ORDER BY id DESC";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
                 $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 ?>
 
-                <title>หน้าแสดงข้อความทั้งหมด</title>
-                <h1>About us</h1>
+                <h4 class='text-center'>About us</h4>
+                
                 <?php if (!empty($entries)): ?>
-                    <ul>
+                    <ul  style='list-style-type: none;'>
                         <?php foreach ($entries as $item): ?>
-                            <li><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
+                            <li ><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
                     <p>ยังไม่มีข้อความใด ๆ</p>
                 <?php endif; ?>
-                <hr>
             </div>
-            <div class="text-center">
-                <!----------------------------------------------------------------------------------------------------------------------------------------->
-
-
-                <!----------------------------------------------------------------------------------------------------------------------------------------->
-                <div class='ms-5'>
-                    <?php $sql = 'select * from footer_links';
+        <!---Social---->
+            <div>
+            <?php $sql = 'select * from footer_links';
                     $result = mysqli_query($conn, $sql);
                     $row = $result->fetch_assoc()
                         ?>
-                    <div>
-                        <div class="text-center">
-                            <h3>AROUD THE WEB</h3>
-                            <ul>
-                                <il><a href="<?= $row['facebook'] ?>"><i class="bi bi-facebook fs-2"
-                                            style='color: #339fff;'></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="text-center">
-                            <h3>SOCIAL</h3>
-                            <ul>
-                                <il>
-                                    <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:
-                                            #339fff;"><i class="bi bi-facebook fs-3"></i>
-                                        สยามรู้ดีผู้เชี่ยวชาญอันดับ1เรื่องตะแกรงฉีก</a>
-                                    </li>
-                                    <br>
-                                    <il><a href="<?= $row['tiktok'] ?>"
-                                            style='text-decoration: none; color: #ffffff;'><i
-                                                class="bi bi-tiktok fs-3"></i>ONE SIAM</a></li>
-                                        <br>
-                                        <il><a href="<?= $row['line'] ?>" style='text-decoration: none; #00f31e;'><i
-                                                    class="bi bi-line fs-3"></i>ONE SIAM</a></li>
-                                            <br>
-                                            <il><a href="##" style='text-decoration: none; color: #f60505;'><i
-                                                        class="bi bi-youtube fs-3"></i>ONE SIAM</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
+            <h4 class='text-center'>SOCIAL</h4>
+            
+            <ul class='d-flex justify-content-evenly'>
+                <il class='mx-2'>
+                    <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:#339fff;"><i class="bi bi-facebook fs-3"></i></a>
+                </li>
+                <il class='mx-2'>
+                    <a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i class="bi bi-tiktok fs-3"></i></a></li>
+                <il class='mx-2'>
+                    <a href="##?>" style='text-decoration: none;color: #00f31e;'><i class="bi bi-line fs-3"></i></a></li>
+                <il class='mx-2'>
+                    <a href="##" style='text-decoration: none; color: #f60505;'><i class="bi bi-youtube fs-3"></i></a></li>
+            </ul>
+        </div>
+    </div>
 </footer>
 <div class="copyright py-4 text-center text-white">
     <div class="container"><small>บริษัท วันน์สยาม จำกัด และในเครือ
