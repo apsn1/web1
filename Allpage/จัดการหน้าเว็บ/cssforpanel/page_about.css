@@ -13836,3 +13836,225 @@ header {
 #scrollToTop:hover {
   background-color: #e67e22; /* สีเมื่อ hover */
 }
+/* ตกแต่ง h1 */
+.container h1 {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* ตกแต่งรูปภาพ */
+.container img {
+  width: 100%; /* ให้รูปภาพปรับตามขนาดของ container */
+  max-width: 500px; /* กำหนดขนาดสูงสุด */
+  display: block;
+  margin: 0 auto; /* จัดรูปภาพให้อยู่ตรงกลาง */
+  border-radius: 8px; /* เพิ่มมุมโค้ง */
+}
+
+/* ตกแต่งข้อความ */
+.container p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+  text-align: justify;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+/* Layout Styling */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+header {
+  background-color: #ffcc00;
+  padding: 20px;
+  text-align: center;
+  color: #333;
+}
+
+h1, h2 {
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Navbar Styling */
+nav {
+  background: linear-gradient(to right, #4c4c4c, #c2b280);
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  align-items: center;
+}
+
+nav ul li {
+  padding: 5px 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+nav ul li a:hover {
+  color: #ffcc00;
+}
+
+/* Content Section */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.content .section {
+  flex: 1 1 calc(50% - 20px);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.content .section img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.content .section h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #ff8800;
+}
+
+.content .section p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+  text-align: justify;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+footer h3 {
+  margin-bottom: 10px;
+}
+
+footer p, footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Scroll to Top Button */
+#scrollToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffcc00;
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#scrollToTop.show {
+  display: flex;
+}
+
+/* Image and Text Section Specific */
+.content .section img {
+  max-height: 250px;
+  object-fit: cover;
+}
+
+.content .section h3 {
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+.content .section p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+.left{
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 30px;
+}
+.right{
+  display: flex;
+  margin-bottom: 30px;
+}
+.left p{
+  letter-spacing: 0.6px;
+  margin-right: 20px;
+}
+.right p{
+  margin-left: 20px;
+  letter-spacing: 0.6px;
+}
+.content{
+  margin-top: 60px;
+}
+.left img{
+  width: 100%; /* หรือกำหนดเป็น px เช่น width: 300px; */
+  max-height: 500px; /* กำหนดความสูงที่คุณต้องการ */
+  object-fit: cover; /* ทำให้รูปครอบคลุมโดยไม่บิดเบี้ยว */
+}
+.right img{
+  max-width: 300px;
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
