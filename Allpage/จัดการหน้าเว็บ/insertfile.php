@@ -37,24 +37,6 @@
                 <label for="name">ชื่อหน้า:</label>
                 <input type="text" id="name" name="name" placeholder="ชื่อหน้า (เช่น about หรือ contact)" required>
                 <br><br>
-                
-                <!-- ฟิลด์สำหรับกรอกข้อความด้านบน -->
-                <label for="body_top">ข้อความด้านบน:</label>
-                <textarea id="body_top" name="body_top" rows="4" cols="50"
-                    placeholder="ข้อความด้านบนของหน้า"></textarea>
-                <br><br>
-
-                <!-- ฟิลด์สำหรับกรอกเนื้อหาด้านซ้าย -->
-                <label for="text_left">เนื้อหาด้านซ้าย:</label>
-                <textarea id="text_left" name="text_left" rows="4" cols="50"
-                    placeholder="เนื้อหาที่แสดงด้านซ้าย"></textarea>
-                <br><br>
-
-                <label for="text_right">เนื้อหาด้านขวา</label>
-                <textarea id="text_right" name="text_right" rows="4" cols="50"
-                    placeholder="เนื้อหาที่แสดงด้านขวา"></textarea>
-                <br><br>
-
 
                 <?php
                 // เชื่อมต่อฐานข้อมูล
@@ -72,6 +54,40 @@
                     }
                 }
                 ?>
+                
+                <div class="dropdown">
+                    <label for="img_onTop">เลือกรูปภาพ Banner บน :</label>
+                    <input type="text" id="searchInputonTop" class="form-control mb-2"
+                        placeholder="ค้นหาชื่อไฟล์ (บน)...">
+                    <select id="fileDropdownonTop" name="img_onTop" class="form-select">
+                        <option value="">เลือกไฟล์รูปภาพ</option>
+                        <?php foreach ($image_options as $option): ?>
+                            <option value="<?php echo $option['url']; ?>"><?php echo $option['filename']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div id="previewonTop" style="margin-top: 10px;">
+                        <p>ยังไม่ได้เลือกรูปภาพด้านบน</p>
+                    </div>
+                </div>
+
+                <br><br>
+                <!-- ฟิลด์สำหรับกรอกข้อความด้านบน -->
+                <label for="body_top">ข้อความด้านบน:</label>
+                <textarea id="body_top" name="body_top" rows="4" cols="50"
+                    placeholder="ข้อความด้านบนของหน้า"></textarea>
+                <br><br>
+
+                <!-- ฟิลด์สำหรับกรอกเนื้อหาด้านซ้าย -->
+                <label for="text_left">เนื้อหาด้านซ้าย:</label>
+                <textarea id="text_left" name="text_left" rows="4" cols="50"
+                    placeholder="เนื้อหาที่แสดงด้านซ้าย"></textarea>
+                <br><br>
+
+                <label for="text_right">เนื้อหาด้านขวา</label>
+                <textarea id="text_right" name="text_right" rows="4" cols="50"
+                    placeholder="เนื้อหาที่แสดงด้านขวา"></textarea>
+                <br><br>
+
                 <!-- ฟิลด์สำหรับกรอก URL รูปภาพด้านซ้าย -->
                 <div class="dropdown">
                     <label for="img_left">เลือกรูปภาพด้านซ้าย:</label>
@@ -132,8 +148,9 @@
     </div>
 
     <!----------------------------------------------------------------------------------------------------------------------->
-   
+
     <script>
+        // ฟังก์ชันสำหรับการค้นหาและเลือก (ซ้าย)
         // ฟังก์ชันสำหรับการค้นหาและเลือก (ซ้าย)
         const searchInputLeft = document.getElementById('searchInputLeft');
         const fileDropdownLeft = document.getElementById('fileDropdownLeft');
@@ -143,6 +160,8 @@
             const filter = this.value.toLowerCase();
             for (let i = 0; i < fileDropdownLeft.options.length; i++) {
                 const option = fileDropdownLeft.options[i];
+                // ถ้าข้อความภายใน option ตรงกับฟิลเตอร์ (filter) หรือถ้าเป็น option แรก
+                // ก็ให้แสดงผล ไม่เช่นนั้นซ่อน
                 option.style.display = option.text.toLowerCase().indexOf(filter) > -1 || i === 0 ? '' : 'none';
             }
         });
@@ -177,6 +196,29 @@
                 previewRight.innerHTML = '<p>ยังไม่ได้เลือกรูปภาพ (ขวา)</p>';
             }
         });
+
+        // ฟังก์ชันสำหรับการค้นหาและเลือก (บน)
+        const searchInputonTop = document.getElementById('searchInputonTop');
+        const fileDropdownonTop = document.getElementById('fileDropdownonTop');
+        const previewonTop = document.getElementById('previewonTop');
+
+        searchInputonTop.addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            for (let i = 0; i < fileDropdownonTop.options.length; i++) {
+                const option = fileDropdownonTop.options[i];
+                option.style.display = option.text.toLowerCase().indexOf(filter) > -1 || i === 0 ? '' : 'none';
+            }
+        });
+
+        fileDropdownonTop.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value) {
+                previewonTop.innerHTML = `<img src="${selectedOption.value}" alt="Preview onTop" style="max-width: 300px;">`;
+            } else {
+                previewonTop.innerHTML = '<p>ยังไม่ได้เลือกรูปภาพ (บน)</p>';
+            }
+        });
+
     </script>
 </body>
 
