@@ -54,6 +54,7 @@
 
     <!-- Bootstrap JS Bundle (รวม Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -76,25 +77,24 @@
     </div>
 
     <button id="scrollToTop">↑ ขึ้นบนสุด</button>
-
     <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
-        ['id' => 1, 'name' => 'หน้าหลัก'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
-        ['id' => 3, 'name' => 'สินค้า'],
-        ['id' => 4, 'name' => 'โปรเจค'],
-        ['id' => 5, 'name' => 'โซเซี่ยล'],
-        ['id' => 6, 'name' => 'บทความ'],
-        ['id' => 7, 'name' => 'ติดต่อเรา']
+        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'home.php'],
+        ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
+        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
+        ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
+        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.php'],
+        ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
+        ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
     include('db.php');
 
     // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
-    $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4]
-    $inClause = implode(',', $mainIds);        // "1,2,3,4"
+    $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4,5,6,7]
+    $inClause = implode(',', $mainIds);        // "1,2,3,4,5,6,7"
     
     // 4) Query ดึงเมนูย่อยจากตาราง navbar
     $sql = "SELECT * 
@@ -115,84 +115,87 @@
             $subMenus[$pid][] = $row;
         }
     }
-
-
-    echo "<nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>";
-
-    echo "<div class='container'>";
-
-    // 5.1 แสดงโลโก้ (ถ้ามี)
-    echo "<a href='#'>";
-
-    // ตรวจสอบรูปภาพใน 'admin/uploads' (ถ้าไม่ใช้ ก็ลบส่วนนี้ออกได้)
-    $directory = 'admin/uploads/';
-    if (is_dir($directory)) {
-        $files = scandir($directory);
-        if ($files !== false) {
-            $files = array_diff($files, array('.', '..'));
-            $imageFiles = array_filter($files, function ($file) {
-                $ext = pathinfo($file, PATHINFO_EXTENSION);
-                return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
-            });
-            if (count($imageFiles) > 0) {
-                $image = reset($imageFiles);
-                echo "<img src='{$directory}{$image}' 
-                      alt='รูปภาพล่าสุด' 
-                      style='height: 95px; margin-right: 500px;'>";
-            } else {
-                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
-            }
-        } else {
-            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
-        }
-    } else {
-        echo "ไม่พบโฟลเดอร์ uploads";
-    }
-
-    echo "</a>";
-
-    // 5.2 ปุ่ม Toggle สำหรับ Mobile
-    echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' 
-      type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' 
-      aria-controls='navbarResponsive' aria-expanded='false' 
-      aria-label='Toggle navigation'>
-      Menu <i class='fas fa-bars'></i>
-      </button>";
-
-    // 5.3 ส่วนเนื้อหาของ Navbar
-    echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
-    echo "<ul class='navbar-nav'>";
-
-    // 6) วนลูปสร้าง “เมนูหลัก” จาก $mainMenus
-    foreach ($mainMenus as $main) {
-        $mainId = $main['id'];
-        $mainName = $main['name'];
-
-        // ตรวจสอบว่ามีเมนูย่อยหรือไม่
-        if (isset($subMenus[$mainId])) {
-            // มีเมนูย่อย แสดงเป็น Dropdown
-            echo "<li class='nav-item dropdown mx-0 '>";
-            echo "<a class='nav-link dropdown-toggle py-3 ' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
-                . htmlspecialchars($mainName) . "</a>";
-            echo "<ul class='dropdown-menu'>";
-            foreach ($subMenus[$mainId] as $submenu) {
-                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to']);
-                $submenuName = htmlspecialchars($submenu['name']);
-                echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
-            }
-            echo "</ul>";
-            echo "</li>";
-        } else {
-            // ไม่มีเมนูย่อย แสดงเป็นปกติ ไม่ใช่ Dropdown
-            echo "<li class='nav-item mx-0 '>";
-            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#'>"
-                . htmlspecialchars($mainName) . "</a>";
-            echo "</li>";
-        }
-    }
-    echo "</nav>";
-
     ?>
+
+    <nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>
+        <div class='container'>
+
+            <!-- 5.1 แสดงโลโก้ (ถ้ามี) -->
+            <a class='navbar-brand' href='home.php'>
+                <?php
+                $directory = 'admin/uploads/';
+                if (is_dir($directory)) {
+                    $files = scandir($directory);
+                    if ($files !== false) {
+                        $files = array_diff($files, array('.', '..'));
+                        $imageFiles = array_filter($files, function ($file) {
+                            $ext = pathinfo($file, PATHINFO_EXTENSION);
+                            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+                        });
+                        if (count($imageFiles) > 0) {
+                            $image = reset($imageFiles);
+                            echo "<img src='{$directory}" . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . "' 
+                              alt='โลโก้' 
+                              style='height: 95px;'>";
+                        } else {
+                            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+                        }
+                    } else {
+                        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
+                    }
+                } else {
+                    echo "ไม่พบโฟลเดอร์ uploads";
+                }
+                ?>
+            </a>
+
+            <!-- 5.2 ปุ่ม Toggle สำหรับ Mobile -->
+            <button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button'
+                data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'
+                aria-expanded='false' aria-label='Toggle navigation'>
+                Menu <i class='fas fa-bars'></i>
+            </button>
+
+            <!-- 5.3 ส่วนเนื้อหาของ Navbar -->
+            <div class='collapse navbar-collapse' id='navbarResponsive'>
+                <ul class='navbar-nav ms-auto'> <!-- ใช้ ms-auto เพื่อจัดเมนูไปทางขวา -->
+                    <?php foreach ($mainMenus as $main): ?>
+                        <?php
+                        $mainId = $main['id'];
+                        $mainName = htmlspecialchars($main['name'], ENT_QUOTES, 'UTF-8');
+                        $mainLink = htmlspecialchars($main['link'], ENT_QUOTES, 'UTF-8');
+
+                        // ตรวจสอบว่ามีเมนูย่อยหรือไม่
+                        if (isset($subMenus[$mainId])):
+                            ?>
+                            <li class='nav-item dropdown'>
+                                <a class='nav-link dropdown-toggle' href='<?php echo $mainLink; ?>' role='button'
+                                    data-bs-toggle='dropdown' aria-expanded='false'>
+                                    <?php echo $mainName; ?>
+                                </a>
+                                <ul class='dropdown-menu'>
+                                    <?php foreach ($subMenus[$mainId] as $submenu): ?>
+                                        <?php
+                                        $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
+                                        $submenuLinkTo = htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
+                                        $submenuLink = "Allpage/" . $submenuLinkTo . ".php";
+                                        ?>
+                                        <li><a class='dropdown-item'
+                                                href='<?php echo $submenuLink; ?>'><?php echo $submenuName; ?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php else: ?>
+                            <li class='nav-item'>
+                                <a class='nav-link' href='<?php echo $mainLink; ?>'><?php echo $mainName; ?></a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 
 
     <?php
@@ -420,13 +423,12 @@
             iframe.src = "";
         }
     </script>
-<br>
-<br>
+    <br>
+    <br>
     <section class="page-section" id="project" style="
     padding-top: 0px;
     padding-bottom: 0px;
-"
->
+">
         <h2 class="Project" style="margin-bottom:40px; text-align: center;">
             การสร้างออกเเบบวันน์สยามเป็นอย่างไร
         </h2>
@@ -494,10 +496,10 @@
                     </div>
                 </div>
             </div>
-            
+
         </section>
-      <br>
-            <br>
+        <br>
+        <br>
         <section class="page-section" id="project">
             <h2 class="Project" style="margin-bottom :70px; text-align: center;">
                 Projects โปรเจกต์ออกแบบหน้ากากอาคารและลูกค้าของเรา
@@ -615,91 +617,95 @@
         <!---Location---->
         <div>
             <h4 class='text-center'>LOCATION</h4>
-                <?php
-                $sql = "SELECT * FROM address";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    $row = mysqli_fetch_assoc($result);
-                    ?>
-                    <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?>    <?= $row['street'] ?> แขวง<?= $row['subDistrict'] ?>
-                        เขต<?= $row['district'] ?></p>
-                    <p><?= $row['province'] ?>, <?= $row['postalCode'] ?></p>
-                    <?php
-                } else {
-                    echo "<p>ไม่มีข้อมูลที่อยู่</p>";
-                }
+            <?php
+            $sql = "SELECT * FROM address";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
                 ?>
+                <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?>     <?= $row['street'] ?> แขวง<?= $row['subDistrict'] ?>
+                    เขต<?= $row['district'] ?></p>
+                <p><?= $row['province'] ?>, <?= $row['postalCode'] ?></p>
+                <?php
+            } else {
+                echo "<p>ไม่มีข้อมูลที่อยู่</p>";
+            }
+            ?>
         </div>
         <!---Contact---->
         <div>
             <h4>Contact Us</h4>
             <?php
             $sql = "SELECT * FROM contacts";
-            $result = mysqli_query($conn,$sql);
+            $result = mysqli_query($conn, $sql);
             $row = $result->fetch_assoc();
 
             echo "<div class='contactsall'>";
-        
-                    echo "<div class='contactphone my-2 '>";
-                    echo "<i class='bi bi-telephone-fill'>"." ". htmlspecialchars($row['phone'])."</i><br>";
-                    echo "<i class='bi bi-line'>"." ". htmlspecialchars($row['line'])."</i><br>";
-                    echo "<i class='bi bi-envelope-at-fill'>"." ". htmlspecialchars($row['email'])."</i><br>";
-                    echo "</div>";
-            
 
-            
+            echo "<div class='contactphone my-2 '>";
+            echo "<i class='bi bi-telephone-fill'>" . " " . htmlspecialchars($row['phone']) . "</i><br>";
+            echo "<i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i><br>";
+            echo "<i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i><br>";
+            echo "</div>";
+
+
+
             echo "</div>";
             ?>
         </div>
         <!---aboutUS---->
         <div>
-                <?php
-                try {
-                    $pdo = new PDO(
-                        "mysql:host=$servername;dbname=$dbname;charset=utf8",
-                        $username,
-                        $password
-                    );
-                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                } catch (PDOException $e) {
-                    die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
-                }
-                $sql = "SELECT * FROM messages ORDER BY id DESC";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute();
-                $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                ?>
+            <?php
+            try {
+                $pdo = new PDO(
+                    "mysql:host=$servername;dbname=$dbname;charset=utf8",
+                    $username,
+                    $password
+                );
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("เชื่อมต่อฐานข้อมูลไม่ได้: " . $e->getMessage());
+            }
+            $sql = "SELECT * FROM messages ORDER BY id DESC";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            ?>
 
-                <h4 class='text-center'>About us</h4>
-                
-                <?php if (!empty($entries)): ?>
-                    <ul  style='list-style-type: none;'>
-                        <?php foreach ($entries as $item): ?>
-                            <li ><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <p>ยังไม่มีข้อความใด ๆ</p>
-                <?php endif; ?>
-            </div>
+            <h4 class='text-center'>About us</h4>
+
+            <?php if (!empty($entries)): ?>
+                <ul style='list-style-type: none;'>
+                    <?php foreach ($entries as $item): ?>
+                        <li><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>ยังไม่มีข้อความใด ๆ</p>
+            <?php endif; ?>
+        </div>
         <!---Social---->
-            <div>
+        <div>
             <?php $sql = 'select * from footer_links';
-                    $result = mysqli_query($conn, $sql);
-                    $row = $result->fetch_assoc()
-                        ?>
+            $result = mysqli_query($conn, $sql);
+            $row = $result->fetch_assoc()
+                ?>
             <h4 class='text-center'>SOCIAL</h4>
-            
+
             <ul class='d-flex justify-content-evenly'>
                 <il class='mx-2'>
-                    <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:#339fff;"><i class="bi bi-facebook fs-3"></i></a>
-                </li>
-                <il class='mx-2'>
-                    <a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i class="bi bi-tiktok fs-3"></i></a></li>
-                <il class='mx-2'>
-                    <a href="##?>" style='text-decoration: none;color: #00f31e;'><i class="bi bi-line fs-3"></i></a></li>
-                <il class='mx-2'>
-                    <a href="##" style='text-decoration: none; color: #f60505;'><i class="bi bi-youtube fs-3"></i></a></li>
+                    <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:#339fff;"><i
+                            class="bi bi-facebook fs-3"></i></a>
+                    </li>
+                    <il class='mx-2'>
+                        <a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i
+                                class="bi bi-tiktok fs-3"></i></a></li>
+                        <il class='mx-2'>
+                            <a href="##?>" style='text-decoration: none;color: #00f31e;'><i
+                                    class="bi bi-line fs-3"></i></a></li>
+                            <il class='mx-2'>
+                                <a href="##" style='text-decoration: none; color: #f60505;'><i
+                                        class="bi bi-youtube fs-3"></i></a></li>
             </ul>
         </div>
     </div>

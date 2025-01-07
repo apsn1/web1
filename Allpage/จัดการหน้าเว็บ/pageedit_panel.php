@@ -74,9 +74,15 @@
                     echo "ไม่มีไฟล์ในระบบ";
                 }
                 ?>
+                <div class="ส่วนจัดการหน้า">
+                    <a onclick="loadFile('../../about.php')">about</a><br>
+                    <a onclick="loadFile('../uploads/file2.php')">File 2</a><br>
+                    <a onclick="loadFile('../uploads/file3.php')">File 3</a><br>
+                    <!-- เพิ่มลิงก์เพิ่มเติมตามต้องการ -->
+                </div>
             </div>
             <div class="ส่วนตัวอย่างหน้า">
-                <iframe id="fileIframe" class="iframe-content"  src=""></iframe>
+                <iframe id="fileIframe" class="iframe-content" src=""></iframe>
 
             </div>
         </div>
