@@ -132,7 +132,7 @@
                         $hardcodedFiles = [
                             'add_social.php' => 'Social Page',
                             'insertfile.php' => 'เพิ่มไฟล์',
-                            '../uploads/file3.php' => 'File 3',
+                            'insertfile_product.php' => 'เพิ่มสินค้า',
                         ];
 
                         foreach ($hardcodedFiles as $filePath => $fileName) {
