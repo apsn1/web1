@@ -58,36 +58,63 @@
             จัดการหน้าเว็บ
         </div>
         <div class="allPage">
-            <div class="ส่วนจัดการหน้า">
+            <!-- ส่วนแสดงหน้าเว็บตัวอย่าง (ซ้าย) -->
+            <div class="ส่วนหน้าเว็บตัวอย่าง">
+                <h2>หน้าเว็บตัวอย่าง</h2>
                 <?php
+                // สมมติว่าไฟล์ตัวอย่างหน้าเว็บ hardcoded
+                $exampleFiles = [
+                    '../../index.php' => 'หน้าแรก',
+                    '../../about.php' => 'เกี่ยวกับเรา',
+                    '../../social.php' => 'โซเซียล',
+                ];
+
+                foreach ($exampleFiles as $filePath => $fileName) {
+                    echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">' . htmlspecialchars($fileName) . '</a><br>';
+                }
+
+                // ดึงไฟล์เพิ่มเติมจากฐานข้อมูล
                 $sql = "SELECT * FROM page_aboutme ORDER BY id DESC";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    // แสดงชื่อไฟล์เป็นลิงก์ที่สามารถคลิกได้
                     while ($row = $result->fetch_assoc()) {
-                        // สมมติว่าไฟล์อยู่ในโฟลเดอร์ 'uploads'
                         $filePath = '../' . htmlspecialchars($row["name"]) . '.php';
-                        echo '<a onclick="loadFile(\'' . $filePath . '\')".>' . htmlspecialchars($row["name"]) . '</a>';
+                        echo '<a onclick="loadFile(\'' . $filePath . '\')">' . htmlspecialchars($row["name"]) . '</a><br>';
                     }
                 } else {
-                    echo "ไม่มีไฟล์ในระบบ";
+                    echo "ไม่มีไฟล์ในระบบ<br>";
                 }
                 ?>
-                <div class="ส่วนจัดการหน้า">
-                    <a onclick="loadFile('../../about.php')">about</a><br>
-                    <a onclick="loadFile('../uploads/file2.php')">File 2</a><br>
-                    <a onclick="loadFile('../uploads/file3.php')">File 3</a><br>
-                    <!-- เพิ่มลิงก์เพิ่มเติมตามต้องการ -->
-                </div>
-            </div>
-            <div class="ส่วนตัวอย่างหน้า">
-                <iframe id="fileIframe" class="iframe-content" src=""></iframe>
 
+            </div>
+
+            <!-- ส่วนจัดการไฟล์ (กลาง) -->
+            <div class="ส่วนจัดการไฟล์">
+                <h2>จัดการไฟล์</h2>
+                <?php
+                // สมมติว่าไฟล์ hardcoded อยู่ในอาร์เรย์
+                $hardcodedFiles = [
+                    'add_social.php' => 'Social Page',
+                    'insertfile.php' => 'เพิ่มไฟล์',
+                    '../uploads/file3.php' => 'File 3',
+                ];
+
+                foreach ($hardcodedFiles as $filePath => $fileName) {
+                    echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">' . htmlspecialchars($fileName) . '</a><br>';
+                }
+
+                ?>
+            </div>
+
+            <!-- ส่วนแสดง iframe (ขวา) -->
+            <div class="ส่วนแสดงผล">
+                <h2>แสดงผลไฟล์</h2>
+                <iframe id="fileIframe" class="iframe-content" src=""></iframe>
             </div>
         </div>
     </div>
-    </div>
+
 </body>
 
 </html>

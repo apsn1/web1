@@ -503,7 +503,6 @@
                     while ($row = $result->fetch_assoc()) {
                         echo '<div class="imgContainerpj1">';
                         echo '<img class="photo1" src="admin/' . $row['image_path'] . '" alt="' . htmlspecialchars($row['alt_text']) . '"></a>';
-                        echo '<button onclick="deleteImage(' . $row['id'] . ')">ลบ</button>';
                         echo '</div>';
                     }
                 } else {
