@@ -1,13 +1,11 @@
-<?php include('../../db.php') ?>
+<?php include('../../db.php');
+?>
 
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>แอดมิน</title>
-    <link rel="stylesheet" href="cssforpanel/page_blog.css">
-    <script src="scripts.js"></script>
     <?php
     // Path to the folder
     $folderPath = "../../admin/uploads/";
@@ -29,13 +27,12 @@
         echo "No files found in the folder.";
     }
     ?>
+    <title>แอดมิน</title>
+    <link rel="stylesheet" href="../../admin/CssForadmin/admin_panel_css.css">
 </head>
 
 <body>
     <div class="admin_page">
-        <div class="tabmenu">
-            จัดการหน้าเว็บ
-        </div>
         <div class="allPage">
             <div class="tabmenuBar">
                 <?php
@@ -74,61 +71,92 @@
 
                 echo "</a>";
                 ?>
+
                 <div class="tab" onclick="window.location.href='../../admin/admin_panel.php';">จัดการหน้าหลัก</div>
-                <div class="tab" onclick="window.location.href='editallpage.php';">สร้างหน้าเว็บเพิ่ม</div>
                 <div class="tab" onclick="toggleDropdown(this)">
                     <span>จัดการหน้าเว็บอื่นๆ</span>
                     <span class="icon">&#9660;</span>
                 </div>
                 <div class="dropdown-menu" style="display: none;">
-                    <div class="dropdown-item" onclick="window.location.href='pageedit_panel.php';">หน้าเว็บทั้งหมด
+                    <div class="dropdown-item"
+                        onclick="window.location.href='pageedit_panel.php';">หน้าเว็บทั้งหมด
                     </div>
-                    <div class="dropdown-item" onclick="window.location.href='images_all.php';">รูปภาพทั้งหมด</div>
-                    <div class="dropdown-item" onclick="window.location.href='blogs_all.php';">บทความทั้งหมด</div>
+                    <div class="dropdown-item"
+                        onclick="window.location.href='images_all.php';">รูปภาพทั้งหมด</div>
                 </div>
                 <div class="tab" onclick="window.location.href='tab3.html';">แท็บที่ 3</div>
                 <div class="tab" onclick="window.location.href='tab4.html';">แท็บที่ 4</div>
+
             </div>
-            <div class="ส่วนจัดการหน้า">
-                <?php
-                include('../../db.php'); // เชื่อมต่อฐานข้อมูล
-                
-                // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
-                $sql = "SELECT * FROM filemanager ORDER BY id DESC";
-                $result = $conn->query($sql);
+            <div class="admin_page">
+                <div class="tabmenu">
+                    จัดการหน้าเว็บ
+                </div>
+                <div class="allPage">
+                    <!-- ส่วนแสดงหน้าเว็บตัวอย่าง (ซ้าย) -->
+                    <div class="ส่วนหน้าเว็บตัวอย่าง">
+                        <h2>หน้าเว็บตัวอย่าง</h2>
+                        <?php
+                        // สมมติว่าไฟล์ตัวอย่างหน้าเว็บ hardcoded
+                        $exampleFiles = [
+                            '../../index.php' => 'หน้าแรก',
+                            '../../about.php' => 'เกี่ยวกับเรา',
+                            '../../social.php' => 'โซเซียล',
+                        ];
 
-                if ($result->num_rows > 0):
-                    echo '<ul>';
-                    while ($row = $result->fetch_assoc()):
-                        // สร้างเส้นทางของไฟล์จากชื่อไฟล์ในฐานข้อมูล
-                        $filePath = '../' . $row['filename'];
-
-                        // ตรวจสอบว่าไฟล์มีอยู่ใน directory หรือไม่
-                        if (file_exists($filePath)) {
-                            // หากไฟล์มีอยู่ แสดงลิงก์ที่สามารถคลิกเพื่อเปลี่ยน iframe
-                            echo '<li><strong>' . htmlspecialchars($row['filename']) . '</strong> - <a href="#" onclick="updateIframe(\'' . $filePath . '\')">ดูเนื้อหา</a></li>';
-                        } else {
-                            // หากไฟล์ไม่พบ แสดงข้อความว่า "ไฟล์ไม่พบ"
-                            echo '<li><strong>' . htmlspecialchars($row['filename']) . '</strong> - <span>ไฟล์ไม่พบ</span></li>';
+                        foreach ($exampleFiles as $filePath => $fileName) {
+                            echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">' . htmlspecialchars($fileName) . '</a><br>';
                         }
-                    endwhile;
-                    echo '</ul>';
-                else:
-                    echo '<p>ยังไม่มีไฟล์ที่ถูกบันทึกไว้</p>';
-                endif;
 
-                $conn->close();
-                ?>
+                        // ดึงไฟล์เพิ่มเติมจากฐานข้อมูล
+                        $sql = "SELECT * FROM page_aboutme ORDER BY id DESC";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $filePath = '../' . htmlspecialchars($row["name"]) . '.php';
+                                echo '<a onclick="loadFile(\'' . $filePath . '\')">' . htmlspecialchars($row["name"]) . '</a><br>';
+                            }
+                        } else {
+                            echo "ไม่มีไฟล์ในระบบ<br>";
+                        }
+                        ?>
+
+                    </div>
+
+                    <!-- ส่วนจัดการไฟล์ (กลาง) -->
+                    <div class="ส่วนจัดการไฟล์">
+                        <h2>จัดการไฟล์</h2>
+                        <?php
+                        // สมมติว่าไฟล์ hardcoded อยู่ในอาร์เรย์
+                        $hardcodedFiles = [
+                            'add_social.php' => 'Social Page',
+                            'insertfile.php' => 'เพิ่มไฟล์',
+                            '../uploads/file3.php' => 'File 3',
+                        ];
+
+                        foreach ($hardcodedFiles as $filePath => $fileName) {
+                            echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">' . htmlspecialchars($fileName) . '</a><br>';
+                        }
+
+                        ?>
+                    </div>
+
+                    <!-- ส่วนแสดง iframe (ขวา) -->
+                    <div class="ส่วนแสดงผล">
+                        <h2>แสดงผลไฟล์</h2>
+                        <iframe id="fileIframe" class="iframe-content" src=""></iframe>
+                    </div>
+                </div>
             </div>
-            <div class="ส่วนตัวอย่างหน้า">
-                <iframe src="../../index.php" class="iframe-content" id="contentFrame"></iframe>
-            </div>
+
+
+            <!-- Form สำหรับแก้ไขข้อมูล -->
+
 
             <script>
-
-                // ฟังก์ชันสำหรับเปลี่ยน src ของ iframe
-                function updateIframe(filePath) {
-                    document.getElementById('contentFrame').src = filePath;
+                function loadFile(filePath) {
+                    document.getElementById('fileIframe').src = filePath;
                 }
 
                 function toggleDropdownFields(checkbox) {
@@ -140,6 +168,19 @@
                     }
                 }
 
+                function addDropdownMenu() {
+                    var newInput = document.createElement('input');
+                    newInput.type = 'text';
+                    newInput.name = 'dropdown_name[]';
+                    newInput.placeholder = 'ชื่อเมนูย่อย';
+                    document.querySelector('.additional-dropdown-fields').appendChild(newInput);
+                }
+                function openForm(id, type, value) {
+                    document.getElementById('formId').value = id || '';
+                    document.getElementById('formType').value = type || 'phone';
+                    document.getElementById('formValue').value = value || '';
+                }
+
                 document.addEventListener('mousemove', function (event) {
                     const menu = document.querySelector('.tabmenuBar');
 
@@ -148,28 +189,6 @@
                         menu.classList.add('open'); // เปิดเมนู
                     } else if (event.clientX > 200) { // ถ้าเมาส์ออกห่างจากเมนู
                         menu.classList.remove('open'); // ปิดเมนู
-                    }
-                });
-                function toggleDropdown(element) {
-                    const isOpen = element.classList.contains('open');
-
-                    // ปิดเมนูอื่นที่เปิดอยู่
-                    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('open'));
-                    document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
-
-                    // แสดงหรือซ่อนเมนูที่คลิก
-                    if (!isOpen) {
-                        element.classList.add('open');
-                        element.nextElementSibling.style.display = 'block';
-                    }
-                }
-
-                // ปิดเมนู dropdown เมื่อคลิกพื้นที่อื่น
-                document.addEventListener('click', function (event) {
-                    const isDropdown = event.target.closest('.tab, .dropdown-menu');
-                    if (!isDropdown) {
-                        document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('open'));
-                        document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
                     }
                 });
 
@@ -194,9 +213,18 @@
                         document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
                     }
                 });
+
+                function toggleForm(formId) {
+                    var form = document.getElementById(formId);
+                    if (form.style.display === "none") {
+                        form.style.display = "block";
+                    } else {
+                        form.style.display = "none";
+                    }
+                }
+
             </script>
-        </div>
-    </div>
+
 </body>
 
 </html>

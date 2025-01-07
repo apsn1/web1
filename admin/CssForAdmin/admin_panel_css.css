@@ -56,7 +56,7 @@ label {
     /* Full height */
     margin: 0;
     background: #fff;
-    padding-left: 50px;
+    padding-left: 20px;
     padding-right: 20px;
     padding-top: 20px;
     padding-bottom: -20px;
@@ -81,7 +81,7 @@ label {
     font-size: 18px;
     position: fixed;
     top: 0;
-    left: -200px;
+    left: -300px;
     /* ซ่อนเมนูไว้ด้านซ้าย */
     height: 100%;
     /* ทำให้เต็มความสูงของจอ */

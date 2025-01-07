@@ -1,9 +1,5 @@
 <?php include('../db.php');
-session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
-}
+
 ?>
 
 
@@ -80,8 +76,6 @@ if (!isset($_SESSION['username'])) {
                 echo "</a>";
                 ?>
                 <div class="tab" onclick="window.location.href='admin_panel.php';">จัดการหน้าหลัก</div>
-                <div class="tab" onclick="window.location.href='../Allpage/จัดการหน้าเว็บ/insertfile.php';">
-                    สร้างหน้าเว็บเพิ่ม</div>
                 <div class="tab" onclick="toggleDropdown(this)">
                     <span>จัดการหน้าเว็บอื่นๆ</span>
                     <span class="icon">&#9660;</span>
@@ -337,33 +331,27 @@ if (!isset($_SESSION['username'])) {
                     <button type="submit" name="submit">อัปโหลดรูป</button>
                 </form>
 
-
+                <!-- ----------------------------------------------------------------------------------------------- -->
                 <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
-                <form id="editForm2" method="POST" action="edit_contact.php" style="display: none;">
-                    <input type="hidden" name="id" id="formId" placeholder="Form 2">
-                    <input type="hidden" name="aboutID"
-                        value="<?php echo htmlspecialchars($about['aboutID'] ?? ''); ?>">
-                    <!-- กำหนด aboutID -->
-
-                    <!-- ข้อความองค์กร -->
-                    <div class="underAbout"></div>
-                    <div class="row">
-                        <div class="col-lg-4 ms-auto">
-                            <label for="onesiamText">องค์กร บริษัท วันน์สยาม จำกัด</label><br>
-                            <textarea id="onesiamText" name="onesiamText" rows="5" class="form-control">
-                <?php echo htmlspecialchars($about['onesiamText'] ?? ''); ?>
-            </textarea>
-                        </div>
-                        <div class="col-lg-4 me-auto">
-                            <label for="aboutText">ข้อความเกี่ยวกับบริษัท</label><br>
-                            <textarea id="aboutText" name="aboutText" rows="5" class="form-control">
-                <?php echo htmlspecialchars($about['aboutText'] ?? ''); ?>
-            </textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-3">อัปเดตข้อมูล</button>
+                <form id="editForm2" method="POST" action="edit_about.php" style="display: none;">
+                <?php
+                $sql = 'select * from about ';
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                ?>
+                    <div class="mb-3">
+                        <label for="abouthead" class="form-label">หัวข้อ</label>
+                        <input type="text" class="form-control" name="abouthead" placeholder="กรอกหัวเรื่อง"
+                            value="<?php echo isset($row['abouthead']) ? $row['abouthead'] : ''; ?>" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="abouttitle" class="form-label">บทความ</label>
+                        <input type="text" class="form-control" name="abouttitle" placeholder="กรอกบทความ"
+                            value="<?php echo isset($row['abouttitle']) ? $row['abouttitle'] : ''; ?>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">เพิ่มและแก้ไขข้อมูล</button>
                 </form>
-
+                <!-- ----------------------------------------------------------------------------------------------- -->
 
                 <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
                 <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;">
