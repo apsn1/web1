@@ -12369,7 +12369,7 @@ html {
 }
 
 #mainNav .navbar-toggler {
-  font-size: 80%;
+  font-size: 40%;
   padding: 0.8rem;
 }
 
@@ -12554,11 +12554,13 @@ img.img-fluid {
 
 
 .footer {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding: 20px 10px;
   background-color: #2c3e50;
   color: #fff;
+  font-size: 14px;
+  color: white;
 }
+
 
 .copyright {
   background-color: #1a252f;
@@ -12954,53 +12956,65 @@ img.img-fluid {
 }
 
 .blog-card {
-
-  background-color: #e9ecef;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  background-color: #f9f9f9; /* สีพื้นหลัง */
+  border: 1px solid #ddd; /* เส้นขอบ */
+  border-radius: 8px; /* มุมมน */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เงา */
+  overflow: hidden; /* ซ่อนเนื้อหาที่ล้น */
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* เพิ่มแอนิเมชัน */
+
+  /* ขนาดการ์ด */
+  width: 300px; /* กำหนดความกว้าง */
+  height: 400px; /* กำหนดความสูงคงที่ */
+  display: flex;
+  flex-direction: column; /* จัดเรียงเนื้อหาแนวตั้ง */
+  justify-content: space-between; /* กระจายเนื้อหา */
+  padding: 15px;
+  margin: 10px; /* เพิ่มระยะห่างระหว่างการ์ด */
 }
 
-.blog-card img.photo1 {
-  width: 100%;
-  height: 200px;
-  /* ความสูงของรูปภาพ */
-  object-fit: cover;
-  /* จัดให้รูปภาพพอดีกับพื้นที่ */
-  border-radius: 8px 8px 0 0;
+.blog-card img {
+  width: 100%; /* รูปภาพเต็มความกว้าง */
+  height: 150px; /* กำหนดความสูงของรูปภาพ */
+  object-fit: cover; /* ปรับขนาดรูปภาพโดยไม่เสียสัดส่วน */
+  border-radius: 8px; /* ทำให้รูปภาพมุมมน */
 }
 
 .blog-card h3 {
-  font-size: 1.2rem;
+  font-size: 18px; /* ขนาดตัวอักษรหัวข้อ */
   margin: 10px 0;
-  color: #343a40;
+  color: #333;
 }
 
 .blog-card p {
-  font-size: 0.9rem;
-  color: #6c757d;
-  margin: 0 10px 10px;
+  font-size: 14px; /* ขนาดตัวอักษร */
+  margin: 10px 0;
+  color: #555;
+  line-height: 1.4;
+  
+  /* ตัดข้อความที่เกิน */
+  overflow: hidden; /* ซ่อนข้อความ */
+  text-overflow: ellipsis; /* เพิ่มจุดสามจุด */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* แสดงข้อความสูงสุด 3 บรรทัด */
+  -webkit-box-orient: vertical;
 }
 
-.blog-card a.btn-read-more {
+.blog-card .btn-read-more {
   display: inline-block;
-  margin: 10px auto;
-  padding: 8px 12px;
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 5px;
+  margin-top: auto;
+  padding: 10px 20px;
+  background-color: #007bff; /* สีพื้นหลังปุ่ม */
+  color: white; /* สีตัวอักษร */
   text-decoration: none;
-  font-size: 14px;
+  border-radius: 4px; /* มุมมนปุ่ม */
   transition: background-color 0.3s ease;
 }
 
-.blog-card a.btn-read-more:hover {
-  background-color: #0056b3;
+.blog-card .btn-read-more:hover {
+  background-color: #0056b3; /* สีเมื่อเอาเมาส์วางบนปุ่ม */
 }
-
 
 #Blog {
 
@@ -13555,4 +13569,256 @@ header {
   border-width: 10px 0 10px 16px;
   border-color: transparent transparent transparent #fff;
   margin-left: 5px;
+}
+@media (max-width: 768px) {
+  /* ทำให้ blog-card แสดงทีละ 1 อัน */
+.allblog {
+  display: flex;
+  overflow: hidden; /* ซ่อนส่วนที่เกิน */
+  position: relative;
+  width: 100%;
+}
+
+.blog-card {
+  flex: 0 0 100%; /* แสดงทีละ 1 การ์ด */
+  transition: transform 0.5s ease; /* เลื่อนการ์ดอย่างนุ่มนวล */
+}
+
+/* ปุ่มควบคุม */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+}
+@media (max-width: 768px) {
+  #scrollToTop {
+    position: fixed;
+    bottom: 12px; /* ระยะห่างจากด้านล่าง */
+    left: 20px;   /* ระยะห่างจากด้านซ้าย */
+    background-color: #f39c12; /* สีพื้นหลัง */
+    color: white; /* สีตัวอักษร */
+    border: none;
+    border-radius: 5px;
+    padding: 0px 5px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* เงา */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px); /* ซ่อนปุ่มในตอนแรก */
+    z-index: 9999; /* อยู่ด้านหน้าสุด */
+  }
+  
+  #scrollToTop.show {
+    opacity: 1;
+    transform: translateY(0); /* แสดงปุ่มเมื่อเลื่อนลง */
+  }
+  
+  #scrollToTop:hover {
+    background-color: #e67e22; /* สีเมื่อ hover */
+  }
+}
+@media (max-width: 768px) {
+  #notification-icon {
+    position: fixed;
+    bottom: 10px;
+    /* ระยะจากขอบล่าง */
+    right: 20px;
+    /* ระยะจากขอบขวา */
+    width: 40px;
+    /* ขนาดของกรอบวงกลม */
+    height: 40px;
+    /* ขนาดของกรอบวงกลม */
+    border-radius: 50%;
+    /* ทำให้กรอบเป็นวงกลม */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    animation: bounce 1s infinite;
+    /* แอนิเมชันขยับ */
+    z-index: 9999;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  #notification-icon img {
+    width: 120%;
+    /* ทำให้รูปภาพเต็มขนาดของกรอบ */
+    height: 100%;
+    /* ทำให้รูปภาพเต็มขนาดของกรอบ */
+  }
+  
+  #notification-icon:hover {
+    transform: scale(1.1);
+    /* ขยายขนาดเล็กน้อยเมื่อเมาส์วาง */
+    animation: none;
+    /* หยุดแอนิเมชันเมื่อเมาส์วาง */
+  }
+}
+
+/* Media Query สำหรับมือถือ Footer*/
+@media (max-width: 768px) {
+  footer .d-flex {
+    flex-direction: column; /* เปลี่ยนเป็นเรียงแนวตั้ง */
+    align-items: center;
+  }
+
+  footer div {
+    flex: 1 1 100%; /* ให้แต่ละส่วนยืดเต็มพื้นที่ */
+    margin-bottom: 15px;
+  }
+
+  footer ul {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  footer ul li {
+    margin: 0 5px;
+  }
+
+  .copyright div {
+    font-size: 10px;
+  }
+}
+/* บทความ*/
+@media (max-width: 768px) {
+  .allblog {
+    display: flex; /* จัดเรียงการ์ดในแนวนอน */
+    overflow-x: auto; /* เปิดการเลื่อนในแนวนอน */
+    scroll-snap-type: x mandatory; /* ใช้ Scroll Snap */
+    -webkit-overflow-scrolling: touch; /* เพิ่มการเลื่อนแบบนุ่มนวลใน iOS */
+  }
+
+  .blog-card {
+    flex: 0 0 100%; /* แต่ละการ์ดกว้างเต็มหน้าจอ */
+    scroll-snap-align: start; /* ให้การ์ดหยุดที่จุดเริ่มต้น */
+    margin-right: 10px; /* เพิ่มช่องว่างระหว่างการ์ด */
+  }
+
+  .blog-card img {
+    width: 100%; /* รูปภาพเต็มความกว้าง */
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .blog-card h3, .blog-card p {
+    text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+  }
+
+  .blog-card a {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 768px) {
+  .huakor{   
+    margin-bottom: 50px;
+    }
+}
+.huakor{
+  margin-left: 80px; 
+  margin-bottom: 50px; 
+  text-align: left;
+}
+/* สำหรับหน้าจอมือถือ */
+@media (max-width: 768px) {
+  .containerPj {
+      display: flex;
+      flex-direction: column; /* จัดเรียงแนวตั้ง */
+      overflow-y: auto; /* เปิดการเลื่อนในแนวตั้ง */
+      max-height: 80vh; /* กำหนดความสูงสูงสุด */
+      scroll-snap-type: y mandatory; /* ใช้ Scroll Snap */
+      -webkit-overflow-scrolling: touch; /* เลื่อนแบบนุ่มนวลใน iOS */
+  }
+
+  .imgContainerpj1 {
+      flex: 0 0 auto; /* ให้แต่ละไอเท็มใช้พื้นที่อัตโนมัติ */
+      scroll-snap-align: start; /* ให้เลื่อนไปหยุดที่ไอเท็ม */
+      margin-bottom: 20px; /* เพิ่มช่องว่างระหว่างไอเท็ม */
+      text-align: center; /* จัดกึ่งกลางเนื้อหา */
+  }
+
+  .imgContainerpj1 img {
+      width: 100%; /* รูปภาพเต็มความกว้าง */
+  }
+
+  .imgContainerpj1 button {
+      display: none;
+  }
+}
+/* สำหรับหน้าจอมือถือ */
+@media (max-width: 768px) {
+  .containerPj {
+      display: flex;
+      flex-direction: column; /* จัดเรียงแนวตั้ง */
+      overflow-y: auto; /* เปิดการเลื่อนในแนวตั้ง */
+      max-height: 80vh; /* กำหนดความสูงสูงสุด */
+      scroll-snap-type: y mandatory; /* ใช้ Scroll Snap */
+      -webkit-overflow-scrolling: touch; /* เลื่อนแบบนุ่มนวลใน iOS */
+  }
+
+  .imgContainerpj {
+      flex: 0 0 auto; /* ให้แต่ละไอเท็มใช้พื้นที่อัตโนมัติ */
+      scroll-snap-align: start; /* ให้เลื่อนไปหยุดที่ไอเท็ม */
+      margin-bottom: 20px; /* เพิ่มช่องว่างระหว่างไอเท็ม */
+      text-align: center; /* จัดกึ่งกลางเนื้อหา */
+  }
+
+  .imgContainerpj img {
+      width: 100%; /* รูปภาพเต็มความกว้าง */
+  }
+
+  .imgContainerpj button {
+      display: none;
+  }
+}
+@media (max-width: 768px) {
+  .video-container{
+    height: 300px;
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .custom-position-absolute{
+    height: 50px;
+  }
+  .custom-button-container button{
+    font-size: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .logoinmenu img {
+      height: 40px !important;
+      width: 50px !important;
+  }
+.logoinmenu {
+  width: 100px;
+}
+}
+.logoinmenu img{
+height: 95px; 
+margin-right: 500px;
+}
+@media (max-width: 768px) {
+  .navbar-toggler{
+    color: black;
+  }
 }

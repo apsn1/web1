@@ -13,7 +13,7 @@ if (!isset($_POST['header_button'])) {
 $file_name = time() . '_' . basename($_FILES['header']['name']); // เพิ่มเวลาเพื่อป้องกันชื่อไฟล์ซ้ำ
 $tempname = $_FILES['header']['tmp_name'];
 $button = $conn->real_escape_string($_POST['header_button']); // ป้องกัน SQL Injection
-$target_dir = $_SERVER['DOCUMENT_ROOT'] . "/web/admin/img/header/";
+$target_dir = $_SERVER['DOCUMENT_ROOT'] . "/web1/admin/img/header/";
 $target_file = $target_dir . $file_name;
 
 // ตรวจสอบจำนวนรูปภาพในฐานข้อมูล

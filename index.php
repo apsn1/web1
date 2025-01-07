@@ -136,9 +136,11 @@
             });
             if (count($imageFiles) > 0) {
                 $image = reset($imageFiles);
+                echo "<div class='logoinmenu'>";
                 echo "<img src='{$directory}{$image}' 
                       alt='รูปภาพล่าสุด' 
-                      style='height: 95px; margin-right: 500px;'>";
+                      '>";
+                echo "</div>";
             } else {
                 echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
             }
@@ -283,7 +285,7 @@
     $result = $conn->query($sql);
     ?>
 
-    <div class="videoBar">
+    <div class="videoBar" style="margin-top: 50px;">
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -430,7 +432,7 @@
         <h2 class="Project" style="margin-bottom:40px; text-align: center;">
             การสร้างออกเเบบวันน์สยามเป็นอย่างไร
         </h2>
-        <div class="containerPj" style="display:flex; flex-wrap:wrap;">
+        <div class="containerPj"style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
             <?php
             include('db.php'); // เชื่อมต่อฐานข้อมูล
             
@@ -502,7 +504,7 @@
             <h2 class="Project" style="margin-bottom :70px; text-align: center;">
                 Projects โปรเจกต์ออกแบบหน้ากากอาคารและลูกค้าของเรา
             </h2>
-            <div class="containerPj" style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
+            <div class="containerPj"style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
                 <?php
                 include('db.php'); // เชื่อมต่อฐานข้อมูล
                 
@@ -523,7 +525,7 @@
             </div>
         </section>
         <section class="page-section" id="Blog">
-            <div class="huakor" style="margin-left: 80px; margin-bottom: 50px; text-align: left;">
+            <div class="huakor">
                 <h1>- Architecting Legacy : Stability and Wealth Through Design</h1><br>
                 <h2>บทความ</h2>
             </div>
@@ -710,3 +712,5 @@
 </div>
 
 </html>
+
+<script></script>
