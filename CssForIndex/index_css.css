@@ -12368,9 +12368,16 @@ html {
   color: #000000;
 }
 
+@media (min-width: 376px){
 #mainNav .navbar-toggler {
-  font-size: 40%;
-  padding: 0.8rem;
+  font-size: 8px;
+  padding: 1rem;
+  }
+  .navbar-toggler{
+    height: 50px;
+    width: 80px;
+    font-size: 12px;
+  }
 }
 
 @media (min-width: 992px) {
@@ -13696,6 +13703,9 @@ header {
   .copyright div {
     font-size: 10px;
   }
+  .footer{
+    width: 100%;
+  }
 }
 /* บทความ*/
 @media (max-width: 768px) {
@@ -13801,7 +13811,15 @@ header {
     height: 50px;
   }
   .custom-button-container button{
-    font-size: 10px;
+    font-size: 8px;
+    width: 100%;
+    padding: 6px 20px;
+    border: 2px solid transparent;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
   }
 }
 @media (max-width: 768px) {
@@ -13810,7 +13828,7 @@ header {
       width: 50px !important;
   }
 .logoinmenu {
-  width: 100px;
+  width: 100%;
 }
 }
 .logoinmenu img{
@@ -13820,5 +13838,73 @@ margin-right: 500px;
 @media (max-width: 768px) {
   .navbar-toggler{
     color: black;
+  }
+}
+@media (max-width: 768px) {
+  #mainNav {
+      width: 100%;
+  }
+}
+@media (max-width: 376px) {
+  #mainNav {
+      width: 100%;
+  }
+  .custom-button-container button{
+    font-size: 6px;
+    width: 100%;
+    padding: 6px 20px;
+    border: 2px solid transparent;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+}
+
+@media (max-width: 350px) {
+  footer {
+      width: 100%;
+  }
+}
+@media (max-width: 1030px) {
+  .Colum15year {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px;
+    background-color: #e9ecef;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media (min-width: 768px) and (max-width: 830px) {
+  .custom-button-container button{
+    font-size: 13px;
+    width: 100%;
+    padding: 6px 20px;
+    border: 2px solid transparent;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .Colum15year {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #e9ecef;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@media (max-width: 930px) {
+  .Colum15year {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #e9ecef;
+    align-items: center;
+    justify-content: center;
   }
 }
