@@ -46,7 +46,6 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="CssForIndex/index_css.css">
     <title>หน้าเว็บหลัก</title>
-    <script src="scripts.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome (สำหรับไอคอน) -->
@@ -77,10 +76,11 @@
     </div>
 
     <button id="scrollToTop">↑ ขึ้นบนสุด</button>
+
     <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
-        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'home.php'],
+        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
         ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
         ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
         ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
@@ -116,13 +116,12 @@
         }
     }
 
-
     echo "<nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>";
 
     echo "<div class='container'>";
 
     // 5.1 แสดงโลโก้ (ถ้ามี)
-    echo "<a href='#'>";
+    echo "<a href='index.php'>";
 
     // ตรวจสอบรูปภาพใน 'admin/uploads' (ถ้าไม่ใช้ ก็ลบส่วนนี้ออกได้)
     $directory = 'admin/uploads/';
@@ -169,17 +168,18 @@
     foreach ($mainMenus as $main) {
         $mainId = $main['id'];
         $mainName = $main['name'];
-
+        $mainLink = htmlspecialchars($main['link'], ENT_QUOTES, 'UTF-8'); // ใช้ link จาก $mainMenus
+    
         // ตรวจสอบว่ามีเมนูย่อยหรือไม่
         if (isset($subMenus[$mainId])) {
             // มีเมนูย่อย แสดงเป็น Dropdown
             echo "<li class='nav-item dropdown mx-0 '>";
-            echo "<a class='nav-link dropdown-toggle py-3 ' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
-                . htmlspecialchars($mainName) . "</a>";
+            echo "<a class='nav-link dropdown-toggle py-3 ' href='{$mainLink}'>"
+                . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
-                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to']);
-                $submenuName = htmlspecialchars($submenu['name']);
+                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
+                $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
                 echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
             }
             echo "</ul>";
@@ -187,96 +187,16 @@
         } else {
             // ไม่มีเมนูย่อย แสดงเป็นปกติ ไม่ใช่ Dropdown
             echo "<li class='nav-item mx-0 '>";
-            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#'>"
-                . htmlspecialchars($mainName) . "</a>";
+            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='{$mainLink}'>"
+                . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "</li>";
         }
     }
     echo "</nav>";
+    
 
     ?>
-
-    <nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>
-        <div class='container'>
-
-            <!-- 5.1 แสดงโลโก้ (ถ้ามี) -->
-            <a class='navbar-brand' href='home.php'>
-                <?php
-                $directory = 'admin/uploads/';
-                if (is_dir($directory)) {
-                    $files = scandir($directory);
-                    if ($files !== false) {
-                        $files = array_diff($files, array('.', '..'));
-                        $imageFiles = array_filter($files, function ($file) {
-                            $ext = pathinfo($file, PATHINFO_EXTENSION);
-                            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
-                        });
-                        if (count($imageFiles) > 0) {
-                            $image = reset($imageFiles);
-                            echo "<img src='{$directory}" . htmlspecialchars($image, ENT_QUOTES, 'UTF-8') . "' 
-                              alt='โลโก้' 
-                              style='height: 95px;'>";
-                        } else {
-                            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
-                        }
-                    } else {
-                        echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
-                    }
-                } else {
-                    echo "ไม่พบโฟลเดอร์ uploads";
-                }
-                ?>
-            </a>
-
-            <!-- 5.2 ปุ่ม Toggle สำหรับ Mobile -->
-            <button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button'
-                data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'
-                aria-expanded='false' aria-label='Toggle navigation'>
-                Menu <i class='fas fa-bars'></i>
-            </button>
-
-            <!-- 5.3 ส่วนเนื้อหาของ Navbar -->
-            <div class='collapse navbar-collapse' id='navbarResponsive'>
-                <ul class='navbar-nav ms-auto'> <!-- ใช้ ms-auto เพื่อจัดเมนูไปทางขวา -->
-                    <?php foreach ($mainMenus as $main): ?>
-                        <?php
-                        $mainId = $main['id'];
-                        $mainName = htmlspecialchars($main['name'], ENT_QUOTES, 'UTF-8');
-                        $mainLink = htmlspecialchars($main['link'], ENT_QUOTES, 'UTF-8');
-
-                        // ตรวจสอบว่ามีเมนูย่อยหรือไม่
-                        if (isset($subMenus[$mainId])):
-                            ?>
-                            <li class='nav-item dropdown'>
-                                <a class='nav-link dropdown-toggle' href='<?php echo $mainLink; ?>' role='button'
-                                    data-bs-toggle='dropdown' aria-expanded='false'>
-                                    <?php echo $mainName; ?>
-                                </a>
-                                <ul class='dropdown-menu'>
-                                    <?php foreach ($subMenus[$mainId] as $submenu): ?>
-                                        <?php
-                                        $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
-                                        $submenuLinkTo = htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
-                                        $submenuLink = "Allpage/" . $submenuLinkTo . ".php";
-                                        ?>
-                                        <li><a class='dropdown-item'
-                                                href='<?php echo $submenuLink; ?>'><?php echo $submenuName; ?></a></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </li>
-                        <?php else: ?>
-                            <li class='nav-item'>
-                                <a class='nav-link' href='<?php echo $mainLink; ?>'><?php echo $mainName; ?></a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-
+      
     <?php
     include("db.php");
     // ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
@@ -638,43 +558,43 @@
         </section>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navbar = document.getElementById("mainNav");
+   // การจัดการพื้นหลัง Navbar
+document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.getElementById("mainNav");
 
-            window.addEventListener("scroll", () => {
-                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-                if (currentScroll < 100) {
-                    // เมื่อเลื่อนน้อยกว่า 100px - โปร่งใส
-                    navbar.classList.add("transparent");
-                } else {
-                    // เมื่อเลื่อนเกิน 100px - มีพื้นหลัง
-                    navbar.classList.remove("transparent");
-                }
-            });
+        if (currentScroll < 100) {
+            navbar.classList.add("transparent"); // พื้นหลังโปร่งใส
+        } else {
+            navbar.classList.remove("transparent"); // พื้นหลังปกติ
+        }
+    });
+});
+
+// การจัดการปุ่ม Scroll to Top
+document.addEventListener("DOMContentLoaded", function () {
+    const scrollToTopBtn = document.getElementById("scrollToTop");
+
+    // แสดงหรือซ่อนปุ่ม
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > 200) { // เมื่อเลื่อนเกิน 200px
+            scrollToTopBtn.classList.add("show");
+        } else {
+            scrollToTopBtn.classList.remove("show");
+        }
+    });
+
+    // คลิกปุ่มเพื่อเลื่อนกลับด้านบน
+    scrollToTopBtn.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth", // เลื่อนอย่างนุ่มนวล
         });
+    });
+});
 
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const scrollToTopBtn = document.getElementById("scrollToTop");
-
-            // ตรวจสอบการเลื่อนหน้า
-            window.addEventListener("scroll", function () {
-                if (window.scrollY > 200) { // แสดงปุ่มเมื่อเลื่อนลงเกิน 200px
-                    scrollToTopBtn.classList.add("show");
-                } else {
-                    scrollToTopBtn.classList.remove("show");
-                }
-            });
-
-            // เมื่อคลิกปุ่ม ให้เลื่อนขึ้นไปด้านบน
-            scrollToTopBtn.addEventListener("click", function () {
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth", // เลื่อนอย่างนุ่มนวล
-                });
-            });
-        });
     </script>
     </div>
 </body>
@@ -782,5 +702,3 @@
 </div>
 
 </html>
-
-<script></script>

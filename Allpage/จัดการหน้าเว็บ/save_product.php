@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("เตรียม statement ล้มเหลว: " . $conn->error);
     }
 
-    $stmt->bind_param("sssssss", $name, $text_description, $text_nameproduct, $img_product, $img_others_json, $link_Social, $img_product_json);
+    $stmt->bind_param("sssssss", $name, $text_description, $text_nameproduct, $img_product, $img_others_json, $link_Social, $img_onTop_json);
 
     if ($stmt->execute()) {
         // ถ้าบันทึกสำเร็จ สร้างไฟล์ใหม่
@@ -116,7 +116,7 @@ include('../db.php');
         <img src="../uploads/{$img_product}" alt="{$name}">
     </div>
     <div>
-        {$img_product_html}
+        {$img_onTop_html}
     </div>
     <div>
         <h2>ภาพเพิ่มเติม</h2>
