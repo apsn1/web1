@@ -622,16 +622,22 @@ document.addEventListener("DOMContentLoaded", function () {
         <div>
             <h4>Contact Us</h4>
             <?php
-            $sql = "SELECT * FROM contacts";
+            $sql = "SELECT c.*, f.line as line_url 
+                FROM contacts c 
+                LEFT JOIN footer_links f 
+                ON 1=1 
+                LIMIT 1";
             $result = mysqli_query($conn, $sql);
-            $row = $result->fetch_assoc();
+            $row = mysqli_fetch_assoc($result);
 
             echo "<div class='contactsall'>";
             echo "<div class='contactphone my-2 '>";
             echo "<i class='bi bi-telephone-fill'>" . " " . htmlspecialchars($row['phone']) . "</i><br>";
             echo "<i class='bi bi-building'>" . " " . ($row['telephone'] === "" ? htmlspecialchars($row['phone']) : htmlspecialchars($row['telephone'])) . "</i><br>";
             echo "<a class='text-decoration-none ' style='color: white;' href='mailto:" . htmlspecialchars($row['email']) . "'><i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i></a><br>";
-            echo "<a class='text-decoration-none ' style='color: white;' href='https://line.me/R/ti/p/@749JQJZM'><i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i></a><br>";
+            echo "<a class='text-decoration-none ' style='color: white;' href='" . htmlspecialchars($row['line_url']) . "'><i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i></a><br>";
+            echo "</div>";
+
             echo "</div>";
             ?>
         </div>
