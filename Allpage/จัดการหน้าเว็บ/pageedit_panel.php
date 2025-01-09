@@ -135,6 +135,7 @@
                             'add_social.php' => 'Social Page',
                             'insertfile.php' => 'เพิ่มไฟล์',
                             'insertfile_product.php' => 'เพิ่มสินค้า',
+                            'from_member.php' => 'เพิ่มและแก้ไข',
                         ];
 
                         foreach ($hardcodedFiles as $filePath => $fileName) {
