@@ -627,15 +627,11 @@ document.addEventListener("DOMContentLoaded", function () {
             $row = $result->fetch_assoc();
 
             echo "<div class='contactsall'>";
-
             echo "<div class='contactphone my-2 '>";
             echo "<i class='bi bi-telephone-fill'>" . " " . htmlspecialchars($row['phone']) . "</i><br>";
-            echo "<i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i><br>";
-            echo "<i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i><br>";
-            echo "</div>";
-
-
-
+            echo "<i class='bi bi-building'>" . " " . ($row['telephone'] === "" ? htmlspecialchars($row['phone']) : htmlspecialchars($row['telephone'])) . "</i><br>";
+            echo "<a class='text-decoration-none ' style='color: white;' href='mailto:" . htmlspecialchars($row['email']) . "'><i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i></a><br>";
+            echo "<a class='text-decoration-none ' style='color: white;' href='https://line.me/R/ti/p/@749JQJZM'><i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i></a><br>";
             echo "</div>";
             ?>
         </div>
