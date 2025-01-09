@@ -101,7 +101,9 @@
                         $exampleFiles = [
                             '../../index.php' => 'หน้าแรก',
                             '../../about.php' => 'เกี่ยวกับเรา',
-                            '../../social.php' => 'โซเซียล',
+                            '../../social.all.php' => 'โซเซียล',
+                            '../../social_youtube.php' => 'youtube',
+
                         ];
 
                         foreach ($exampleFiles as $filePath => $fileName) {

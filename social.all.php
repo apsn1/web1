@@ -12,7 +12,7 @@ include('db.php');
 
     <?php
     // Path to the folder
-    $folderPath = "../admin/uploads/";
+    $folderPath = "admin/uploads/";
 
     // Get all files in the folder
     $files = glob($folderPath . "*");
@@ -200,22 +200,61 @@ include('db.php');
 
 
     ?>
+    <!------------------------------------------------------------------->
+    <?php
+    // เชื่อมต่อฐานข้อมูล
+    include('db.php');
 
-    <div class="content">
-        <p><?php echo htmlspecialchars("เกี่ยวกับฉัน", ENT_QUOTES, 'UTF-8'); ?></p>
-        <div class="left">
-            <img src="<?php echo htmlspecialchars('Allpage/จัดการหน้าเว็บ/images_all/462567104_2075481142880694_1501017219490596836_n.jpg', ENT_QUOTES, 'UTF-8'); ?>"
-                alt="Left Image" style="max-width: 300px;">
-            <p><?php echo htmlspecialchars("องค์กรบริษัท วันน์สยาม จำกัด และในเครือ <br> บริษัทวันน์สยามและในเครือพัฒนาอย่างต่อเนื่องเราเริ่มดำเนินการตั้งแต่2547 จนถึงปัจจุบันโดยคณะผู้ก่อตั้งที่มีคุณวุฒิ ประกอบด้วยCEO PHAKKACHAPHIMON B<br> เริ่มเปิดดำเนินการ เมื่อปี 2547 โรงงานผลิตตะแกรงครบวงจร<br> ผลิตภัณฑ์ โลหะเหล็ก สแตนเลส อลูมิเนียม<br> ตะแกรงเหล็กฉีก ตะแกรงแผ่นเจาะรู ตะแกรงแผ่นลายกันลื่น<br> อบสีฝุ่น ชุลกัลวาไนซ์<br> ผลิต-ส่งออกและมีตัวแทนจำหน่ายทั่วประเทศ<br> ผู้บริหารทรงคุณวุฒิ พัฒนาสู่การบริหารครบวงจร ด้านการออกแบบสถาปัตยกรรม<br> งานตบแต่งภายใน ทุกรูปแบบ ด้วยการพัฒนาการอย่างไม่หยุดยั้ง<br> เราจึงมี ทีมสถาปนิก วิศวกร ช่างผู้เชี่ยวชาญ ประสบการณ์ตรง<br> เป็นบริษัทที่ให้บริการด้านการก่อสร้างอย่างครบวงจรผลงานเรามีมานานกว่า 10 ปี ให้กับลูกค้าในทุกกลุ่มธุรกิจ รวมเป็นจำนวนมากกว่า 300 โปรเจคโดยแยกเป็น โรงงาน ฝ่ายผลิต ทีมออกแบบ สถาปนิก วิศวกร ช่างชำนาญการ สาขาหน้าร้าน ทีมประสานงานและทีมที่ปรึกษา ดังนั้นไม่ว่าความต้องการของคุณจะยากหรือซับซ้อนขนาดไหนทีมงานของเราสามารถช่วยให้คุณก้าวข้ามผ่านไปได้อย่างแน่นอน<br> ดำเนินงานที่ชัดเจน ส่งมอบงานได้ตรงเวลา : ความรับผิดชอบเวลาเป็นเรื่องสำคัญที่เรายึดถือปฏิบัติมาโดยตลอดการทำงานทุกครั้งจะมีเจ้าหน้าที่คอยให้คำแนะนำงานใช้<br> วัตถุดิบในการออกแบบที่ถูกกฏหมาย : เพื่อประสิทธิภาพสูงสุดในการออกแบบ ซื่อสัตย์งานออกแบบทุกชิ้น<br> เกิดจากการพูดคุยถามตอบถึงความต้องการของลูกค้าและนำมาสร้างสรรค์จนเป็นชิ้นงานอย่างที่ปรากฏมาตลอด 10 ปี<br> เอกสารรับรอง มาตรฐานอุตสาหกรรมญี่ปุ่น JIS G 3505 3351 3101-2004</p>", ENT_QUOTES, 'UTF-8'); ?>
-            </p>
+    // ตรวจสอบการเชื่อมต่อ
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // ดึงข้อมูลจากทุกตาราง
+    $tables = ['card_tiktok', 'card_facebook'];
+    $data = [];
+
+    // วนลูปดึงข้อมูลจากแต่ละตาราง
+    foreach ($tables as $table) {
+        $sql = "SELECT * FROM $table";
+        $result = $conn->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = [
+                    'platform_name' => $row['platform_name'],
+                    'platform_link' => $row['platform_link']
+                ];
+            }
+        }
+    }
+    ?>
+        <h1>ข้อมูลจากหลายตาราง</h1>
+        <div class="allcard">
+            <div class="card">
+                <img src="https://via.placeholder.com/100" alt="Platform Logo">
+                <h3>Youtube</h3>
+                <a href="social_youtube.php" target="_blank">ไปยังแพลตฟอร์ม</a>
+                </div>
+            <?php if (!empty($data)): ?>
+            <?php foreach ($data as $item): ?>
+                
+            <div class="card">
+                <!-- แสดงโลโก้ตัวอย่าง -->
+                        <img src="https://via.placeholder.com/100" alt="Platform Logo">
+                        <!-- ชื่อแพลตฟอร์ม -->
+                        <h3><?php echo htmlspecialchars($item['platform_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                        <!-- ลิงก์แพลตฟอร์ม -->
+                        <a href="<?php echo htmlspecialchars($item['platform_link'], ENT_QUOTES, 'UTF-8'); ?>"
+                            target="_blank">ไปยังแพลตฟอร์ม</a>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>ไม่มีข้อมูลในตาราง</p>
+            <?php endif; ?>
         </div>
-        <div class="right">
-            <img src="<?php echo htmlspecialchars('Allpage/จัดการหน้าเว็บ/images_all/462574549_504611285935765_4198341142524739233_n.jpg', ENT_QUOTES, 'UTF-8'); ?>"
-                alt="Right Image" style="max-width: 300px;">
-            <p><?php echo htmlspecialchars("ปี2547 ได้เปิดดำเนินการ ค้าปลีกส่งสินค้าและอิเล็กโทนิก<br> ปี2552 ได้เปิดดำเนินการ ผลิตจำหน่ายตะแกรงโลหะ<br> ปี2556 ได้เปิดดำเนินการ ผลิตจำหน่ายติดตั้งงานตะแกรงโลหะ จนถึงปัจจุบัน<br> สินค้าและบริการของเรา ประกอบด้วย ... ผู้ผลิตจำหน่าย ตะแกรงโลหะ เหล็ก สแตนเลส อลูมิเนียม<br> ผลิตปั้มขึ้นรูปเป็นตะแกรงเหล็กฉีก ตะแกรงเหล็กเจาะรู ตะแกรงเหล็กตีนเป็ด ตะแกรงเหล็กตีนไก่<br> อลูมิเนียมฉีก อลูมิเนียมเจาะรู อลูมิเนียมตีนเป็ด อลูมิเนียมตีนไก่<br> สแตนเลสฉีก สแตนเลสเจาะรู สแตนเลสตีนเป็ด สแตนเลสตีนไก่<br> การควบคุมการผลิต<br> มาตรฐานการผลิต JIS ISO ASTM<br> มาตรฐานควบคุม คุณภาพ ด้วยหนังสือรับรองการดูแล<br> มาตรฐานหนังสือรับรองโลหะการผลิตทุกประเภท<br> บริการเสริมการทำสีกันสนิม<br> ชุบกัลวาไนท์<br> อบสีฝุ่น powder<br> พ่นสีอุสาหกรรม<br> ทาสีอุตสาหกรรม<br> บริการจัดส่ง 76 จังหวัดทั่วไทย<br> การจัดส่งให้ทุกมือลูกค้าทั่วไทย<br> ตัวแทนจำหน่าย 4 ภาคทั่วประเทศ<br> ควบคุมการจัดส่งด้วยระบบมาตรฐาน<br> เกรดโลหะใช้ในการผลิต<br> เหล็กแผ่นรีดร้อนชั้นคุณภาพ SS400 เหล็กแผ่นรีดร้อนชนิดม้วน แผ่นแถบ แผ่นหนา - บาง<br> ตามมาตรฐานอุตสาหกรรม มอก. 1479-2541<br> อลูมิเนียม AL1100 พับขึ้นรูปได้ดี เนื้อเหนียว มีความมันเงาไม่เป็นสนิม มีน้ำหนักเบากว่าแผ่นอลูมิเนียม<br> สแตนเลสชนิดหนึ่งในกลุ่มออสเตนนิติค (Austenitic) ซึ่งสแตนเลสชนิดนี้<br> ทนทาน มีความเหนียว ทนกัดกร่อน ทนความร้อนได้สูง ขึ้นรูปได้ดี ไม่เป็นสนิม ไม่ดูดซึมสาร กล่น<br> อย่างยาวนานเกิดจากการผสมโลหะระหว่างเหล็ก และคาร์บอน โครเมียม นิกเกิล เป็นส่วนผสมหลัก", ENT_QUOTES, 'UTF-8'); ?>
-            </p>
-        </div>
-    </div>
+
+
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
     <footer class="footer">
@@ -346,20 +385,7 @@ include('db.php');
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navbar = document.getElementById("mainNav");
 
-            window.addEventListener("scroll", () => {
-                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                if (currentScroll < 100) {
-                    // เมื่อเลื่อนน้อยกว่า 100px - โปร่งใส
-                    navbar.classList.add("transparent");
-                } else {
-                    // เมื่อเลื่อนเกิน 100px - มีพื้นหลัง
-                    navbar.classList.remove("transparent");
-                }
-            });
-        });
 
         document.addEventListener("DOMContentLoaded", function () {
             const scrollToTopBtn = document.getElementById("scrollToTop");
@@ -382,6 +408,66 @@ include('db.php');
             });
         });
     </script>
+    <style>
+        body {
+
+            justify-content: center;
+            /* จัดกึ่งกลางแนวนอน */
+            height: 100vh;
+            /* ความสูงเต็มหน้าจอ */
+            margin: 0;
+            /* ลบระยะขอบเริ่มต้น */
+        }
+
+        .allcard {
+            margin-top: 150px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .card {
+            border: 2px solid #000;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px auto;
+            width: 100%;
+            /* เต็มความกว้าง */
+            max-width: 100%;
+            /* ไม่เกินหน้าจอ */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-sizing: border-box;
+            /* รวม padding ใน width */
+        }
+
+        .card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .card-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 15px;
+            /* ขอบซ้ายขวา */
+            box-sizing: border-box;
+        }
+    </style>
 </body>
 
 </html>
