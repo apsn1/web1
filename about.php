@@ -316,7 +316,7 @@ include('db.php');
                 <div class="org-box">
                     <div class="card">
                         <div class="card-body d-flex justify-content-around">
-                            <img src="admin/img/members/<?php echo $ceo['member_image']; ?>" 
+                            <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $ceo['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="CEO"
                                  style="width: 100px; height: 100px; object-fit: cover;">
@@ -341,7 +341,7 @@ include('db.php');
                 <div class="org-box">
                     <div class="card">
                         <div class="card-body d-flex justify-content-around">
-                            <img src="admin/img/members/<?php echo $coCeo['member_image']; ?>" 
+                            <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $coCeo['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="CO-CEO"
                                  style="width: 100px; height: 100px; object-fit: cover;">
@@ -367,7 +367,7 @@ include('db.php');
                     <div class="org-box">
                         <div class="card">
                             <div class="card-body d-flex justify-content-around">
-                                <img src="admin/img/members/<?php echo $manager['member_image']; ?>" 
+                                <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $manager['member_image']; ?>" 
                                      class="rounded-circle mb-3" 
                                      alt="Manager"
                                      style="width: 100px; height: 100px; object-fit: cover;">
