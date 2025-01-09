@@ -394,7 +394,7 @@ include('db.php');
                     <div class="org-box col-md-3">
                         <div class="card">
                             <div class="card-body d-flex justify-content-around">
-                                <img src="admin/img/members/<?php echo $employee['member_image']; ?>" 
+                                <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $employee['member_image']; ?>" 
                                      class="rounded-circle mb-3" 
                                      alt="Employee"
                                      style="width: 100px; height: 100px; object-fit: cover;">
