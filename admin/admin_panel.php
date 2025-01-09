@@ -393,7 +393,6 @@
                                accept="image/*" 
                                required 
                                class="form-control mb-2"
-                               value="" ? value="img/members/person.jpg" 
                                >  
                         
                         <input type="text" 

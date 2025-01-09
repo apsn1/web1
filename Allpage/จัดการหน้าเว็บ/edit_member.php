@@ -65,7 +65,7 @@
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body text-center">
-                            <img src="img/members/<?php echo $row['member_image']; ?>" 
+                            <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $row['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="<?php echo $row['member_name']; ?>"
                                  style="width: 150px; height: 150px; object-fit: cover;">

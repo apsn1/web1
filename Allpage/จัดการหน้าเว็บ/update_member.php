@@ -28,13 +28,13 @@ if(isset($_POST['update'])) {
         if(in_array($file_ext, $allowed)) {
             // สร้างชื่อไฟล์ใหม่
             $new_image = uniqid('member_') . '.' . $file_ext;
-            $upload_path = 'img/members/' . $new_image;
+            $upload_path = '../Allpage/จัดการหน้าเว็บ/images_all/' . $new_image;
             
             // อัพโหลดไฟล์ใหม่
             if(move_uploaded_file($file_tmp, $upload_path)) {
                 // ลบรูปเก่า (ถ้ามี)
-                if($old_image && file_exists('img/members/' . $old_image)) {
-                    unlink('img/members/' . $old_image);
+                if($old_image && file_exists('../Allpage/จัดการหน้าเว็บ/images_all/' . $old_image)) {
+                    unlink('../Allpage/จัดการหน้าเว็บ/images_all/' . $old_image);
                 }
                 
                 // อัพเดทข้อมูลพร้อมรูปภาพใหม่

@@ -11,7 +11,7 @@ if(isset($_GET['id'])) {
     $result = mysqli_stmt_get_result($stmt);
     
     if($row = mysqli_fetch_assoc($result)) {
-        $image_path = 'img/members/' . $row['member_image'];
+        $image_path = '../Allpage/จัดการหน้าเว็บ/images_all/' . $row['member_image'];
         
         // ลบข้อมูลจากฐานข้อมูล
         $delete_sql = "DELETE FROM members WHERE memberID = ?";

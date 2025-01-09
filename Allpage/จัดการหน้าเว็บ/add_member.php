@@ -22,11 +22,11 @@ if(isset($_POST['submit'])) {
             if(in_array($file_ext, $allowed)) {
                 // สร้างชื่อไฟล์ใหม่
                 $new_file_name = uniqid('member_') . '.' . $file_ext;
-                $upload_path = 'img/members/' . $new_file_name;
+                $upload_path = '../Allpage/จัดการหน้าเว็บ/images_all/' . $new_file_name;
                 
                 // สร้างโฟลเดอร์ถ้ายังไม่มี
-                if (!file_exists('img/members/')) {
-                    mkdir('img/members/', 0777, true);
+                if (!file_exists('../Allpage/จัดการหน้าเว็บ/images_all/')) {
+                    mkdir('../Allpage/จัดการหน้าเว็บ/images_all/', 0777, true);
                 }
                 
                 // อัพโหลดไฟล์
