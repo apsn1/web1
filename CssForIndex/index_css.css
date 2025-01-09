@@ -13004,7 +13004,6 @@ img.img-fluid {
   overflow: hidden; /* ซ่อนข้อความ */
   text-overflow: ellipsis; /* เพิ่มจุดสามจุด */
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* แสดงข้อความสูงสุด 3 บรรทัด */
   -webkit-box-orient: vertical;
 }
 
@@ -13839,16 +13838,7 @@ margin-right: 500px;
   .navbar-toggler{
     color: black;
   }
-}
-@media (max-width: 768px) {
-  #mainNav {
-      width: 100%;
-  }
-}
-@media (max-width: 376px) {
-  #mainNav {
-      width: 100%;
-  }
+
   .custom-button-container button{
     font-size: 6px;
     width: 100%;

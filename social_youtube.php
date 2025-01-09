@@ -82,26 +82,29 @@ include('db.php');
     <button id="scrollToTop">↑ ขึ้นบนสุด</button>
 
     <?php
-    // กำหนดเมนูหลัก
+    // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
-        ['id' => 1, 'name' => 'หน้าหลัก'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
-        ['id' => 3, 'name' => 'สินค้า'],
-        ['id' => 4, 'name' => 'โปรเจค'],
-        ['id' => 5, 'name' => 'โซเซี่ยล'],
-        ['id' => 6, 'name' => 'บทความ'],
-        ['id' => 7, 'name' => 'ติดต่อเรา']
+        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
+        ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
+        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
+        ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
+        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
+        ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
+        ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
-    // แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
-    $mainIds = array_column($mainMenus, 'id');
-    $inClause = implode(',', $mainIds);
+    // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
+    include('db.php');
 
-    // Query ดึงเมนูย่อยจากตาราง navbar
+    // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
+    $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4,5,6,7]
+    $inClause = implode(',', $mainIds);        // "1,2,3,4,5,6,7"
+    
+    // 4) Query ดึงเมนูย่อยจากตาราง navbar
     $sql = "SELECT * 
-            FROM navbar
-            WHERE parent_id IN ($inClause)
-            ORDER BY parent_id ASC, id ASC";
+        FROM navbar
+        WHERE parent_id IN ($inClause)
+        ORDER BY parent_id ASC, id ASC";
 
     $result = $conn->query($sql);
 
@@ -118,30 +121,34 @@ include('db.php');
     }
 
     echo "<nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>";
+
     echo "<div class='container'>";
 
-    // แสดงโลโก้
-    echo "<a href='#'>";
+    // 5.1 แสดงโลโก้ (ถ้ามี)
+    echo "<a href='index.php'>";
+
+    // ตรวจสอบรูปภาพใน 'admin/uploads' (ถ้าไม่ใช้ ก็ลบส่วนนี้ออกได้)
     $directory = 'admin/uploads/';
-
     if (is_dir($directory)) {
-        // สแกนไฟล์ในโฟลเดอร์
         $files = scandir($directory);
-        // ตัด . และ .. ออก
-        $files = array_diff($files, array('.', '..'));
-
-        // กรองให้เหลือไฟล์ภาพเท่านั้น
-        $imageFiles = array_filter($files, function ($file) {
-            $ext = pathinfo($file, PATHINFO_EXTENSION);
-            return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
-        });
-
-        // หากเจอไฟล์ภาพอย่างน้อย 1 ไฟล์
-        if (!empty($imageFiles)) {
-            $latestImage = reset($imageFiles); // หยิบไฟล์แรกของ array
-            echo "<img src='{$directory}{$latestImage}' alt='โลโก้' style='height: 75px; width: 97px; margin-right: 50px;'>";
+        if ($files !== false) {
+            $files = array_diff($files, array('.', '..'));
+            $imageFiles = array_filter($files, function ($file) {
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                return in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']);
+            });
+            if (count($imageFiles) > 0) {
+                $image = reset($imageFiles);
+                echo "<div class='logoinmenu'>";
+                echo "<img src='{$directory}{$image}' 
+                      alt='รูปภาพล่าสุด' 
+                      '>";
+                echo "</div>";
+            } else {
+                echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+            }
         } else {
-            echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
+            echo "ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้";
         }
     } else {
         echo "ไม่พบโฟลเดอร์ uploads";
@@ -149,73 +156,114 @@ include('db.php');
 
     echo "</a>";
 
-    // ปุ่ม Toggle สำหรับ Mobile
+    // 5.2 ปุ่ม Toggle สำหรับ Mobile
     echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' 
-        type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' 
-        aria-controls='navbarResponsive' aria-expanded='false' 
-        aria-label='Toggle navigation'>Menu <i class='fas fa-bars'></i></button>";
+      type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' 
+      aria-controls='navbarResponsive' aria-expanded='false' 
+      aria-label='Toggle navigation'>
+      Menu <i class='fas fa-bars'></i>
+      </button>";
 
-    // ส่วนเนื้อหาของ Navbar
+    // 5.3 ส่วนเนื้อหาของ Navbar
     echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
-    echo "<ul class='navbar-nav ms-auto'>";
+    echo "<ul class='navbar-nav'>";
 
+    // 6) วนลูปสร้าง “เมนูหลัก” จาก $mainMenus
     foreach ($mainMenus as $main) {
         $mainId = $main['id'];
-        $mainName = htmlspecialchars($main['name']);
-
+        $mainName = $main['name'];
+        $mainLink = htmlspecialchars($main['link'], ENT_QUOTES, 'UTF-8'); // ใช้ link จาก $mainMenus
+    
+        // ตรวจสอบว่ามีเมนูย่อยหรือไม่
         if (isset($subMenus[$mainId])) {
-            echo "<li class='nav-item dropdown mx-0 mx-lg-1'>";
-            echo "<a class='nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
-                . htmlspecialchars($mainName) . "</a>";
+            // มีเมนูย่อย แสดงเป็น Dropdown
+            echo "<li class='nav-item dropdown mx-0 '>";
+            echo "<a class='nav-link dropdown-toggle py-3 ' href='{$mainLink}'>"
+                . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
-                $submenuLink = htmlspecialchars($submenu['link_to']);
-                $submenuName = htmlspecialchars($submenu['name']);
-                echo "<li><a class='dropdown-item' href='$submenuLink'>$submenuName</a></li>";
+                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
+                $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
+                echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
             }
-            echo "</ul></li>";
+            echo "</ul>";
+            echo "</li>";
         } else {
-            echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded' href='#'>"
-                . htmlspecialchars($mainName) . "</a></li>";
+            // ไม่มีเมนูย่อย แสดงเป็นปกติ ไม่ใช่ Dropdown
+            echo "<li class='nav-item mx-0 '>";
+            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='{$mainLink}'>"
+                . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
+            echo "</li>";
         }
     }
+    echo "</nav>";
 
-    echo "</ul>";
-    echo "</div></div></nav>";
+
     ?>
     <!------------------------------------------------------------------->
     <?php
-// เชื่อมต่อฐานข้อมูล
-include('db.php');
+    // เชื่อมต่อฐานข้อมูล
+    include('db.php');
 
-// ดึงข้อมูลจากฐานข้อมูล
-$sql = "SELECT * FROM cards";
-$result = mysqli_query($conn, $sql);
+    // ตรวจสอบการเชื่อมต่อ
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
-// กำหนดโลโก้สำหรับแต่ละแพลตฟอร์ม
-$logoUrls = [
-    'YouTube' => 'https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png',
-    'TikTok' => 'https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg',
-    'Facebook' => 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg'
-];
-?>
+    // ดึงข้อมูลที่ลิงก์มีคำว่า youtube.com
+    $sql = "SELECT * FROM card_youtube WHERE platform_link LIKE '%youtube.com%'";
+    $result = mysqli_query($conn, $sql);
 
-<div class="allcard">
-        <h1>โซเชียล</h1>
-        <?php if (mysqli_num_rows($result) > 0): ?>
-            <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <div class="card">
-                    <img src="<?php echo isset($logoUrls[$row['platform_logo']]) ? $logoUrls[$row['platform_logo']] : 'default-logo.png'; ?>"
-                        alt="<?php echo htmlspecialchars($row['platform_name'], ENT_QUOTES, 'UTF-8'); ?>">
-                    <div class="card-text">
-                        <h3><?php echo htmlspecialchars($row['platform_name'], ENT_QUOTES, 'UTF-8'); ?></h3><br>
-                        <a href="<?php echo htmlspecialchars($row['platform_link'], ENT_QUOTES, 'UTF-8'); ?>" target="_blank">ดูรายละเอียดเพิ่มเติม</a>
+    // โลโก้สำหรับ YouTube
+    $logoUrls = [
+        'YouTube' => 'https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png',
+    ];
+
+    // ฟังก์ชันดึงรหัสวิดีโอ YouTube
+    function getYouTubeVideoId($url)
+    {
+        parse_str(parse_url($url, PHP_URL_QUERY), $queryParams);
+        return $queryParams['v'] ?? null;
+    }
+    ?>
+
+    <div class="allcard">
+        <h1>ข้อมูลแพลตฟอร์ม YouTube</h1>
+        <div class="card-container">
+            <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="card">
+                <!-- รูป Thumbnail และข้อมูล -->
+                        <div class="thumbnail">
+                            <!-- โลโก้ YouTube -->
+                            <div class="logo">
+                                <img src="<?php echo $logoUrls['YouTube']; ?>"
+                                    alt="<?php echo htmlspecialchars($row['platform_name'], ENT_QUOTES, 'UTF-8'); ?> Logo">
+                            </div>
+                            <?php
+                            $videoId = getYouTubeVideoId($row['platform_link']);
+                            if ($videoId): ?>
+                                <img src="https://img.youtube.com/vi/<?php echo $videoId; ?>/hqdefault.jpg"
+                                    alt="<?php echo htmlspecialchars($row['platform_name'], ENT_QUOTES, 'UTF-8'); ?> Thumbnail">
+                            <?php else: ?>
+                                <img src="<?php echo $logoUrls['YouTube']; ?>"
+                                    alt="<?php echo htmlspecialchars($row['platform_name'], ENT_QUOTES, 'UTF-8'); ?> Logo">
+                            <?php endif; ?>
+                        </div>
+                        <!-- ชื่อแพลตฟอร์ม -->
+                        <div class="platform-name">
+                            <h3><?php echo htmlspecialchars($row['platform_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <a href="<?php echo htmlspecialchars($row['platform_link'], ENT_QUOTES, 'UTF-8'); ?>"
+                                target="_blank">
+                                <?php echo htmlspecialchars($row['platform_link'], ENT_QUOTES, 'UTF-8'); ?>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>ไม่มีข้อมูล</p>
-        <?php endif; ?>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>ไม่มีข้อมูลในตาราง</p>
+            <?php endif; ?>
+        </div>
     </div>
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
@@ -371,64 +419,121 @@ $logoUrls = [
         });
     </script>
     <style>
-        body {
-
-            justify-content: center;
-            /* จัดกึ่งกลางแนวนอน */
-            height: 100vh;
-            /* ความสูงเต็มหน้าจอ */
-            margin: 0;
-            /* ลบระยะขอบเริ่มต้น */
-        }
-
         .allcard {
-            margin-top: 150px;
-        }
-
-        h3 {
+            margin-top: 20px;
             text-align: center;
         }
 
-        h1 {
-            font-size: 24px;
-            margin: 20px 0;
-            text-align: center;
+        /* การตั้งค่าพื้นฐาน */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
         }
 
         .card {
-            border: 2px solid #000;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 10px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
-            /* เต็มความกว้าง */
-            max-width: 100%;
-            /* ไม่เกินหน้าจอ */
             display: flex;
-            align-items: center;
-            gap: 15px;
-            box-sizing: border-box;
-            /* รวม padding ใน width */
+            flex-direction: row;
         }
 
-        .card img {
-            width: 50px;
-            height: 50px;
+        .thumbnail {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
             border-radius: 50%;
         }
 
-        .card-text {
-            flex-grow: 1;
-            text-align: left;
+        .platform-name {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
         }
 
-        .container {
-            width: 100%;
-            max-width: 100%;
-            padding: 0 15px;
-            /* ขอบซ้ายขวา */
-            box-sizing: border-box;
+        .platform-link {
+            margin-top: 5px;
         }
+
+        .platform-link a {
+            color: blue;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .platform-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* สำหรับ Tablet */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .card {
+                width: 100%;
+                /* ขยายเต็มจอ */
+
+            }
+
+            .card-container {
+                flex-direction: column;
+                align-content: space-around;
+                /* จัดเรียงตรงกลาง */
+            }
+
+            .thumbnail {
+                height: 350px;
+                /* เพิ่มความสูงของ Thumbnail */
+            }
+        }
+
+        /* สำหรับ Desktop */
+        @media (min-width: 1025px) {
+            .card {
+    gap: 250px;
+
+            }
+            .card-container {
+                /* เว้นช่องว่างระหว่างการ์ด */
+                flex-direction: column;
+                align-content: space-around;
+
+                
+            }
+        }
+
+        .thumbnail {
+            height: 250px;
+            /* เพิ่มความสูงของ Thumbnail */
+        }
+        
     </style>
 </body>
 

@@ -50,21 +50,24 @@
     <script src="scripts.js"></script>
   </head>
   <body id="page-top">
-    <?php
+  <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
-        ['id' => 1, 'name' => 'หน้าหลัก'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
-        ['id' => 3, 'name' => 'บริการ'],
-        ['id' => 4, 'name' => 'ติดต่อเรา']
+        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
+        ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
+        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
+        ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
+        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.php'],
+        ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
+        ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
     include('db.php');
 
     // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
-    $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4]
-    $inClause = implode(',', $mainIds);        // "1,2,3,4"
+    $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4,5,6,7]
+    $inClause = implode(',', $mainIds);        // "1,2,3,4,5,6,7"
     
     // 4) Query ดึงเมนูย่อยจากตาราง navbar
     $sql = "SELECT * 
@@ -86,12 +89,12 @@
         }
     }
 
+    echo "<nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>";
 
-    echo "<nav class='navbar navbar-expand-lg bg-secondary text-uppercase fixed-top' id='mainNav'>";
     echo "<div class='container'>";
 
     // 5.1 แสดงโลโก้ (ถ้ามี)
-    echo "<a href='#'>";
+    echo "<a href='index.php'>";
 
     // ตรวจสอบรูปภาพใน 'admin/uploads' (ถ้าไม่ใช้ ก็ลบส่วนนี้ออกได้)
     $directory = 'admin/uploads/';
@@ -105,9 +108,11 @@
             });
             if (count($imageFiles) > 0) {
                 $image = reset($imageFiles);
+                echo "<div class='logoinmenu'>";
                 echo "<img src='{$directory}{$image}' 
                       alt='รูปภาพล่าสุด' 
-                      style='height: 75px; width: 97px; margin-right: 50px;'>";
+                      '>";
+                echo "</div>";
             } else {
                 echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
             }
@@ -130,37 +135,39 @@
 
     // 5.3 ส่วนเนื้อหาของ Navbar
     echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
-    echo "<ul class='navbar-nav ms-auto'>";
+    echo "<ul class='navbar-nav'>";
 
     // 6) วนลูปสร้าง “เมนูหลัก” จาก $mainMenus
     foreach ($mainMenus as $main) {
         $mainId = $main['id'];
         $mainName = $main['name'];
-
+        $mainLink = htmlspecialchars($main['link'], ENT_QUOTES, 'UTF-8'); // ใช้ link จาก $mainMenus
+    
         // ตรวจสอบว่ามีเมนูย่อยหรือไม่
         if (isset($subMenus[$mainId])) {
             // มีเมนูย่อย แสดงเป็น Dropdown
-            echo "<li class='nav-item dropdown mx-0 mx-lg-1'>";
-            echo "<a class='nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>"
-                . htmlspecialchars($mainName) . "</a>";
+            echo "<li class='nav-item dropdown mx-0 '>";
+            echo "<a class='nav-link dropdown-toggle py-3 ' href='{$mainLink}'>"
+                . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
-                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to']);
-                $submenuName = htmlspecialchars($submenu['name']);
-                echo "<li><a class='dropdown-item' href='{$submenuLink}'>{$submenuName}</a></li>";
+                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
+                $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
+                echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
             }
             echo "</ul>";
             echo "</li>";
         } else {
             // ไม่มีเมนูย่อย แสดงเป็นปกติ ไม่ใช่ Dropdown
-            echo "<li class='nav-item mx-0 mx-lg-1'>";
-            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='#'>"
-                . htmlspecialchars($mainName) . "</a>";
+            echo "<li class='nav-item mx-0 '>";
+            echo "<a class='nav-link py-3 px-0 px-lg-3 rounded' href='{$mainLink}'>"
+                . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "</li>";
         }
     }
-    echo "</div>";
     echo "</nav>";
+    
+
     ?>
 
     <section id="articles" class="py-5">
