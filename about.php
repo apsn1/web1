@@ -56,6 +56,94 @@ include('db.php');
     <!-- Bootstrap JS Bundle (รวม Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </div>
+
+    <style>
+/* Organization Chart Styles */
+.org-chart {
+        text-align: center;
+      }
+      .org-node {
+        display: inline-block;
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+      }
+      .org-connection {
+        height: 20px;
+        border-left: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        margin: 0 auto;
+        width: 50%;
+      }
+.org-chart-section {
+    padding: 20px;
+}
+
+.org-level {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.org-box-container {
+    display: flex;
+    gap: 30px;
+    position: relative;
+}
+
+.org-box {
+    min-width: 400px;
+}
+
+.org-box .card {
+    transition: transform 0.3s ease;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.org-box .card:hover {
+    transform: translateY(-5px);
+}
+
+.org-box img {
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.org-line {
+    width: 2px;
+    height: 30px;
+    background-color: #fff;
+    margin: 0 auto;
+}
+
+.position {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .org-box-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .org-box {
+        min-width: 180px;
+    }
+}
+</style>
+
     <title>เกี่ยวกับ วันสยาม</title>
 
 </head>
@@ -216,6 +304,112 @@ include('db.php');
             </p>
         </div>
     </div>
+
+    <!-- Organization Chart Section -->
+<div class="org-chart-section my-5" style="background-color: #232F4C;">
+    <h1 class="text-center py-4 text-white">แผนผังองค์กร</h1>
+    
+    <!-- CEO Level -->
+    <div class="org-level" id="ผู้บริหาร">
+        <?php if(!empty($members['ผู้บริหาร'])): ?>
+            <?php foreach($members['ผู้บริหาร'] as $ceo): ?>
+                <div class="org-box">
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-around">
+                            <img src="admin/img/members/<?php echo $ceo['member_image']; ?>" 
+                                 class="rounded-circle mb-3" 
+                                 alt="CEO"
+                                 style="width: 100px; height: 100px; object-fit: cover;">
+                            <div>
+                                <h5><?php echo $ceo['member_name']; ?></h5>
+                                <p class="position"><?php echo $ceo['position']; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
+    <!-- Vertical Line -->
+    <div class="org-line"></div>
+
+    <!-- CO-CEO Level -->
+    <div class="org-level" id="รองผู้บริหาร">
+        <?php if(!empty($members['รองผู้บริหาร'])): ?>
+            <?php foreach($members['รองผู้บริหาร'] as $coCeo): ?>
+                <div class="org-box">
+                    <div class="card">
+                        <div class="card-body d-flex justify-content-around">
+                            <img src="admin/img/members/<?php echo $coCeo['member_image']; ?>" 
+                                 class="rounded-circle mb-3" 
+                                 alt="CO-CEO"
+                                 style="width: 100px; height: 100px; object-fit: cover;">
+                            <div>
+                                <h5><?php echo $coCeo['member_name']; ?></h5>
+                                <p class="position"><?php echo $coCeo['position']; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+
+    <!-- Vertical Line -->
+    <div class="org-line"></div>
+
+    <!-- Managers Level -->
+    <div class="org-level" id="ผู้จัดการ">
+        <div class="org-box-container">
+            <?php if(!empty($members['ผู้จัดการ'])): ?>
+                <?php foreach($members['ผู้จัดการ'] as $manager): ?>
+                    <div class="org-box">
+                        <div class="card">
+                            <div class="card-body d-flex justify-content-around">
+                                <img src="admin/img/members/<?php echo $manager['member_image']; ?>" 
+                                     class="rounded-circle mb-3" 
+                                     alt="Manager"
+                                     style="width: 100px; height: 100px; object-fit: cover;">
+                                <div>
+                                    <h5><?php echo $manager['member_name']; ?></h5>
+                                    <p class="position"><?php echo $manager['position']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Vertical Line -->
+    <div class="org-line"></div>
+
+    
+    <div class="org-level mb-5 text-center" id="พนักงาน">
+        <div class="org-box-container row">
+            <?php if(!empty($members['พนักงาน'])): ?>
+                <?php foreach($members['พนักงาน'] as $employee): ?>
+                    <div class="org-box col-md-3">
+                        <div class="card">
+                            <div class="card-body d-flex justify-content-around">
+                                <img src="admin/img/members/<?php echo $employee['member_image']; ?>" 
+                                     class="rounded-circle mb-3" 
+                                     alt="Employee"
+                                     style="width: 100px; height: 100px; object-fit: cover;">
+                                <div>
+                                    <h5><?php echo $employee['member_name']; ?></h5>
+                                    <p class="position"><?php echo $employee['position']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
     <footer class="footer">
