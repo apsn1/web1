@@ -691,9 +691,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <il class='mx-2'>
                             <a href="##?>" style='text-decoration: none;color: #00f31e;'><i
                                     class="bi bi-line fs-3"></i></a></li>
-                            <il class='mx-2'>
-                                <a href="##" style='text-decoration: none; color: #f60505;'><i
-                                        class="bi bi-youtube fs-3"></i></a></li>
+                        <il class='mx-2'>
+                            <a href="<?= $row['youtube'] ?>" style='text-decoration: none; color: #f60505;'><i
+                                    class="bi bi-youtube fs-3"></i></a></li>
+
             </ul>
         </div>
     </div>

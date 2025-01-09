@@ -632,6 +632,8 @@
                             <label for="line">Line Add</label>
                             <input type="text" name="line" id="line" placeholder="URL"
                                 value="<?= htmlspecialchars($row['line']) ?>" />
+                            <input type="text" name="youtube" id="youtube" placeholder="URL"
+                                value="<?= htmlspecialchars($row['youtube']) ?>" />
                             <button type="submit">อัพเดท</button>
                         </div>
                     </div>
