@@ -28,7 +28,7 @@
     }
     ?>
     <title>แอดมิน</title>
-    <link rel="stylesheet" href="../../admin/CssForadmin/admin_panel_css.css">
+    <link rel="stylesheet" href="cssforpanel/pageedit_panel.css">
 </head>
 
 <body>
