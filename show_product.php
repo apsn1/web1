@@ -49,7 +49,7 @@
     <title>SEO</title>
     <script src="scripts.js"></script>
   </head>
-  <body id="page-top">
+  < id="page-top">
   <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
@@ -169,7 +169,7 @@
     
 
     ?>
-
+<!------------------------------------------------------------------>
     <section id="articles" class="py-5">
         <h2 class="text-center" style='margin-top: 100px'>บทความทั้งหมด</h2>
       <div class="container py-3" >
@@ -262,6 +262,8 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!------------------------------------------------------------------>
   </body>
   <footer class="footer">
     <div class='d-flex justify-content-evenly'>
