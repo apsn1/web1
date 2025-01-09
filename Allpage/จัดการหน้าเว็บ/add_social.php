@@ -2,8 +2,7 @@
     <h2>บันทึกข้อมูลหน้า</h2>
     <div class="FromFilemanager">
         <!-- ปุ่มสำหรับเปิด/ปิดฟอร์ม -->
-        <div class="Allfrom">
-            <h2>บันทึกข้อมูลหน้า</h2>
+        <div class="Allfrom1">
             <div class="FromFilemanager">
                 เพิ่ม Youtube
                 <form action="edit_youtube.php" method="POST">
@@ -45,11 +44,16 @@
 
         <style>
             /* CSS ที่คุณให้มา */
+            .Allfrom1{
+                display: flex;
+                align-items: center; /* จัดชิดด้านบน */
+                gap: 10px; /* ระยะห่างระหว่างฟอร์ม */
+            }
             .FromFilemanager {
                 display: flex;
                 flex-direction: column;
                 /* เปลี่ยนเป็น column เพื่อให้ปุ่มอยู่บนและฟอร์มอยู่ล่าง */
-                align-items: flex-start;
+                align-items: center;
                 gap: 10px;
             }
 
