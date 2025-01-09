@@ -305,6 +305,22 @@ include('db.php');
         </div>
     </div>
 
+    <?
+        $sql = "SELECT * FROM members";
+        $result = mysqli_query($conn, $sql);
+// เก็บข้อมูลแยกตามตำแหน่ง
+        $members = array(
+            'ผู้บริหาร' => array(),
+            'รองผู้บริหาร' => array(),
+            'ผู้จัดการ' => array(),
+            'พนักงาน' => array()
+);
+while($row = mysqli_fetch_assoc($result)) {
+    $members[$row['position']][] = $row;
+}
+?>
+    ?>
+
     <!-- Organization Chart Section -->
 <div class="org-chart-section my-5" style="background-color: #232F4C;">
     <h1 class="text-center py-4 text-white">แผนผังองค์กร</h1>
@@ -316,10 +332,11 @@ include('db.php');
                 <div class="org-box">
                     <div class="card">
                         <div class="card-body d-flex justify-content-around">
-                            <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $ceo['member_image']; ?>" 
+                            <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $ceo['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="CEO"
-                                 style="width: 100px; height: 100px; object-fit: cover;">
+                                 style="width: 100px; height: 100px; object-fit: cover;"
+                                 onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
                             <div>
                                 <h5><?php echo $ceo['member_name']; ?></h5>
                                 <p class="position"><?php echo $ceo['position']; ?></p>
@@ -338,13 +355,14 @@ include('db.php');
     <div class="org-level" id="รองผู้บริหาร">
         <?php if(!empty($members['รองผู้บริหาร'])): ?>
             <?php foreach($members['รองผู้บริหาร'] as $coCeo): ?>
-                <div class="org-box">
+                <div class="org-box mx-3">
                     <div class="card">
                         <div class="card-body d-flex justify-content-around">
-                            <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $coCeo['member_image']; ?>" 
+                            <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $coCeo['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="CO-CEO"
-                                 style="width: 100px; height: 100px; object-fit: cover;">
+                                 style="width: 100px; height: 100px; object-fit: cover;"
+                                 onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
                             <div>
                                 <h5><?php echo $coCeo['member_name']; ?></h5>
                                 <p class="position"><?php echo $coCeo['position']; ?></p>
@@ -367,10 +385,11 @@ include('db.php');
                     <div class="org-box">
                         <div class="card">
                             <div class="card-body d-flex justify-content-around">
-                                <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $manager['member_image']; ?>" 
+                                <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $manager['member_image']; ?>" 
                                      class="rounded-circle mb-3" 
                                      alt="Manager"
-                                     style="width: 100px; height: 100px; object-fit: cover;">
+                                     style="width: 100px; height: 100px; object-fit: cover;"
+                                     onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
                                 <div>
                                     <h5><?php echo $manager['member_name']; ?></h5>
                                     <p class="position"><?php echo $manager['position']; ?></p>
@@ -387,17 +406,18 @@ include('db.php');
     <div class="org-line"></div>
 
     
-    <div class="org-level mb-5 text-center" id="พนักงาน">
+    <div class="org-level mb-5" id="พนักงาน">
         <div class="org-box-container row">
             <?php if(!empty($members['พนักงาน'])): ?>
                 <?php foreach($members['พนักงาน'] as $employee): ?>
                     <div class="org-box col-md-3">
                         <div class="card">
                             <div class="card-body d-flex justify-content-around">
-                                <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $employee['member_image']; ?>" 
+                                <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $employee['member_image']; ?>" 
                                      class="rounded-circle mb-3" 
                                      alt="Employee"
-                                     style="width: 100px; height: 100px; object-fit: cover;">
+                                     style="width: 100px; height: 100px; object-fit: cover;"
+                                     onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
                                 <div>
                                     <h5><?php echo $employee['member_name']; ?></h5>
                                     <p class="position"><?php echo $employee['position']; ?></p>
@@ -410,6 +430,8 @@ include('db.php');
         </div>
     </div>
 </div>
+
+
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
     <footer class="footer">
