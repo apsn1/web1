@@ -267,7 +267,7 @@ include('db.php');
     </div>
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
-    <footer class="footer">
+    <footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
         <div class='d-flex justify-content-evenly'>
             <!---Location---->
             <div>
@@ -430,6 +430,8 @@ include('db.php');
             flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
+            margin-top: 100px;
+            margin-bottom: 50px;
         }
 
         .card {
@@ -493,7 +495,18 @@ include('db.php');
         .platform-link a:hover {
             text-decoration: underline;
         }
-
+            @media (max-width: 768px) {
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            }
+        }
         /* สำหรับ Tablet */
         @media (min-width: 768px) and (max-width: 1024px) {
             .card {
@@ -533,6 +546,7 @@ include('db.php');
             height: 250px;
             /* เพิ่มความสูงของ Thumbnail */
         }
+        
         
     </style>
 </body>

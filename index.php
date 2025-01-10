@@ -598,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </script>
     </div>
 </body>
-<footer class="footer">
+<footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
     <div class='d-flex justify-content-evenly'>
         <!---Location---->
         <div>
@@ -622,19 +622,21 @@ document.addEventListener("DOMContentLoaded", function () {
         <div>
             <h4>Contact Us</h4>
             <?php
-            $sql = "SELECT * FROM contacts";
+            $sql = "SELECT c.*, f.line as line_url 
+                FROM contacts c 
+                LEFT JOIN footer_links f 
+                ON 1=1 
+                LIMIT 1";
             $result = mysqli_query($conn, $sql);
-            $row = $result->fetch_assoc();
+            $row = mysqli_fetch_assoc($result);
 
             echo "<div class='contactsall'>";
-
             echo "<div class='contactphone my-2 '>";
             echo "<i class='bi bi-telephone-fill'>" . " " . htmlspecialchars($row['phone']) . "</i><br>";
-            echo "<i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i><br>";
-            echo "<i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i><br>";
+            echo "<i class='bi bi-building'>" . " " . ($row['telephone'] === "" ? htmlspecialchars($row['phone']) : htmlspecialchars($row['telephone'])) . "</i><br>";
+            echo "<a class='text-decoration-none ' style='color: white;' href='mailto:" . htmlspecialchars($row['email']) . "'><i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i></a><br>";
+            echo "<a class='text-decoration-none ' style='color: white;' href='" . htmlspecialchars($row['line_url']) . "'><i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i></a><br>";
             echo "</div>";
-
-
 
             echo "</div>";
             ?>
@@ -689,9 +691,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <il class='mx-2'>
                             <a href="##?>" style='text-decoration: none;color: #00f31e;'><i
                                     class="bi bi-line fs-3"></i></a></li>
-                            <il class='mx-2'>
-                                <a href="##" style='text-decoration: none; color: #f60505;'><i
-                                        class="bi bi-youtube fs-3"></i></a></li>
+                        <il class='mx-2'>
+                            <a href="<?= $row['youtube'] ?>" style='text-decoration: none; color: #f60505;'><i
+                                    class="bi bi-youtube fs-3"></i></a></li>
+
             </ul>
         </div>
     </div>

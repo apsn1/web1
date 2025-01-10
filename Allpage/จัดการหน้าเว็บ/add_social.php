@@ -56,7 +56,6 @@
                 align-items: center;
                 gap: 10px;
             }
-
             /* รีเซ็ต Margin และ Padding */
             * {
                 margin: 0;

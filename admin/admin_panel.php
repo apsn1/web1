@@ -363,6 +363,8 @@
 
                     <label for="phone">เบอร์ติดต่อ : </label>
                     <input type="text" name="phone" value="<?php echo isset($row['phone']) ? $row['phone'] : ''; ?>"/>
+                    <label for="telephone">เบอร์ติดต่อ : </label>
+                    <input type="text" name="telephone" value="<?php echo isset($row['telephone']) ? $row['telephone'] : ''; ?>"/>
                     <label for="lineID">ไลน์ไอดี : </label>
                     <input type="text" name="lineID" value="<?php echo isset($row['line']) ? $row['line'] : ''; ?>"/>
                     <label for="email">อีเมล์ : </label>
@@ -597,6 +599,8 @@
                             <label for="line">Line Add</label>
                             <input type="text" name="line" id="line" placeholder="URL"
                                 value="<?= htmlspecialchars($row['line']) ?>" />
+                            <input type="text" name="youtube" id="youtube" placeholder="URL"
+                                value="<?= htmlspecialchars($row['youtube']) ?>" />
                             <button type="submit">อัพเดท</button>
                         </div>
                     </div>
