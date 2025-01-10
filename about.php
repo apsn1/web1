@@ -1,5 +1,20 @@
 <?php
+
 include('db.php');
+
+$sql = "SELECT * FROM members";
+$result = mysqli_query($conn, $sql);
+// เก็บข้อมูลแยกตามตำแหน่ง
+$members = array(
+    'ผู้บริหาร' => array(),
+    'รองผู้บริหาร' => array(),
+    'ผู้จัดการ' => array(),
+    'พนักงาน' => array()
+);
+while($row = mysqli_fetch_assoc($result)) {
+    $members[$row['position']][] = $row;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -304,21 +319,6 @@ include('db.php');
             </p>
         </div>
     </div>
-
-    <?
-        $sql = "SELECT * FROM members";
-        $result = mysqli_query($conn, $sql);
-// เก็บข้อมูลแยกตามตำแหน่ง
-        $members = array(
-            'ผู้บริหาร' => array(),
-            'รองผู้บริหาร' => array(),
-            'ผู้จัดการ' => array(),
-            'พนักงาน' => array()
-);
-while($row = mysqli_fetch_assoc($result)) {
-    $members[$row['position']][] = $row;
-}
-?>
 
 
     <!-- Organization Chart Section -->
