@@ -4560,6 +4560,8 @@ fieldset:disabled .btn {
   .navbar-expand-lg .navbar-collapse {
     display: flex !important;
     flex-basis: auto;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .navbar-expand-lg .navbar-toggler {
@@ -14022,26 +14024,111 @@ footer a:hover {
 }
 
 .content .section p {
-  font-size: 14px;
+  font-size: 16px;
   color: #555;
   line-height: 1.5;
 }
 .left{
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   margin-bottom: 30px;
+}
+@media (max-width: 768px){
+  .left{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    align-items: center;
+  }
+  .left p{
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: justify; /* จัดข้อความชิดขอบทั้งสองด้าน */
+    margin-left: 20px;
+
+  }
+  .left img{
+    width: 100%; 
+    max-height: 500px; /* กำหนดความสูงที่คุณต้องการ */
+    object-fit: cover; /* ทำให้รูปครอบคลุมโดยไม่บิดเบี้ยว */
+    align-items: center;
+  }
+}
+
+@media (min-width: 820px) and (max-width: 1025px){
+  .right{
+    display: flex;
+    margin-bottom: 30px;
+    flex-direction: row-reverse;
+    margin-left: 20px;
+    margin-right: 20px;
+
+  }
+  .left{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+
+  }
+  .right img{
+    max-width: 300px;
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+  }
+  .left p{
+    letter-spacing: 0.6px;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+    text-align: justify; /* จัดข้อความชิดขอบทั้งสองด้าน */
+  }
+  .right p{
+    letter-spacing: 0.6px;
+    margin-right: 20px;
+    font-size: 18px;
+    text-align: justify; /* จัดข้อความชิดขอบทั้งสองด้าน */
+  }
 }
 .right{
   display: flex;
   margin-bottom: 30px;
+  flex-direction: row-reverse;
+}
+@media (max-width: 768px){
+  .right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  .right p{
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: justify; /* จัดข้อความชิดขอบทั้งสองด้าน */
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+
+  }
+  .right p{
+    margin-left: 20px;
+    letter-spacing: 0.6px;
+  }
 }
 .left p{
   letter-spacing: 0.6px;
   margin-right: 20px;
+  text-align: justify; /* จัดข้อความชิดขอบทั้งสองด้าน */
+  margin-left: 20px;
 }
 .right p{
   margin-left: 20px;
   letter-spacing: 0.6px;
+  margin-right: 20px;
+  text-align: justify; /* จัดข้อความชิดขอบทั้งสองด้าน */
 }
 .content{
   margin-top: 200px;
@@ -14056,4 +14143,7 @@ footer a:hover {
   width: 100%;
   max-height: 500px;
   object-fit: cover;
+}
+.content p{
+  align-items: center;
 }

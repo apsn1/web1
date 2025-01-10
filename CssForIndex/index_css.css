@@ -4560,6 +4560,8 @@ fieldset:disabled .btn {
   .navbar-expand-lg .navbar-collapse {
     display: flex !important;
     flex-basis: auto;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .navbar-expand-lg .navbar-toggler {
