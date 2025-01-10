@@ -1,5 +1,5 @@
 <?php
-include('../db.php');
+include('../../db.php');
 
 if(isset($_POST['submit'])) {
     // รับค่าจากฟอร์ม
@@ -22,11 +22,11 @@ if(isset($_POST['submit'])) {
             if(in_array($file_ext, $allowed)) {
                 // สร้างชื่อไฟล์ใหม่
                 $new_file_name = uniqid('member_') . '.' . $file_ext;
-                $upload_path = '../Allpage/จัดการหน้าเว็บ/images_all/' . $new_file_name;
+                $upload_path = 'images_member/' . $new_file_name;
                 
                 // สร้างโฟลเดอร์ถ้ายังไม่มี
-                if (!file_exists('../Allpage/จัดการหน้าเว็บ/images_all/')) {
-                    mkdir('../Allpage/จัดการหน้าเว็บ/images_all/', 0777, true);
+                if (!file_exists('images_member/')) {
+                    mkdir('images_member/', 0777, true);
                 }
                 
                 // อัพโหลดไฟล์
@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
                     if(mysqli_stmt_execute($stmt)) {
                         echo "<script>
                                 alert('เพิ่มสมาชิกสำเร็จ');
-                                window.location.href = 'admin_panel.php';
+                                window.location.href = '../../admin/admin_panel.php';
                               </script>";
                     } else {
                         echo "<script>

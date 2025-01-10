@@ -51,21 +51,21 @@
 </head>
 <body>
     <?php
-    include('../db.php');
+    include('../../db.php');
 
     $sql = "SELECT * FROM members";
     $result = mysqli_query($conn, $sql);
     ?>
 
     <div class="my-5">
-        <a class="btn btn-primary ms-5"  href="admin_panel.php"><i class="fas fa-arrow-left"></i></a>
+        <a class="btn btn-primary ms-5"  href="../../admin/admin_panel.php"><i class="fas fa-arrow-left"></i></a>
         <h1 class="text-center my-3">แก้ไขข้อมูลสมาชิก</h1>
         <div class="row justify-content-center">
             <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body text-center">
-                            <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo $row['member_image']; ?>" 
+                            <img src="images_member/<?php echo $row['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="<?php echo $row['member_name']; ?>"
                                  style="width: 150px; height: 150px; object-fit: cover;">
