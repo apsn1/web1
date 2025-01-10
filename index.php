@@ -598,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </script>
     </div>
 </body>
-<footer class="footer">
+<footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
     <div class='d-flex justify-content-evenly'>
         <!---Location---->
         <div>
