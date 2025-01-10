@@ -319,7 +319,7 @@ while($row = mysqli_fetch_assoc($result)) {
     $members[$row['position']][] = $row;
 }
 ?>
-    ?>
+
 
     <!-- Organization Chart Section -->
 <div class="org-chart-section my-5" style="background-color: #232F4C;">
