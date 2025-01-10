@@ -13940,7 +13940,6 @@ header {
 }
 .logoinmenu img {
   height: 95px;
-  margin-right: 500px;
 }
 @media (max-width: 768px) {
   .navbar-toggler {
