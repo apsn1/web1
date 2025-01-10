@@ -26,7 +26,7 @@
     $latestFile = !empty($files) ? basename($files[0]) : null;
 
     if ($latestFile) {
-        echo '<link rel="icon" type="image/x-icon" href="' . $folderPath . $latestFile . '">';
+        echo '<link rel="icon" type="image/x-icon" ' . $folderPath . $latestFile . '">';
     } else {
         echo "No files found in the folder.";
     }
@@ -94,13 +94,13 @@
 
     // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
     $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4,5,6,7]
-    $inClause = implode(',', $mainIds);        // "1,2,3,4,5,6,7"
+    $inClause = implode(',', $mainIds); // "1,2,3,4,5,6,7"
     
     // 4) Query ดึงเมนูย่อยจากตาราง navbar
-    $sql = "SELECT * 
-        FROM navbar
-        WHERE parent_id IN ($inClause)
-        ORDER BY parent_id ASC, id ASC";
+    $sql = "SELECT *
+    FROM navbar
+    WHERE parent_id IN ($inClause)
+    ORDER BY parent_id ASC, id ASC";
 
     $result = $conn->query($sql);
 
@@ -136,9 +136,7 @@
             if (count($imageFiles) > 0) {
                 $image = reset($imageFiles);
                 echo "<div class='logoinmenu'>";
-                echo "<img src='{$directory}{$image}' 
-                      alt='รูปภาพล่าสุด' 
-                      '>";
+                echo "<img src='{$directory}{$image}' alt='รูปภาพล่าสุด' ' class='track-link' >";
                 echo "</div>";
             } else {
                 echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
@@ -153,12 +151,11 @@
     echo "</a>";
 
     // 5.2 ปุ่ม Toggle สำหรับ Mobile
-    echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' 
-      type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' 
-      aria-controls='navbarResponsive' aria-expanded='false' 
-      aria-label='Toggle navigation'>
-      Menu <i class='fas fa-bars'></i>
-      </button>";
+    echo "<button class=' navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button'
+                        data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'
+                        aria-expanded='false' aria-label='Toggle navigation'>
+                    Menu <i class='fas fa-bars'></i>
+                    </button>";
 
     // 5.3 ส่วนเนื้อหาของ Navbar
     echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
@@ -174,13 +171,18 @@
         if (isset($subMenus[$mainId])) {
             // มีเมนูย่อย แสดงเป็น Dropdown
             echo "<li class='nav-item dropdown mx-0 '>";
-            echo "<a class='nav-link dropdown-toggle py-3 ' href='{$mainLink}'>"
+            echo "<a class='track-link nav-link dropdown-toggle py-3 ' href='{$mainLink}' >"
                 . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
-                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
+                $submenuLink = "Allpage/" . htmlspecialchars(
+                    $submenu['link_to'],
+                    ENT_QUOTES,
+                    'UTF-8'
+                );
                 $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
-                echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
+                echo "<li><a class='track-link dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>
+                                    ";
             }
             echo "</ul>";
             echo "</li>";
@@ -193,10 +195,10 @@
         }
     }
     echo "</nav>";
-    
+
 
     ?>
-      
+
     <?php
     include("db.php");
     // ดึงข้อมูลรูปแบนเนอร์จากฐานข้อมูล
@@ -431,7 +433,7 @@
         <h2 class="Project" style="margin-bottom:40px; text-align: center;">
             การสร้างออกเเบบวันน์สยามเป็นอย่างไร
         </h2>
-        <div class="containerPj"style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
+        <div class="containerPj" style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
             <?php
             include('db.php'); // เชื่อมต่อฐานข้อมูล
             
@@ -468,9 +470,9 @@
                     if (mysqli_num_rows($result) > 0) {
                         $row = mysqli_fetch_assoc($result);
                         ?>
-    
-                 <p> <?= $row['abouthead'] ?> <br>   
-                 <?= $row['abouttitle'] ?> </p>
+
+                        <p> <?= $row['abouthead'] ?> <br>
+                            <?= $row['abouttitle'] ?> </p>
                         <?php
                     } else {
                         echo "<p>ไม่มีข้อมูลที่อยู่</p>";
@@ -491,7 +493,7 @@
             <h2 class="Project" style="margin-bottom :70px; text-align: center;">
                 Projects โปรเจกต์ออกแบบหน้ากากอาคารและลูกค้าของเรา
             </h2>
-            <div class="containerPj"style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
+            <div class="containerPj" style="display:flex;flex-wrap:wrap;margin-bottom: 10px;">
                 <?php
                 include('db.php'); // เชื่อมต่อฐานข้อมูล
                 
@@ -558,47 +560,26 @@
         </section>
     </div>
     <script>
-   // การจัดการพื้นหลัง Navbar
-document.addEventListener("DOMContentLoaded", () => {
-    const navbar = document.getElementById("mainNav");
+        // การจัดการพื้นหลัง Navbar
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNav");
 
-    window.addEventListener("scroll", () => {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            window.addEventListener("scroll", () => {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-        if (currentScroll < 100) {
-            navbar.classList.add("transparent"); // พื้นหลังโปร่งใส
-        } else {
-            navbar.classList.remove("transparent"); // พื้นหลังปกติ
-        }
-    });
-});
-
-// การจัดการปุ่ม Scroll to Top
-document.addEventListener("DOMContentLoaded", function () {
-    const scrollToTopBtn = document.getElementById("scrollToTop");
-
-    // แสดงหรือซ่อนปุ่ม
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 200) { // เมื่อเลื่อนเกิน 200px
-            scrollToTopBtn.classList.add("show");
-        } else {
-            scrollToTopBtn.classList.remove("show");
-        }
-    });
-
-    // คลิกปุ่มเพื่อเลื่อนกลับด้านบน
-    scrollToTopBtn.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth", // เลื่อนอย่างนุ่มนวล
+                if (currentScroll < 100) {
+                    navbar.classList.add("transparent"); // พื้นหลังโปร่งใส
+                } else {
+                    navbar.classList.remove("transparent"); // พื้นหลังปกติ
+                }
+            });
         });
-    });
-});
 
     </script>
+
     </div>
 </body>
-<footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
+<footer class="footer text-center p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
     <div class='d-flex justify-content-evenly'>
         <!---Location---->
         <div>
@@ -691,9 +672,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         <il class='mx-2'>
                             <a href="##?>" style='text-decoration: none;color: #00f31e;'><i
                                     class="bi bi-line fs-3"></i></a></li>
-                        <il class='mx-2'>
-                            <a href="<?= $row['youtube'] ?>" style='text-decoration: none; color: #f60505;'><i
-                                    class="bi bi-youtube fs-3"></i></a></li>
+                            <il class='mx-2'>
+                                <a href="<?= $row['youtube'] ?>" rel="nofollow noopener noreferrer" target="_blank"
+                                    style="text-decoration: none; color: #f60505;">
+                                    <i class="bi bi-youtube fs-3"></i>
+                                </a>
 
             </ul>
         </div>

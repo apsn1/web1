@@ -78,7 +78,7 @@
         ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
         ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
         ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
-        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.php'],
+        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
         ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
         ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
