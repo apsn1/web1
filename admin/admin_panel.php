@@ -386,9 +386,9 @@
                     <button type="submit">อัปโหลด</button>
                 </form>
 
-              
+                <button onclick="toggleForm('editForm17')">เพิ่มสมาชิกบริษัท</button>
                 <form id="editForm17" action="add_member.php" method="POST" enctype="multipart/form-data"
-                    >
+                    style="display: none;">
                     <div class="form-group">
                         <input type="file" 
                                name="member_image" 

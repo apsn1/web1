@@ -1,5 +1,20 @@
 <?php
+
 include('db.php');
+
+$sql = "SELECT * FROM members";
+$result = mysqli_query($conn, $sql);
+// เก็บข้อมูลแยกตามตำแหน่ง
+$members = array(
+    'ผู้บริหาร' => array(),
+    'รองผู้บริหาร' => array(),
+    'ผู้จัดการ' => array(),
+    'พนักงาน' => array()
+);
+while($row = mysqli_fetch_assoc($result)) {
+    $members[$row['position']][] = $row;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -174,7 +189,7 @@ include('db.php');
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
         ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
-        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
+        ['id' => 3, 'name' => 'สินค้า', 'link' => 'show_product.php'],
         ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
         ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
         ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
@@ -305,21 +320,6 @@ include('db.php');
         </div>
     </div>
 
-    <?
-        $sql = "SELECT * FROM members";
-        $result = mysqli_query($conn, $sql);
-// เก็บข้อมูลแยกตามตำแหน่ง
-        $members = array(
-            'ผู้บริหาร' => array(),
-            'รองผู้บริหาร' => array(),
-            'ผู้จัดการ' => array(),
-            'พนักงาน' => array()
-);
-while($row = mysqli_fetch_assoc($result)) {
-    $members[$row['position']][] = $row;
-}
-?>
-    ?>
 
     <!-- Organization Chart Section -->
 <div class="org-chart-section my-5" style="background-color: #232F4C;">
@@ -332,11 +332,11 @@ while($row = mysqli_fetch_assoc($result)) {
                 <div class="org-box">
                     <div class="card">
                         <div class="card-body d-flex justify-content-around">
-                            <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $ceo['member_image']; ?>" 
+                            <img src="Allpage/จัดการหน้าเว็บ/images_member/<?php echo $ceo['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="CEO"
                                  style="width: 100px; height: 100px; object-fit: cover;"
-                                 onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
+                                 onerror="this.src='Allpage/จัดการหน้าเว็บ/images_member/person.jpg'">
                             <div>
                                 <h5><?php echo $ceo['member_name']; ?></h5>
                                 <p class="position"><?php echo $ceo['position']; ?></p>
@@ -358,11 +358,11 @@ while($row = mysqli_fetch_assoc($result)) {
                 <div class="org-box mx-3">
                     <div class="card">
                         <div class="card-body d-flex justify-content-around">
-                            <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $coCeo['member_image']; ?>" 
+                            <img src="Allpage/จัดการหน้าเว็บ/images_member/<?php echo $coCeo['member_image']; ?>" 
                                  class="rounded-circle mb-3" 
                                  alt="CO-CEO"
                                  style="width: 100px; height: 100px; object-fit: cover;"
-                                 onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
+                                 onerror="this.src='Allpage/จัดการหน้าเว็บ/images_member/person.jpg'">
                             <div>
                                 <h5><?php echo $coCeo['member_name']; ?></h5>
                                 <p class="position"><?php echo $coCeo['position']; ?></p>
@@ -385,11 +385,11 @@ while($row = mysqli_fetch_assoc($result)) {
                     <div class="org-box">
                         <div class="card">
                             <div class="card-body d-flex justify-content-around">
-                                <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $manager['member_image']; ?>" 
+                                <img src="Allpage/จัดการหน้าเว็บ/images_member/<?php echo $manager['member_image']; ?>" 
                                      class="rounded-circle mb-3" 
                                      alt="Manager"
                                      style="width: 100px; height: 100px; object-fit: cover;"
-                                     onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
+                                     onerror="this.src='Allpage/จัดการหน้าเว็บ/images_member/person.jpg'">
                                 <div>
                                     <h5><?php echo $manager['member_name']; ?></h5>
                                     <p class="position"><?php echo $manager['position']; ?></p>
@@ -413,11 +413,11 @@ while($row = mysqli_fetch_assoc($result)) {
                     <div class="org-box col-md-3">
                         <div class="card">
                             <div class="card-body d-flex justify-content-around">
-                                <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $employee['member_image']; ?>" 
+                                <img src="Allpage/จัดการหน้าเว็บ/images_member/<?php echo $employee['member_image']; ?>" 
                                      class="rounded-circle mb-3" 
                                      alt="Employee"
                                      style="width: 100px; height: 100px; object-fit: cover;"
-                                     onerror="this.src='Allpage/จัดการหน้าเว็บ/images_all/person.jpg'">
+                                     onerror="this.src='Allpage/จัดการหน้าเว็บ/images_member/person.jpg'">
                                 <div>
                                     <h5><?php echo $employee['member_name']; ?></h5>
                                     <p class="position"><?php echo $employee['position']; ?></p>
@@ -435,7 +435,7 @@ while($row = mysqli_fetch_assoc($result)) {
 
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
-    <footer class="footer">
+    <footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
         <div class='d-flex justify-content-evenly'>
             <!---Location---->
             <div>

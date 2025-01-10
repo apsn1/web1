@@ -78,11 +78,9 @@
                     <span class="icon">&#9660;</span>
                 </div>
                 <div class="dropdown-menu" style="display: none;">
-                    <div class="dropdown-item"
-                        onclick="window.location.href='pageedit_panel.php';">หน้าเว็บทั้งหมด
+                    <div class="dropdown-item" onclick="window.location.href='pageedit_panel.php';">หน้าเว็บทั้งหมด
                     </div>
-                    <div class="dropdown-item"
-                        onclick="window.location.href='images_all.php';">รูปภาพทั้งหมด</div>
+                    <div class="dropdown-item" onclick="window.location.href='images_all.php';">รูปภาพทั้งหมด</div>
                 </div>
                 <div class="tab" onclick="window.location.href='tab3.html';">แท็บที่ 3</div>
                 <div class="tab" onclick="window.location.href='tab4.html';">แท็บที่ 4</div>
@@ -103,6 +101,7 @@
                             '../../about.php' => 'เกี่ยวกับเรา',
                             '../../social.all.php' => 'โซเซียล',
                             '../../social_youtube.php' => 'youtube',
+                            '../../show_product.php' => 'สินค้าทั้งหมด',
 
                         ];
 
@@ -130,17 +129,31 @@
                     <div class="ส่วนจัดการไฟล์">
                         <h2>จัดการไฟล์</h2>
                         <?php
-                        // สมมติว่าไฟล์ hardcoded อยู่ในอาร์เรย์
                         $hardcodedFiles = [
                             'add_social.php' => 'Social Page',
-                            'insertfile.php' => 'เพิ่มไฟล์',
+                            'insertfile.php' => 'เพิ่มไฟล์เทม 1',
                             'insertfile_product.php' => 'เพิ่มสินค้า',
-                            'from_member.php' => 'เพิ่มและแก้ไข',
+                            'from_member.php' => 'เพิ่มและแก้ไข บุคลากร',
+                            'from_product.php' => 'เพิ่มตัวสินค้าในหน้าสินค้า'
                         ];
 
                         foreach ($hardcodedFiles as $filePath => $fileName) {
-                            echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">' . htmlspecialchars($fileName) . '</a><br>';
+                            if ($filePath === 'from_product.php') {
+                                // 1) แสดงลิงก์หลัก
+                                echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">'
+                                    . htmlspecialchars($fileName) . '</a><br>';
+
+                                // 2) แสดงเมนูย่อย (Hardcode เพิ่มเอง)
+                                echo '<div style="margin-left: 20px;">';
+                                echo '  <a onclick="loadFile(\'managed_products.php\')">แก้ไขสินค้า</a><br>';
+                                echo '</div>';
+                            } else {
+                                // แสดงลิงก์ปกติ
+                                echo '<a onclick="loadFile(\'' . htmlspecialchars($filePath) . '\')">'
+                                    . htmlspecialchars($fileName) . '</a><br>';
+                            }
                         }
+
 
                         ?>
                     </div>

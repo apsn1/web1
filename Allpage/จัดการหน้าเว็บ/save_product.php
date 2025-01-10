@@ -1,145 +1,83 @@
 <?php
-// เชื่อมต่อฐานข้อมูล
-include('../../db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // รับข้อมูลจากฟอร์ม
-    $name = $_POST['name'];
-    $text_description = $_POST['text_description'];
-    $text_nameproduct = $_POST['text_nameproduct'];
-    $link_Social = $_POST['link_Social'];
-    
-    // รับข้อมูล img_onTop เป็น array
-    $img_onTop = isset($_POST['img_onTop']) ? $_POST['img_onTop'] : [];
-    // แปลง array เป็น JSON เพื่อเก็บในฐานข้อมูล
-    $img_onTop_json = json_encode($img_onTop);
-    
-    // เตรียมตัวแปรสำหรับไฟล์อัปโหลด
-    $uploadDir = '../uploads/';
-    $img_product = '';
-    $img_others = [];
+    include('../../db.php'); // เชื่อมต่อฐานข้อมูล
 
-    // ฟังก์ชันช่วยเหลือสำหรับการอัปโหลดไฟล์
-    function uploadFile($file, $uploadDir) {
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        if ($file['error'] === UPLOAD_ERR_OK) {
-            if (in_array($file['type'], $allowedTypes)) {
-                $uniqueName = uniqid() . '_' . basename($file['name']);
-                $targetPath = $uploadDir . $uniqueName;
-                if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-                    return $uniqueName; // Return the file name
-                }
+    // ตรวจสอบและดึงข้อมูลจากแบบฟอร์ม
+    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $product_name = isset($_POST['product_name']) ? trim($_POST['product_name']) : '';
+    $link_to_product = isset($_POST['link_to_product']) ? trim($_POST['link_to_product']) : '';
+    $description_product = isset($_POST['description_product']) ? trim($_POST['description_product']) : '';
+
+    $uploaded_images = []; // เก็บไฟล์ที่อัปโหลดทั้งหมด
+    $src_image_cover = null; // เก็บไฟล์หน้าปก
+
+    $upload_dir = 'images_product/';
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+    // ตรวจสอบการอัปโหลดรูปภาพหลายรูป
+    if (isset($_FILES['src_images'])) {
+        $total_files = count($_FILES['src_images']['name']);
+        for ($i = 0; $i < $total_files; $i++) {
+            $file_name = $_FILES['src_images']['name'][$i];
+            $file_tmp = $_FILES['src_images']['tmp_name'][$i];
+            $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+            // ตรวจสอบชนิดไฟล์
+            if (!in_array($file_ext, $allowed_extensions)) {
+                continue; // ข้ามไฟล์ที่ไม่ได้รับอนุญาต
+            }
+
+            // สร้างชื่อไฟล์ใหม่และย้ายไฟล์ไปยังโฟลเดอร์เป้าหมาย
+            $new_file_name = uniqid('img_', true) . '.' . $file_ext;
+            $file_path = $upload_dir . $new_file_name;
+
+            if (move_uploaded_file($file_tmp, $file_path)) {
+                $uploaded_images[] = $file_path;
             }
         }
-        return false;
     }
 
-    // อัปโหลดภาพหลักของสินค้า
-    if (isset($_FILES['img_product']) && $_FILES['img_product']['name'] !== '') {
-        $uploadedFile = uploadFile($_FILES['img_product'], $uploadDir);
-        if ($uploadedFile) {
-            $img_product = $uploadedFile;
+    // จัดการการอัปโหลดรูปภาพหน้าปก
+    if (isset($_FILES['src_image_cover']) && $_FILES['src_image_cover']['error'] === UPLOAD_ERR_OK) {
+        $file_name = $_FILES['src_image_cover']['name'];
+        $file_tmp = $_FILES['src_image_cover']['tmp_name'];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+        if (in_array($file_ext, $allowed_extensions)) {
+            $new_cover_name = uniqid('cover_', true) . '.' . $file_ext;
+            $src_image_cover = $upload_dir . $new_cover_name;
+
+            if (!move_uploaded_file($file_tmp, $src_image_cover)) {
+                $src_image_cover = null; // ตั้งค่า null หากการอัปโหลดล้มเหลว
+            }
+        }
+    }
+
+    // ตรวจสอบว่ามีข้อมูลเพียงพอในการบันทึกลงฐานข้อมูล
+    if ($name && $product_name && $description_product) {
+        // JSON Encode รูปภาพที่อัปโหลด
+        $images_json = json_encode($uploaded_images);
+
+        // บันทึกข้อมูลลงฐานข้อมูล
+        $sql = "INSERT INTO product (name, product_name, link_to_product, description_product, src_image_cover, src_image) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssss", $name, $product_name, $link_to_product, $description_product, $src_image_cover, $images_json);
+
+        if ($stmt->execute()) {
+            echo "Product uploaded successfully!";
         } else {
-            die("การอัปโหลด img_product ล้มเหลว หรือไม่รองรับประเภทไฟล์");
-        }
-    }
-
-    // อัปโหลดภาพเพิ่มเติม (หลายไฟล์)
-    if (isset($_FILES['img_others'])) {
-        foreach ($_FILES['img_others']['tmp_name'] as $key => $tmp_name) {
-            if ($_FILES['img_others']['name'][$key] !== '') {
-                $fileArray = [
-                    'name' => $_FILES['img_others']['name'][$key],
-                    'type' => $_FILES['img_others']['type'][$key],
-                    'tmp_name' => $_FILES['img_others']['tmp_name'][$key],
-                    'error' => $_FILES['img_others']['error'][$key],
-                    'size' => $_FILES['img_others']['size'][$key]
-                ];
-                $uploadedFile = uploadFile($fileArray, $uploadDir);
-                if ($uploadedFile) {
-                    $img_others[] = $uploadedFile;
-                }
-            }
-        }
-    }
-
-    // แปลง array ของ img_others เป็น JSON สำหรับการเก็บในฐานข้อมูล
-    $img_others_json = json_encode($img_others);
-
-    // ใช้ prepared statements เพื่อความปลอดภัย
-    $stmt = $conn->prepare("INSERT INTO page_aboutme (name, text_description, text_nameproduct, img_product, img_others, link_Social, img_onTop) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    if ($stmt === false) {
-        die("เตรียม statement ล้มเหลว: " . $conn->error);
-    }
-
-    $stmt->bind_param("sssssss", $name, $text_description, $text_nameproduct, $img_product, $img_others_json, $link_Social, $img_onTop_json);
-
-    if ($stmt->execute()) {
-        // ถ้าบันทึกสำเร็จ สร้างไฟล์ใหม่
-        // ตรวจสอบและ sanitize ชื่อไฟล์เพื่อความปลอดภัย
-        $safe_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', $name);
-        $file_name = "../" . $safe_name . ".php";
-
-        // แปลง img_onTop_json กลับเป็น arrayเพื่อใช้งานในไฟล์ PHP ใหม่
-        $img_onTop_array = json_decode($img_onTop_json, true);
-        $img_onTop_html = '';
-        if (!empty($img_onTop_array)) {
-            foreach ($img_onTop_array as $img_url) {
-                $img_onTop_html .= "<img src=\"../uploads/" . htmlspecialchars($img_url) . "\" alt=\"" . htmlspecialchars($name) . "\" style=\"width:100px; margin-right:10px;\">";
-            }
+            echo "Error: " . $stmt->error;
         }
 
-        // แปลง img_others_json กลับเป็น arrayเพื่อใช้งานในไฟล์ PHP ใหม่
-        $img_others_array = json_decode($img_others_json, true);
-        $img_others_html = '';
-        if (!empty($img_others_array)) {
-            foreach ($img_others_array as $img_url) {
-                $img_others_html .= "<img src=\"../uploads/" . htmlspecialchars($img_url) . "\" alt=\"" . htmlspecialchars($name) . "\" style=\"width:100px; margin-right:10px;\">";
-            }
-        }
-
-        // ใช้ Nowdoc เพื่อสร้างไฟล์ PHP
-        $file_content = <<<HTML
-<?php
-include('../db.php');
-?>
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <meta charset="UTF-8">
-    <title>{$name}</title>
-</head>
-<body>
-    <h1>{$name}</h1>
-    <p>{$text_description}</p>
-    <div>
-        <img src="../uploads/{$img_product}" alt="{$name}">
-    </div>
-    <div>
-        {$img_onTop_html}
-    </div>
-    <div>
-        <h2>ภาพเพิ่มเติม</h2>
-        {$img_others_html}
-    </div>
-    <div>
-        <!-- เพิ่มเนื้อหาอื่นๆ ตามต้องการ -->
-    </div>
-</body>
-</html>
-HTML;
-
-        // เขียนไฟล์ใหม่
-        if (file_put_contents($file_name, $file_content)) {
-            echo "บันทึกสำเร็จและสร้างไฟล์ใหม่: $file_name";
-        } else {
-            echo "บันทึกสำเร็จ แต่สร้างไฟล์ใหม่ไม่สำเร็จ!";
-        }
+        $stmt->close();
     } else {
-        echo "เกิดข้อผิดพลาดในการบันทึกข้อมูล: " . $stmt->error;
+        echo "Error: Missing required fields.";
     }
 
-    $stmt->close();
     $conn->close();
+} else {
+    echo "Error: Invalid request method.";
 }
 ?>

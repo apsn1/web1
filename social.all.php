@@ -86,7 +86,7 @@ include('db.php');
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
         ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
-        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
+        ['id' => 3, 'name' => 'สินค้า', 'link' => 'show_product.php'],
         ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
         ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
         ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
@@ -257,7 +257,7 @@ include('db.php');
 
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
-    <footer class="footer">
+    <footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
         <div class='d-flex justify-content-evenly'>
             <!---Location---->
             <div>
