@@ -1,56 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>one siameRudee</title>
     <!-- Favicon-->
 
-    
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- เพิ่มไฟล์ JS ของ Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script
-      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="CssForIndex/index_css.css" />
+    <style>
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .lightbox-navigation img {
+            max-width: 60px;
+            cursor: pointer;
+        }
+
+        .lightbox-footer {
+            color: white;
+            margin-top: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
     <title>SEO</title>
     <script src="scripts.js"></script>
-  </head>
-  < id="page-top">
-  <?php
+</head>
+< id="page-top">
+    <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
@@ -166,117 +187,145 @@
         }
     }
     echo "</nav>";
-    
+
 
     ?>
-<!------------------------------------------------------------------>
-    <section id="articles" class="py-5">
-        <h2 class="text-center" style='margin-top: 100px'>บทความทั้งหมด</h2>
-      <div class="container py-3" >
-        
-        <div class="row g-4">
-          <!-- Article 1 -->
-          <div class="col-4">
-            <a class="card h-100 text-decoration-none" href='##1'>
-              <img
-                src=""
-                class="card-img-top"
-                alt="Article 1"
-              />
-              <div class="card-body">
-                <h5 class="card-title text-center ">บทความ 1</h5>
-                
-                
-              </div>
-            </a>
-          </div>
-          <!-- Article 2 -->
-          <div class="col-4">
-            <a class="card h-100 text-decoration-none" href='##2'>
-              <img
-                src="67622cbdd4991.jpg"
-                class="card-img-top"
-                alt="Article 2"
-              />
-              <div class="card-body">
-                <h5 class="card-title text-center">บทความ 2</h5>
-                
-              </div>
-            </a>
-          </div>
-          <!-- Article 3 -->
-          <div class="col-4 ">
-            <a class="card h-100 text-decoration-none">
-              <img
-                src="67622cbdd4991.jpg"
-                class="card-img-top"
-                alt="Article 3"
-              />
-              <div class="card-body">
-                <h5 class="card-title text-center">บทความ 3</h5>
-                
-              </div>
-            </a>
-          </div>
-          <!-- More Articles -->
-          <div class="col-4">
-            <a class="card h-100 text-decoration-none">
-              <img
-                src=""
-                class="card-img-top"
-                alt="Article 4"
-              />
-              <div class="card-body">
-                <h5 class="card-title text-center">บทความ 4</h5>
-              </div>
-            </a>
-          </div>
-          <div class="col-4">
-            <a class="card h-100 text-decoration-none">
-              <img
-                src="67622cbdd4991.jpg"
-                class="card-img-top"
-                alt="Article 5"
-              />
-              <div class="card-body">
-                <h5 class="card-title text-center">บทความ 5</h5>
-              </div>
-            </a>
-          </div>
-          <div class="col-4">
-            <a class="card h-100 text-decoration-none">
-              <img
-                src="67622cbdd4991.jpg"
-                class="card-img-top"
-                alt="Article 6"
-              />
-              <div class="card-body">
-                <h5 class="card-title text-center">บทความ 6</h5>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <!------------------------------------------------------------------>
-  </body>
-  <footer class="footer">
-    <div class='d-flex justify-content-evenly'>
-        <!---Location---->
-        <div>
-            <h4 class='text-center'>LOCATION</h4>
+    <?php
+    include('db.php'); // เชื่อมต่อฐานข้อมูล
+    
+    try {
+        // คำสั่ง SQL เพื่อดึงข้อมูลสินค้าทั้งหมด
+        $sql = "SELECT id, name, product_name, link_to_product, description_product, src_image, src_image_cover FROM product ORDER BY id ASC";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            throw new Exception("Failed to prepare SQL statement: " . $conn->error);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $products = [];
+        if ($result->num_rows > 0) {
+            // เก็บข้อมูลทั้งหมดในรูปแบบ Array
+            while ($row = $result->fetch_assoc()) {
+                $row['src_image'] = json_decode($row['src_image'], true); // แปลง JSON เป็น Array
+                $products[] = $row;
+            }
+        } else {
+            echo "No products found.";
+        }
+
+        $stmt->close();
+    } catch (Exception $e) {
+        die("Error: " . $e->getMessage());
+    }
+    ?>
+
+    <!-- Lightbox HTML -->
+    <h1>Product List</h1>
+    <?php if (!empty($products)): ?>
+        <?php foreach ($products as $product): ?>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; text-align: center;">
+                <!-- ชื่อสินค้า -->
+                <h2 style="cursor: pointer;"
+                    onclick="openLightbox(['<?= implode("','", $product['src_image']) ?>'], '<?= $product['src_image_cover'] ?>', '<?= htmlspecialchars($product['name']) ?>', '<?= htmlspecialchars($product['description_product']) ?>')">
+                    <?= htmlspecialchars($product['name']) ?>
+                </h2>
+                <!-- ภาพหน้าปก -->
+                <?php if (!empty($product['src_image_cover'])): ?>
+                    <img src="Allpage/จัดการหน้าเว็บ/<?= htmlspecialchars($product['src_image_cover']) ?>"
+                        alt="<?= htmlspecialchars($product['name']) ?>" style="max-width: 200px; cursor: pointer;"
+                        onclick="openLightbox(['<?= implode("','", $product['src_image']) ?>'], '<?= $product['src_image_cover'] ?>', '<?= htmlspecialchars($product['name']) ?>', '<?= htmlspecialchars($product['description_product']) ?>')">
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No products found.</p>
+    <?php endif; ?>
+
+    <!-- Lightbox HTML -->
+    <div id="lightbox"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; z-index: 1000;">
+        <div
+            style="position: relative; text-align: center; max-width: 80%; background: white; padding: 20px; border-radius: 10px;">
+            <span onclick="closeLightbox()"
+                style="position: absolute; top: 20px; right: 20px; font-size: 24px; color: black; cursor: pointer;">&times;</span>
+            <h2 id="lightbox-name" style="margin-bottom: 20px;"></h2>
+            <div id="lightbox-carousel" style="display: flex; overflow-x: auto; gap: 10px;">
+                <!-- Images will be appended here -->
+            </div>
+            <p id="lightbox-description" style="font-size: 16px; margin-top: 10px; color: black;"></p>
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(images, cover, name, description) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxName = document.getElementById('lightbox-name');
+            const lightboxDescription = document.getElementById('lightbox-description');
+            const lightboxCarousel = document.getElementById('lightbox-carousel');
+
+            // ตั้งค่าชื่อและคำอธิบาย
+            lightboxName.textContent = name;
+            lightboxDescription.textContent = description;
+
+            // เคลียร์ภาพเก่าที่อยู่ใน Carousel
+            lightboxCarousel.innerHTML = '';
+
+            // เพิ่มภาพ Cover
+            if (cover) {
+                const coverImage = document.createElement('img');
+                coverImage.src = "Allpage/จัดการหน้าเว็บ/" + cover;
+                coverImage.alt = name;
+                coverImage.style.maxWidth = '200px';
+                coverImage.style.cursor = 'pointer';
+                coverImage.style.margin = '5px';
+                lightboxCarousel.appendChild(coverImage);
+            }
+
+            // เพิ่มภาพทั้งหมดใน images (รับมาเป็น Array)
+            if (Array.isArray(images)) {
+                images.forEach(image => {
+                    const img = document.createElement('img');
+                    img.src = "Allpage/จัดการหน้าเว็บ/" + image;
+                    img.alt = name;
+                    img.style.maxWidth = '200px';
+                    img.style.cursor = 'pointer';
+                    img.style.margin = '5px';
+                    lightboxCarousel.appendChild(img);
+                });
+            }
+
+            // แสดง Lightbox
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+        }
+
+    </script>
+
+
+
+
+    <!------------------------------------------------------------------>
+    </body>
+    <footer class="footer">
+        <div class='d-flex justify-content-evenly'>
+            <!---Location---->
+            <div>
+                <h4 class='text-center'>LOCATION</h4>
                 <?php
                 $sql = "SELECT * FROM address";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
                     ?>
-                    <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?>    <?= $row['street'] ?> แขวง<?= $row['subDistrict'] ?>
+                    <p>ที่อยู่บริษัท <?= $row['homeNumber'] ?>     <?= $row['street'] ?> แขวง<?= $row['subDistrict'] ?>
                         เขต<?= $row['district'] ?></p>
                     <p><?= $row['province'] ?>, <?= $row['postalCode'] ?></p>
                     <?php
@@ -284,30 +333,30 @@
                     echo "<p>ไม่มีข้อมูลที่อยู่</p>";
                 }
                 ?>
-        </div>
-        <!---Contact---->
-        <div>
-            <h4>Contact Us</h4>
-            <?php
-            $sql = "SELECT * FROM contacts";
-            $result = mysqli_query($conn,$sql);
-            $row = $result->fetch_assoc();
+            </div>
+            <!---Contact---->
+            <div>
+                <h4>Contact Us</h4>
+                <?php
+                $sql = "SELECT * FROM contacts";
+                $result = mysqli_query($conn, $sql);
+                $row = $result->fetch_assoc();
 
-            echo "<div class='contactsall'>";
-        
-                    echo "<div class='contactphone my-2 '>";
-                    echo "<i class='bi bi-telephone-fill'>"." ". htmlspecialchars($row['phone'])."</i><br>";
-                    echo "<i class='bi bi-line'>"." ". htmlspecialchars($row['line'])."</i><br>";
-                    echo "<i class='bi bi-envelope-at-fill'>"." ". htmlspecialchars($row['email'])."</i><br>";
-                    echo "</div>";
-            
+                echo "<div class='contactsall'>";
 
-            
-            echo "</div>";
-            ?>
-        </div>
-        <!---aboutUS---->
-        <div>
+                echo "<div class='contactphone my-2 '>";
+                echo "<i class='bi bi-telephone-fill'>" . " " . htmlspecialchars($row['phone']) . "</i><br>";
+                echo "<i class='bi bi-line'>" . " " . htmlspecialchars($row['line']) . "</i><br>";
+                echo "<i class='bi bi-envelope-at-fill'>" . " " . htmlspecialchars($row['email']) . "</i><br>";
+                echo "</div>";
+
+
+
+                echo "</div>";
+                ?>
+            </div>
+            <!---aboutUS---->
+            <div>
                 <?php
                 try {
                     $pdo = new PDO(
@@ -326,38 +375,42 @@
                 ?>
 
                 <h4 class='text-center'>About us</h4>
-                
+
                 <?php if (!empty($entries)): ?>
-                    <ul  style='list-style-type: none;'>
+                    <ul style='list-style-type: none;'>
                         <?php foreach ($entries as $item): ?>
-                            <li ><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
+                            <li><?php echo htmlspecialchars($item['text'], ENT_QUOTES, 'UTF-8'); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
                     <p>ยังไม่มีข้อความใด ๆ</p>
                 <?php endif; ?>
             </div>
-        <!---Social---->
+            <!---Social---->
             <div>
-            <?php $sql = 'select * from footer_links';
-                    $result = mysqli_query($conn, $sql);
-                    $row = $result->fetch_assoc()
-                        ?>
-            <h4 class='text-center'>SOCIAL</h4>
-            
-            <ul class='d-flex justify-content-evenly'>
-                <il class='mx-2'>
-                    <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:#339fff;"><i class="bi bi-facebook fs-3"></i></a>
-                </li>
-                <il class='mx-2'>
-                    <a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i class="bi bi-tiktok fs-3"></i></a></li>
-                <il class='mx-2'>
-                    <a href="##?>" style='text-decoration: none;color: #00f31e;'><i class="bi bi-line fs-3"></i></a></li>
-                <il class='mx-2'>
-                    <a href="##" style='text-decoration: none; color: #f60505;'><i class="bi bi-youtube fs-3"></i></a></li>
-            </ul>
+                <?php $sql = 'select * from footer_links';
+                $result = mysqli_query($conn, $sql);
+                $row = $result->fetch_assoc()
+                    ?>
+                <h4 class='text-center'>SOCIAL</h4>
+
+                <ul class='d-flex justify-content-evenly'>
+                    <il class='mx-2'>
+                        <a href="<?= $row['facebook'] ?>" style="text-decoration: none; color:#339fff;"><i
+                                class="bi bi-facebook fs-3"></i></a>
+                        </li>
+                        <il class='mx-2'>
+                            <a href="<?= $row['tiktok'] ?>" style='text-decoration: none; color: #ffffff;'><i
+                                    class="bi bi-tiktok fs-3"></i></a></li>
+                            <il class='mx-2'>
+                                <a href="##?>" style='text-decoration: none;color: #00f31e;'><i
+                                        class="bi bi-line fs-3"></i></a></li>
+                                <il class='mx-2'>
+                                    <a href="##" style='text-decoration: none; color: #f60505;'><i
+                                            class="bi bi-youtube fs-3"></i></a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</footer>
-  
+    </footer>
+
 </html>
