@@ -14015,3 +14015,11 @@ header {
   color: white;
   z-index: 1000;
 }
+.row{
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .map-container iframe{
+    width: 100%;
+  }
+}
