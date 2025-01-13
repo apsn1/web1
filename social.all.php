@@ -206,25 +206,23 @@ include('db.php');
     ?>
     <!------------------------------------------------------------------->
     <?php
-    // เชื่อมต่อฐานข้อมูล
+    // เรียกไฟล์เชื่อมต่อฐานข้อมูล
     include('db.php');
 
-    // ตรวจสอบการเชื่อมต่อ
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // ดึงข้อมูลจากทุกตาราง
+    // กำหนดชื่อตารางที่ต้องการดึงข้อมูล
     $tables = ['card_tiktok', 'card_facebook'];
     $data = [];
 
-    // วนลูปดึงข้อมูลจากแต่ละตาราง
+    // วนลูปเรียกข้อมูลจากแต่ละตาราง
     foreach ($tables as $table) {
+        // สร้างคำสั่ง SQL
         $sql = "SELECT * FROM $table";
         $result = $conn->query($sql);
 
+        // ตรวจสอบผลลัพธ์
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
+                // จัดเก็บค่า platform_name และ platform_link ในอาร์เรย์ $data
                 $data[] = [
                     'platform_name' => $row['platform_name'],
                     'platform_link' => $row['platform_link']
@@ -233,44 +231,51 @@ include('db.php');
         }
     }
 
-    // ฟังก์ชันกำหนด URL ของโลโก้
+    // ฟังก์ชันสำหรับดึง URL โลโก้แต่ละแพลตฟอร์ม
     function getLogoSrc($platformName)
     {
+        // กำหนด URL ของโลโก้ตามชื่อแพลตฟอร์ม
+        // หากต้องการเพิ่มแพลตฟอร์มอื่น ๆ ให้เพิ่มในอาร์เรย์นี้ได้เลย
         $logos = [
-            'TikTok' => 'https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.png',
-            'Facebook' => 'https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.png',
-            // เพิ่มแพลตฟอร์มอื่นๆ ที่นี่
+            'TikTok' => 'https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg',
+            'Facebook' => 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
+            'Youtube' => 'https://upload.wikimedia.org/wikipedia/commons/2/20/YouTube_2024.svg'
         ];
 
-        return $logos[$platformName] ?? 'https://via.placeholder.com/100'; // ใช้ placeholder หากไม่มีโลโก้ในรายการ
+        // หากแพลตฟอร์มไหนไม่มีในอาร์เรย์ จะใช้โลโก้ placeholder แสดงแทน
+        return $logos[$platformName] ?? 'https://via.placeholder.com/100';
     }
     ?>
 
     <h1>ข้อมูลจากหลายตาราง</h1>
+
     <div class="allcard">
+        <!-- ตัวอย่าง Card YouTube (ทดลองกำหนดเอง) -->
         <div class="card">
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/YouTube_2024.svg" alt="Platform Logo">
-            <h3>Youtube</h3>
+            <h3>YouTube</h3>
             <a href="social_youtube.php" target="_blank">ไปยังแพลตฟอร์ม</a>
         </div>
+
+        <!-- แสดงผลข้อมูลที่ดึงมาได้จริง -->
         <?php if (!empty($data)): ?>
-        <?php foreach ($data as $item): ?>
-        <div class="card">
-            <!-- ดึงโลโก้จากฟังก์ชัน -->
-                    <img src="<?php echo getLogoSrc($item['platform_name']); ?>" alt="Platform Logo">
+            <?php foreach ($data as $item): ?>
+                <div class="card">
+                    <!-- ดึงโลโก้จากฟังก์ชัน getLogoSrc() -->
+                    <img src="<?php echo getLogoSrc($item['platform_name']); ?>"
+                        alt="<?php echo htmlspecialchars($item['platform_name'], ENT_QUOTES, 'UTF-8'); ?> Logo">
                     <!-- ชื่อแพลตฟอร์ม -->
                     <h3><?php echo htmlspecialchars($item['platform_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
                     <!-- ลิงก์แพลตฟอร์ม -->
-                    <a href="<?php echo htmlspecialchars($item['platform_link'], ENT_QUOTES, 'UTF-8'); ?>"
-                        target="_blank">ไปยังแพลตฟอร์ม</a>
+                    <a href="<?php echo htmlspecialchars($item['platform_link'], ENT_QUOTES, 'UTF-8'); ?>" target="_blank">
+                        ไปยังแพลตฟอร์ม
+                    </a>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
             <p>ไม่มีข้อมูลในตาราง</p>
         <?php endif; ?>
     </div>
-
-
 
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
@@ -476,7 +481,6 @@ include('db.php');
             flex-grow: 1;
             text-align: left;
         }
-
     </style>
 </body>
 

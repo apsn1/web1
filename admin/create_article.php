@@ -408,9 +408,10 @@ require_once '../db.php';
             </div>
             
             <div class="mb-3">
-                <button type="submit" name="submit" class="btn btn-primary">สร้าง Blog</button>
-                <a href="admin_panel.php" class="btn btn-secondary">ยกเลิก</a>
+                <button type="submit" name="submit" class="btn btn-primary">สร้าง Blog</button> 
+                <a href="manage_articles.php" class="btn btn-secondary">แก้ไข</a>
             </div>
+
         </form>
     </div>
 </body>
