@@ -1,45 +1,66 @@
 <?php
 $edit = $_POST['edit'];
-// ตรวจสอบการอัพโหลดไฟล์
-if(isset($_FILES['header'])) {
-    $imgTmpName = $_FILES['header']['tmp_name']; // ไฟล์ที่อัพโหลดชั่วคราว
-    $imgName = $_FILES['header']['name']; // ชื่อไฟล์ต้นฉบับ
-    $imgSize = $_FILES['header']['size']; // ขนาดไฟล์
+
+// ตรวจสอบการอัพโหลดไฟล์ header
+if (isset($_FILES['header'])) {
+    $imgTmpName = $_FILES['header']['tmp_name'];
+    $imgName = $_FILES['header']['name'];
     $button = $_POST['button'];
 
     // กำหนดเส้นทางที่ต้องการเก็บไฟล์
-    $uploadDir = '../admin/img/header/';
-    $uploadFile = $uploadDir . basename($imgName);
+    $uploadDirHeader = '../admin/img/header/';
+    $uploadFileHeader = $uploadDirHeader . basename($imgName);
 
     include('../db.php');
 
     // ดึงชื่อไฟล์เก่าจากฐานข้อมูล
-    $query = "SELECT img FROM header_images WHERE headerID = '$edit'";
+    $query = "SELECT img, img_vertical FROM header_images WHERE headerID = '$edit'";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
-    $oldImage = $uploadDir . $row['img']; // เส้นทางไฟล์รูปเก่า
+    $oldImageHeader = $uploadDirHeader . $row['img']; // เส้นทางไฟล์รูป header เก่า
 
-    // ย้ายไฟล์จากที่ชั่วคราวไปที่ตำแหน่งที่กำหนด
-    if (move_uploaded_file($imgTmpName, $uploadFile)) {
-        // ลบไฟล์รูปภาพเก่า
-        if (file_exists($oldImage)) {
-            unlink($oldImage); // ลบไฟล์รูปภาพเก่า
-        }
-
-        // อัพเดตฐานข้อมูลด้วยชื่อไฟล์ใหม่
-        $sql = "UPDATE header_images SET img='$imgName', button='$button' WHERE headerID = '$edit'";
-        $result = mysqli_query($conn, $sql);
-
-        if ($result) {
-            echo "แก้ไขสำเร็จ";
-            header("Location: admin_panel.php");
-        } else {
-            die(mysqli_error($conn)); // ถ้ามีข้อผิดพลาดในการอัพเดต
+    // ตรวจสอบและจัดการอัพโหลดไฟล์ header
+    if (move_uploaded_file($imgTmpName, $uploadFileHeader)) {
+        // ลบไฟล์ header เก่า
+        if (file_exists($oldImageHeader)) {
+            unlink($oldImageHeader);
         }
     } else {
-        echo "การอัพโหลดไฟล์ล้มเหลว!";
+        echo "การอัพโหลดไฟล์ Header ล้มเหลว!";
+        exit;
     }
+}
+
+// ตรวจสอบการอัพโหลดไฟล์ vertical
+if (isset($_FILES['image_vertical'])) {
+    $imgVerticalTmpName = $_FILES['image_vertical']['tmp_name'];
+    $imgVerticalName = $_FILES['image_vertical']['name'];
+
+    // กำหนดเส้นทางที่ต้องการเก็บไฟล์
+    $uploadDirVertical = '../admin/img/vertical/';
+    $uploadFileVertical = $uploadDirVertical . basename($imgVerticalName);
+
+    // ตรวจสอบและจัดการอัพโหลดไฟล์ vertical
+    if (move_uploaded_file($imgVerticalTmpName, $uploadFileVertical)) {
+        // ลบไฟล์ vertical เก่า
+        $oldImageVertical = $uploadDirVertical . $row['img_vertical'];
+        if (file_exists($oldImageVertical)) {
+            unlink($oldImageVertical);
+        }
+    } else {
+        echo "การอัพโหลดไฟล์ Vertical ล้มเหลว!";
+        exit;
+    }
+}
+
+// อัพเดตฐานข้อมูลด้วยชื่อไฟล์ใหม่
+$sql = "UPDATE header_images SET img='$imgName', img_vertical='$imgVerticalName', button='$button' WHERE headerID = '$edit'";
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    echo "แก้ไขสำเร็จ";
+    header("Location: admin_panel.php?success=1");
 } else {
-    echo "ไม่ได้เลือกไฟล์หรือเกิดข้อผิดพลาดในการอัพโหลด!";
+    die(mysqli_error($conn)); // ถ้ามีข้อผิดพลาดในการอัพเดต
 }
 ?>
