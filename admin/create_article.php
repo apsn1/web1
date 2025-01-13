@@ -1,6 +1,6 @@
 <?php
 // เพิ่ม connection database
-require_once '../db.php';
+ include('../db.php');
 
 // ตรวจสอบการ submit form
 if (isset($_POST['submit'])) {
