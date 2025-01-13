@@ -317,7 +317,7 @@
 
     <!------------------------------------------------------------------>
     </body>
-    <footer class="footer">
+    <footer class="footer position-relative text-center  p-4 w-100 w-100">
         <div class='d-flex justify-content-evenly'>
             <!---Location---->
             <div>

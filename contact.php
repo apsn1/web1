@@ -343,7 +343,7 @@ $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
-    <footer class="footer">
+    <footer class="footer position-relative text-center  p-4 w-100 w-100">
         <div class='d-flex justify-content-evenly'>
             <!---Location---->
             <div>
