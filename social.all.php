@@ -228,31 +228,44 @@ include('db.php');
             }
         }
     }
+
+    // ฟังก์ชันกำหนด URL ของโลโก้
+    function getLogoSrc($platformName)
+    {
+        $logos = [
+            'TikTok' => 'https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.png',
+            'Facebook' => 'https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.png',
+            // เพิ่มแพลตฟอร์มอื่นๆ ที่นี่
+        ];
+
+        return $logos[$platformName] ?? 'https://via.placeholder.com/100'; // ใช้ placeholder หากไม่มีโลโก้ในรายการ
+    }
     ?>
-        <h1>ข้อมูลจากหลายตาราง</h1>
-        <div class="allcard">
-            <div class="card">
-                <img src="https://via.placeholder.com/100" alt="Platform Logo">
-                <h3>Youtube</h3>
-                <a href="social_youtube.php" target="_blank">ไปยังแพลตฟอร์ม</a>
-                </div>
-            <?php if (!empty($data)): ?>
-            <?php foreach ($data as $item): ?>
-                
-            <div class="card">
-                <!-- แสดงโลโก้ตัวอย่าง -->
-                        <img src="https://via.placeholder.com/100" alt="Platform Logo">
-                        <!-- ชื่อแพลตฟอร์ม -->
-                        <h3><?php echo htmlspecialchars($item['platform_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                        <!-- ลิงก์แพลตฟอร์ม -->
-                        <a href="<?php echo htmlspecialchars($item['platform_link'], ENT_QUOTES, 'UTF-8'); ?>"
-                            target="_blank">ไปยังแพลตฟอร์ม</a>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>ไม่มีข้อมูลในตาราง</p>
-            <?php endif; ?>
+
+    <h1>ข้อมูลจากหลายตาราง</h1>
+    <div class="allcard">
+        <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/YouTube_2024.svg" alt="Platform Logo">
+            <h3>Youtube</h3>
+            <a href="social_youtube.php" target="_blank">ไปยังแพลตฟอร์ม</a>
         </div>
+        <?php if (!empty($data)): ?>
+        <?php foreach ($data as $item): ?>
+        <div class="card">
+            <!-- ดึงโลโก้จากฟังก์ชัน -->
+                    <img src="<?php echo getLogoSrc($item['platform_name']); ?>" alt="Platform Logo">
+                    <!-- ชื่อแพลตฟอร์ม -->
+                    <h3><?php echo htmlspecialchars($item['platform_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                    <!-- ลิงก์แพลตฟอร์ม -->
+                    <a href="<?php echo htmlspecialchars($item['platform_link'], ENT_QUOTES, 'UTF-8'); ?>"
+                        target="_blank">ไปยังแพลตฟอร์ม</a>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>ไม่มีข้อมูลในตาราง</p>
+        <?php endif; ?>
+    </div>
+
 
 
 

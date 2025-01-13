@@ -26,7 +26,7 @@
     $latestFile = !empty($files) ? basename($files[0]) : null;
 
     if ($latestFile) {
-        echo '<link rel="icon" type="image/x-icon" ' . $folderPath . $latestFile . '">';
+        echo '<link rel="icon" type="image/x-icon" href=" ' . $folderPath . $latestFile . '">';
     } else {
         echo "No files found in the folder.";
     }
