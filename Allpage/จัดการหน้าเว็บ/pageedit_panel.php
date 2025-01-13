@@ -134,7 +134,8 @@
                             'insertfile.php' => 'เพิ่มไฟล์เทม 1',
                             'insertfile_product.php' => 'เพิ่มสินค้า',
                             'from_member.php' => 'เพิ่มและแก้ไข บุคลากร',
-                            'from_product.php' => 'เพิ่มตัวสินค้าในหน้าสินค้า'
+                            'from_product.php' => 'เพิ่มตัวสินค้าในหน้าสินค้า',
+                            '../../admin/create_article.php'=> 'เพิ่มหน้าบทความ'
                         ];
 
                         foreach ($hardcodedFiles as $filePath => $fileName) {

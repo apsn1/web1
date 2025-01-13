@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $content = $_POST['content'];
     
     // จัดการกับรูปภาพ
-    $target_dir = "../Allpage/จัดการหน้าเว็บ/images_all/";
+    $target_dir = "../Allpage/จัดการหน้าเว็บ/images_article/";
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
@@ -26,11 +26,11 @@ if (isset($_POST['submit'])) {
             // สร้างไฟล์ PHP ใหม่ตามชื่อ title
             $article_id = $conn->insert_id; // รับ ID ของบทความที่เพิ่งสร้าง
             $safe_title = preg_replace('/[^ก-์เa-zA-Z0-9]/', '_', $title); // แทนที่อักขระพิเศษด้วย _
-            $file_name = "../Allpage/จัดการหน้าเว็บ/article_{$article_id}_{$safe_title}.php";
+            $file_name = "../Allpage/article_{$article_id}_{$safe_title}.php";
             
             // สร้างเนื้อหาของไฟล์
             $file_content = "<?php
-require_once '../../db.php';
+require_once '../db.php';
 \$sql = \"SELECT * FROM article WHERE id = {$article_id}\";
 \$result = mysqli_query(\$conn, \$sql);
 \$row = mysqli_fetch_assoc(\$result);
@@ -44,7 +44,7 @@ require_once '../../db.php';
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css\" rel=\"stylesheet\">
     <?php
     // Path to the folder
-    \$folderPath = \"../../admin/uploads/\";
+    \$folderPath = \"../admin/uploads/\";
 
     // Get all files in the folder
     \$files = glob(\$folderPath . \"*\");
@@ -75,7 +75,7 @@ require_once '../../db.php';
     <link href=\"https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic\" rel=\"stylesheet\"
         type=\"text/css\" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link rel=\"stylesheet\" href=\"../../CssForIndex/index_css.css\">
+    <link rel=\"stylesheet\" href=\"../CssForIndex/index_css.css\">
     <title>หน้าเว็บหลัก</title>
     <script src=\"scripts.js\"></script>
     <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css\" rel=\"stylesheet\">
@@ -89,7 +89,7 @@ require_once '../../db.php';
 <body id=\"page-top\">
     <div id=\"notification-icon\">
         <?php
-        \$directory = '../../admin/uploads/';
+        \$directory = '../admin/uploads/';
         \$files = glob(\$directory . '*'); // ดึงไฟล์ทั้งหมดในโฟลเดอร์
         \$latestFile = '';
 
@@ -105,30 +105,32 @@ require_once '../../db.php';
     </div>
 
     <button id=\"scrollToTop\">↑ ขึ้นบนสุด</button>
-    <?php
+   <?php
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     \$mainMenus = [
-        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'home.php'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
-        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
-        ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
-        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.php'],
-        ['id' => 6, 'name' => 'บทความ', 'link' => 'show_article.php'],
-        ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
+        ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
+        ['id' => 2, 'name' => 'รู้จักวันสยาม', 'link' => 'about.php'],
+        ['id' => 3, 'name' => 'ธุรกิจวันสยาม', 'link' => 'index.php'],
+        ['id' => 4, 'name' => 'ข่าวสารและการเคลื่อนไหว', 'link' => 'index.php'],
+        ['id' => 5, 'name' => 'สินค้า', 'link' => 'show_product.php'],
+        ['id' => 6, 'name' => 'โปรเจค', 'link' => 'projects.php'],
+        ['id' => 7, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
+        ['id' => 8, 'name' => 'บทความ', 'link' => 'show_article.php'],
+        ['id' => 9, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
-    include('../../db.php');
+    include('../db.php');
 
     // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
     \$mainIds = array_column(\$mainMenus, 'id'); // [1,2,3,4,5,6,7]
-    \$inClause = implode(',', \$mainIds);        // \"1,2,3,4,5,6,7\"
+    \$inClause = implode(',', \$mainIds); // \"1,2,3,4,5,6,7\"
     
     // 4) Query ดึงเมนูย่อยจากตาราง navbar
-    \$sql = \"SELECT * 
-        FROM navbar
-        WHERE parent_id IN (\$inClause)
-        ORDER BY parent_id ASC, id ASC\";
+    \$sql = \"SELECT *
+    FROM navbar
+    WHERE parent_id IN (\$inClause)
+    ORDER BY parent_id ASC, id ASC\";
 
     \$result = \$conn->query(\$sql);
 
@@ -143,88 +145,91 @@ require_once '../../db.php';
             \$subMenus[\$pid][] = \$row;
         }
     }
+
+    echo \"<nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>\";
+
+    echo \"<div class='container'>\";
+
+    // 5.1 แสดงโลโก้ (ถ้ามี)
+    echo \"<a href='index.php'>\";
+
+    // ตรวจสอบรูปภาพใน '../admin/uploads' (ถ้าไม่ใช้ ก็ลบส่วนนี้ออกได้)
+    \$directory = 'admin/uploads/';
+    if (is_dir(\$directory)) {
+        \$files = scandir(\$directory);
+        if (\$files !== false) {
+            \$files = array_diff(\$files, array('.', '..'));
+            \$imageFiles = array_filter(\$files, function (\$file) {
+                \$ext = pathinfo(\$file, PATHINFO_EXTENSION);
+                return in_array(strtolower(\$ext), ['jpg', 'jpeg', 'png', 'gif']);
+            });
+            if (count(\$imageFiles) > 0) {
+                \$image = reset(\$imageFiles);
+                echo \"<div class='logoinmenu'>\";
+                echo \"<img src='{\$directory}{\$image}' alt='รูปภาพล่าสุด' ' class='track-link' >\";
+                echo \"</div>\";
+            } else {
+                echo \"ไม่มีรูปภาพในโฟลเดอร์ uploads\";
+            }
+        } else {
+            echo \"ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้\";
+        }
+    } else {
+        echo \"ไม่พบโฟลเดอร์ uploads\";
+    }
+
+    echo \"</a>\";
+
+    // 5.2 ปุ่ม Toggle สำหรับ Mobile
+    echo \"<button class=' navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button'
+                        data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'
+                        aria-expanded='false' aria-label='Toggle navigation'>
+                    Menu <i class='fas fa-bars'></i>
+                    </button>\";
+
+    // 5.3 ส่วนเนื้อหาของ Navbar
+    echo \"<div class='collapse navbar-collapse' id='navbarResponsive'>\";
+    echo \"<ul class='navbar-nav'>\";
+
+    // 6) วนลูปสร้าง “เมนูหลัก” จาก \$mainMenus
+    foreach (\$mainMenus as \$main) {
+        \$mainId = \$main['id'];
+        \$mainName = \$main['name'];
+        \$mainLink = htmlspecialchars(\$main['link'], ENT_QUOTES, 'UTF-8'); // ใช้ link จาก \$mainMenus
+    
+        // ตรวจสอบว่ามีเมนูย่อยหรือไม่
+        if (isset(\$subMenus[\$mainId])) {
+            // มีเมนูย่อย แสดงเป็น Dropdown
+            echo \"<li class='nav-item dropdown mx-0 '>\";
+            echo \"<a class='track-link nav-link dropdown-toggle py-3 ' href='{\$mainLink}' >\"
+                . htmlspecialchars(\$mainName, ENT_QUOTES, 'UTF-8') . \"</a>\";
+            echo \"<ul class='dropdown-menu'>\";
+            foreach (\$subMenus[\$mainId] as \$submenu) {
+                \$submenuLink = \"Allpage/\" . htmlspecialchars(
+                    \$submenu['link_to'],
+                    ENT_QUOTES,
+                    'UTF-8'
+                );
+                \$submenuName = htmlspecialchars(\$submenu['name'], ENT_QUOTES, 'UTF-8');
+                echo \"<li><a class='track-link dropdown-item' href='{\$submenuLink}.php'>{\$submenuName}</a></li>
+                                    \";
+            }
+            echo \"</ul>\";
+            echo \"</li>\";
+        } else {
+            // ไม่มีเมนูย่อย แสดงเป็นปกติ ไม่ใช่ Dropdown
+            echo \"<li class='nav-item mx-0 '>\";
+            echo \"<a class='nav-link py-3 px-0 px-lg-3 rounded' href='{\$mainLink}'>\"
+                . htmlspecialchars(\$mainName, ENT_QUOTES, 'UTF-8') . \"</a>\";
+            echo \"</li>\";
+        }
+    }
+    echo \"</nav>\";
+
+
     ?>
-    <nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>
-        <div class='container'>
-
-            <!-- 5.1 แสดงโลโก้ (ถ้ามี) -->
-            <a class='navbar-brand' href='home.php'>
-                <?php
-                \$directory = '../../admin/uploads/';
-                if (is_dir(\$directory)) {
-                    \$files = scandir(\$directory);
-                    if (\$files !== false) {
-                        \$files = array_diff(\$files, array('.', '..'));
-                        \$imageFiles = array_filter(\$files, function (\$file) {
-                            \$ext = pathinfo(\$file, PATHINFO_EXTENSION);
-                            return in_array(strtolower(\$ext), ['jpg', 'jpeg', 'png', 'gif']);
-                        });
-                        if (count(\$imageFiles) > 0) {
-                            \$image = reset(\$imageFiles);
-                            echo \"<img src='{\$directory}\" . htmlspecialchars(\$image, ENT_QUOTES, 'UTF-8') . \"' 
-                              alt='โลโก้' 
-                              style='height: 95px;'>\";
-                        } else {
-                            echo \"ไม่มีรูปภาพในโฟลเดอร์ uploads\";
-                        }
-                    } else {
-                        echo \"ไม่สามารถอ่านไฟล์ในโฟลเดอร์ uploads ได้\";
-                    }
-                } else {
-                    echo \"ไม่พบโฟลเดอร์ uploads\";
-                }
-                ?>
-            </a>
-
-            <!-- 5.2 ปุ่ม Toggle สำหรับ Mobile -->
-            <button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button'
-                data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'
-                aria-expanded='false' aria-label='Toggle navigation'>
-                Menu <i class='fas fa-bars'></i>
-            </button>
-
-            <!-- 5.3 ส่วนเนื้อหาของ Navbar -->
-            <div class='collapse navbar-collapse' id='navbarResponsive'>
-                <ul class='navbar-nav ms-auto'> <!-- ใช้ ms-auto เพื่อจัดเมนูไปทางขวา -->
-                    <?php foreach (\$mainMenus as \$main): ?>
-                        <?php
-                        \$mainId = \$main['id'];
-                        \$mainName = htmlspecialchars(\$main['name'], ENT_QUOTES, 'UTF-8');
-                        \$mainLink = htmlspecialchars(\$main['link'], ENT_QUOTES, 'UTF-8');
-
-                        // ตรวจสอบว่ามีเมนูย่อยหรือไม่
-                        if (isset(\$subMenus[\$mainId])):
-                            ?>
-                            <li class='nav-item dropdown'>
-                                <a class='nav-link dropdown-toggle' href='<?php echo \$mainLink; ?>' role='button'
-                                    data-bs-toggle='dropdown' aria-expanded='false'>
-                                    <?php echo \$mainName; ?>
-                                </a>
-                                <ul class='dropdown-menu'>
-                                    <?php foreach (\$subMenus[\$mainId] as \$submenu): ?>
-                                        <?php
-                                        \$submenuName = htmlspecialchars(\$submenu['name'], ENT_QUOTES, 'UTF-8');
-                                        \$submenuLinkTo = htmlspecialchars(\$submenu['link_to'], ENT_QUOTES, 'UTF-8');
-                                        \$submenuLink = \"Allpage/\" . \$submenuLinkTo . \".php\";
-                                        ?>
-                                        <li><a class='dropdown-item'
-                                                href='<?php echo \$submenuLink; ?>'><?php echo \$submenuName; ?></a></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </li>
-                        <?php else: ?>
-                            <li class='nav-item'>
-                                <a class='nav-link' href='<?php echo \$mainLink; ?>'><?php echo \$mainName; ?></a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <?php
-    include ('../../db.php');
+    include ('../db.php');
     \$filename = basename(__FILE__); // ได้ชื่อไฟล์ปัจจุบัน
     preg_match('/article_(\d+)_/', \$filename, \$matches); // ดึงเฉพาะตัวเลขหลัง article_
     \$article_id = \$matches[1];
@@ -240,13 +245,13 @@ require_once '../../db.php';
     <div class=\"container mt-5 text-center flex-column\" style=\"margin-top: 150px;\">
         <h1><?php echo htmlspecialchars(\$row['title']); ?></h1>
         <div class=\"my-4\">
-            <img src=\"images_all/<?php echo \$row['image_path']; ?>\" class=\"img-fluid\" alt=\"<?php echo htmlspecialchars(\$row['title']); ?>\">
+            <img src=\"จัดการหน้าเว็บ/images_article/<?php echo \$row['image_path']; ?>\" class=\"img-fluid\" alt=\"<?php echo htmlspecialchars(\$row['title']); ?>\">
         </div>
         <div class=\"content\">
             <?php echo \$row['content']; ?>
         
         <div class=\"mt-4\">
-            <a href=\"../../show_article.php\" class=\"btn btn-primary\">กลับหน้าหลัก</a>
+            <a href=\"../show_article.php\" class=\"btn btn-primary\">กลับหน้าหลัก</a>
         </div>
     </div>
 </body>
