@@ -477,13 +477,6 @@ include('db.php');
             text-align: left;
         }
 
-        .container {
-            width: 100%;
-            max-width: 100%;
-            padding: 0 15px;
-            /* ขอบซ้ายขวา */
-            box-sizing: border-box;
-        }
     </style>
 </body>
 

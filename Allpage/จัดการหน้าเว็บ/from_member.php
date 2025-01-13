@@ -140,6 +140,12 @@ body {
 .tab.open + .dropdown-menu {
     display: block;
 }
+.form-group{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
