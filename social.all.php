@@ -85,12 +85,14 @@ include('db.php');
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
-        ['id' => 3, 'name' => 'สินค้า', 'link' => 'show_product.php'],
-        ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
-        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
-        ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
-        ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
+        ['id' => 2, 'name' => 'รู้จักวันสยาม', 'link' => 'about.php'],
+        ['id' => 3, 'name' => 'ธุรกิจวันสยาม', 'link' => 'index.php'],
+        ['id' => 4, 'name' => 'ข่าวสารและการเคลื่อนไหว', 'link' => 'index.php'],
+        ['id' => 5, 'name' => 'สินค้า', 'link' => 'show_product.php'],
+        ['id' => 6, 'name' => 'โปรเจค', 'link' => 'projects.php'],
+        ['id' => 7, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
+        ['id' => 8, 'name' => 'บทความ', 'link' => 'show_article.php'],
+        ['id' => 9, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
@@ -98,13 +100,13 @@ include('db.php');
 
     // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
     $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4,5,6,7]
-    $inClause = implode(',', $mainIds);        // "1,2,3,4,5,6,7"
+    $inClause = implode(',', $mainIds); // "1,2,3,4,5,6,7"
     
     // 4) Query ดึงเมนูย่อยจากตาราง navbar
-    $sql = "SELECT * 
-        FROM navbar
-        WHERE parent_id IN ($inClause)
-        ORDER BY parent_id ASC, id ASC";
+    $sql = "SELECT *
+    FROM navbar
+    WHERE parent_id IN ($inClause)
+    ORDER BY parent_id ASC, id ASC";
 
     $result = $conn->query($sql);
 
@@ -140,9 +142,7 @@ include('db.php');
             if (count($imageFiles) > 0) {
                 $image = reset($imageFiles);
                 echo "<div class='logoinmenu'>";
-                echo "<img src='{$directory}{$image}' 
-                      alt='รูปภาพล่าสุด' 
-                      '>";
+                echo "<img src='{$directory}{$image}' alt='รูปภาพล่าสุด' ' class='track-link' >";
                 echo "</div>";
             } else {
                 echo "ไม่มีรูปภาพในโฟลเดอร์ uploads";
@@ -157,12 +157,11 @@ include('db.php');
     echo "</a>";
 
     // 5.2 ปุ่ม Toggle สำหรับ Mobile
-    echo "<button class='navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' 
-      type='button' data-bs-toggle='collapse' data-bs-target='#navbarResponsive' 
-      aria-controls='navbarResponsive' aria-expanded='false' 
-      aria-label='Toggle navigation'>
-      Menu <i class='fas fa-bars'></i>
-      </button>";
+    echo "<button class=' navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded' type='button'
+                        data-bs-toggle='collapse' data-bs-target='#navbarResponsive' aria-controls='navbarResponsive'
+                        aria-expanded='false' aria-label='Toggle navigation'>
+                    Menu <i class='fas fa-bars'></i>
+                    </button>";
 
     // 5.3 ส่วนเนื้อหาของ Navbar
     echo "<div class='collapse navbar-collapse' id='navbarResponsive'>";
@@ -178,13 +177,18 @@ include('db.php');
         if (isset($subMenus[$mainId])) {
             // มีเมนูย่อย แสดงเป็น Dropdown
             echo "<li class='nav-item dropdown mx-0 '>";
-            echo "<a class='nav-link dropdown-toggle py-3 ' href='{$mainLink}'>"
+            echo "<a class='track-link nav-link dropdown-toggle py-3 ' href='{$mainLink}' >"
                 . htmlspecialchars($mainName, ENT_QUOTES, 'UTF-8') . "</a>";
             echo "<ul class='dropdown-menu'>";
             foreach ($subMenus[$mainId] as $submenu) {
-                $submenuLink = "Allpage/" . htmlspecialchars($submenu['link_to'], ENT_QUOTES, 'UTF-8');
+                $submenuLink = "Allpage/" . htmlspecialchars(
+                    $submenu['link_to'],
+                    ENT_QUOTES,
+                    'UTF-8'
+                );
                 $submenuName = htmlspecialchars($submenu['name'], ENT_QUOTES, 'UTF-8');
-                echo "<li><a class='dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>";
+                echo "<li><a class='track-link dropdown-item' href='{$submenuLink}.php'>{$submenuName}</a></li>
+                                    ";
             }
             echo "</ul>";
             echo "</li>";

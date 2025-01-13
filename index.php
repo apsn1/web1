@@ -81,12 +81,14 @@
     // 1) กำหนดเมนูหลัก (Hard-coded) ในไฟล์เดียวกัน (ไม่ต้อง include admin_panel.php)
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'index.php'],
-        ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
-        ['id' => 3, 'name' => 'สินค้า', 'link' => 'show_product.php'],
-        ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
-        ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
-        ['id' => 6, 'name' => 'บทความ', 'link' => 'articles.php'],
-        ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
+        ['id' => 2, 'name' => 'รู้จักวันสยาม', 'link' => 'about.php'],
+        ['id' => 3, 'name' => 'ธุรกิจวันสยาม', 'link' => 'index.php'],
+        ['id' => 4, 'name' => 'ข่าวสารและการเคลื่อนไหว', 'link' => 'index.php'],
+        ['id' => 5, 'name' => 'สินค้า', 'link' => 'show_product.php'],
+        ['id' => 6, 'name' => 'โปรเจค', 'link' => 'projects.php'],
+        ['id' => 7, 'name' => 'โซเชียล', 'link' => 'social.all.php'],
+        ['id' => 8, 'name' => 'บทความ', 'link' => 'show_article.php'],
+        ['id' => 9, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี

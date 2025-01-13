@@ -1,16 +1,19 @@
+<?php
+require_once '../../db.php';
+$sql = "SELECT * FROM article WHERE id = 1";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>one siameRudee</title>
-    <!-- Favicon-->
-
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo htmlspecialchars($row['title']); ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <?php
     // Path to the folder
-    $folderPath = "admin/uploads/";
+    $folderPath = "../../admin/uploads/";
 
     // Get all files in the folder
     $files = glob($folderPath . "*");
@@ -24,12 +27,11 @@
     $latestFile = !empty($files) ? basename($files[0]) : null;
 
     if ($latestFile) {
-        echo '<link rel="icon" type="image/x-icon" href="' . $folderPath . $latestFile . '">';
+        echo " <link rel='icon' type='image/x-icon' href='" . $folderPath . $latestFile . "'>";
     } else {
         echo "No files found in the folder.";
     }
     ?>
-    <!-- เพิ่มไฟล์ CSS ของ Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -42,7 +44,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link rel="stylesheet" href="CssForIndex/index_css.css">
+    <link rel="stylesheet" href="../../CssForIndex/index_css.css">
     <title>หน้าเว็บหลัก</title>
     <script src="scripts.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -52,15 +54,11 @@
 
     <!-- Bootstrap JS Bundle (รวม Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    </style>
-    <title>SEO</title>
-  </head>
-  <body id="page-top">
+</head>
+<body id="page-top">
     <div id="notification-icon">
         <?php
-        $directory = 'admin/img/logo/';
+        $directory = '../../admin/uploads/';
         $files = glob($directory . '*'); // ดึงไฟล์ทั้งหมดในโฟลเดอร์
         $latestFile = '';
 
@@ -81,15 +79,15 @@
     $mainMenus = [
         ['id' => 1, 'name' => 'หน้าหลัก', 'link' => 'home.php'],
         ['id' => 2, 'name' => 'เกี่ยวกับเรา', 'link' => 'about.php'],
-        ['id' => 3, 'name' => 'สินค้า', 'link' => 'showproducts.php'],
+        ['id' => 3, 'name' => 'สินค้า', 'link' => 'products.php'],
         ['id' => 4, 'name' => 'โปรเจค', 'link' => 'projects.php'],
         ['id' => 5, 'name' => 'โซเชียล', 'link' => 'social.php'],
-        ['id' => 6, 'name' => 'บทความ', 'link' => 'show_articles.php'],
+        ['id' => 6, 'name' => 'บทความ', 'link' => 'show_article.php'],
         ['id' => 7, 'name' => 'ติดต่อเรา', 'link' => 'contact.php']
     ];
 
     // 2) เชื่อมต่อฐานข้อมูล (db.php) ถ้ามี
-    include('db.php');
+    include('../../db.php');
 
     // 3) แปลงค่าเมนูหลัก (id) เป็น array เพื่อใช้ใน Query
     $mainIds = array_column($mainMenus, 'id'); // [1,2,3,4,5,6,7]
@@ -114,25 +112,14 @@
             $subMenus[$pid][] = $row;
         }
     }
-
-    // ดึงข้อมูลบทความทั้งหมดจากฐานข้อมูล
-    $sql = "SELECT * FROM article ORDER BY created_at DESC";
-    $result = $conn->query($sql);
-    $articles = [];
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $articles[] = $row;
-        }
-    }
     ?>
-
     <nav class='navbar navbar-expand-lg bg-secondary1 text-uppercase fixed-top' id='mainNav'>
         <div class='container'>
 
             <!-- 5.1 แสดงโลโก้ (ถ้ามี) -->
             <a class='navbar-brand' href='home.php'>
                 <?php
-                $directory = 'admin/uploads/';
+                $directory = '../../admin/uploads/';
                 if (is_dir($directory)) {
                     $files = scandir($directory);
                     if ($files !== false) {
@@ -204,67 +191,37 @@
             </div>
         </div>
     </nav>
-    <header id="Home" class="custom-headerbanner text-center ">
-            <div class="custom-position-relative" style="padding-top: 0px; padding-bottom: 0px;">
-              <div class="custom-banner-container">
-                  <img id="bannerImage" src="" style="width:100%; alt='<?php echo $buttons[0]; ?>'">
-              </div>
-            </div>
-    </header>
 
-        <h2 class="text-center " style="margin-top: 150px;">บทความ</h2>
+    <?php
+    include ('../../db.php');
+    $filename = basename(__FILE__); // ได้ชื่อไฟล์ปัจจุบัน
+    preg_match('/article_(\d+)_/', $filename, $matches); // ดึงเฉพาะตัวเลขหลัง article_
+    $article_id = $matches[1];
 
-        <div class="container mt-3">
-          <div class="row">
-            <?php
-            // แสดง 4 บทความแรกในรูปแบบการ์ด  
-            for ($i = 0; $i < min(4, count($articles)); $i++) {
-                $article = $articles[$i];
-            ?>
-                <div class="col-md-3 justify-content-center align-items-center">
-                    <div class="card h-100">
-                        <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $article['image_path']; ?>" 
-                             class="card-img-top" 
-                             alt="<?php echo htmlspecialchars($article['title']); ?>"
-                             style="height: 200px; object-fit: cover;">
-                        <div class="card-body d-flex flex-column text-center">
-                            <h5 class="card-title"><?php echo htmlspecialchars($article['title']); ?></h5>
-                            <p class="card-text"><?php echo mb_substr(strip_tags($article['content']), 0, 100, 'UTF-8') . '...'; ?></p>
-                            <div class="text-center">
-                                <a href="/web/Allpage/จัดการหน้าเว็บ/article_<?php echo $article['id']; ?>_<?php echo $article['title']; ?>.php" 
-                                   class="btn btn-primary mt-auto">อ่านบทความ</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-          </div>
+    $sql = "SELECT * FROM article WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $article_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    ?>
+
+    <div class="container mt-5 text-center flex-column" style="margin-top: 150px;">
+        <h1><?php echo htmlspecialchars($row['title']); ?></h1>
+        <div class="my-4">
+            <img src="images_all/<?php echo $row['image_path']; ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['title']); ?>">
         </div>
-        <div class="container my-5 flex-column text-start">
-            <h5 class="text-start mb-4">บทความที่น่าสนใจ</h5>
-            <div class="row row-cols-1 row-cols-md-6 g-4 text-center">
-                <?php
-                // แสดงบทความที่เหลือในรูปแบบ grid
-                for ($i = 4; $i < count($articles); $i++) {
-                    $article = $articles[$i];
-                ?>
-                    <div class="col">
-                        <a href="/web/Allpage/จัดการหน้าเว็บ/article_<?php echo $article['id']; ?>_<?php echo $article['title']; ?>.php" 
-                           class="text-decoration-none">
-                            <div class=" h-100">
-                                <div class="">
-                                    <h6 class=" text-dark"><?php echo htmlspecialchars($article['title']); ?></h6>
-                                    <small class="text-muted"><?php echo date('d/m/Y', strtotime($article['created_at'])); ?></small>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php } ?>
-            </div>
+        <div class="content">
+            <?php echo $row['content']; ?>
+        
+        <div class="mt-4">
+            <a href="../../show_article.php" class="btn btn-primary">กลับหน้าหลัก</a>
         </div>
+    </div>
+</body>
 
-  </body>
-  <footer class="footer position-relative text-center  p-4 w-100 w-100">
+
+<footer class="footer position-relative w-100" >
     <div class='d-flex justify-content-evenly'>
         <!---Location---->
         <div>
