@@ -435,7 +435,7 @@ while($row = mysqli_fetch_assoc($result)) {
 
 
     <!-------เพิ่มโค๊ดข้างล่าง (Footer)----------------->
-    <footer class="footer text-center position-fixed p-4 w-100" style="z-index: 1000;bottom: 0px; left: 0px;">
+    <footer class="footer position-relative text-center  p-4 w-100 w-100" >
         <div class='d-flex justify-content-evenly'>
             <!---Location---->
             <div>

@@ -221,7 +221,7 @@
             for ($i = 0; $i < min(4, count($articles)); $i++) {
                 $article = $articles[$i];
             ?>
-                <div class="col-md-3 justify-content-center align-items-center">
+                <div class="col-3 justify-content-center align-items-center">
                     <div class="card h-100">
                         <img src="Allpage/จัดการหน้าเว็บ/images_all/<?php echo $article['image_path']; ?>" 
                              class="card-img-top" 
