@@ -97,7 +97,7 @@ $result = mysqli_query($conn, $sql);
                             <td><?php echo $article['id']; ?></td>
                             <td>
                                 <?php if ($article['image_path']): ?>
-                                    <img src="../Allpage/จัดการหน้าเว็บ/images_all/<?php echo htmlspecialchars($article['image_path']); ?>" 
+                                    <img src="../Allpage/จัดการหน้าเว็บ/images_article/<?php echo htmlspecialchars($article['image_path']); ?>" 
                                          alt="Article image" style="max-width: 100px; ">
                                 <?php else: ?>
                                     <span class="text-muted">ไม่มีรูปภาพ</span>

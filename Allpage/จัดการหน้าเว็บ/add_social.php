@@ -1,46 +1,22 @@
 <div class="Allfrom">
     <h2>บันทึกข้อมูลหน้า</h2>
     <div class="FromFilemanager">
-        <!-- ปุ่มสำหรับเปิด/ปิดฟอร์ม -->
-        <div class="Allfrom1">
-            <div class="FromFilemanager">
-                เพิ่ม Youtube
-                <form action="edit_youtube.php" method="POST">
-                    <label>ชื่อแพลตฟอร์ม:</label><br>
-                    <input type="text" name="platform_name" required><br><br>
+        <form action="edit_platfrom.php" method="POST">
+            <label for="platform_name">แพลตฟอร์ม:</label><br>
+            <select name="platform_name" id="platform_name">
+                <option value="YouTube">YouTube</option>
+                <option value="Facebook">Facebook</option>
+                <option value="TikTok">TikTok</option>
+            </select>
+            <br><br>
 
-                    <label>ลิงก์แพลตฟอร์ม:</label><br>
-                    <input type="text" name="platform_link" required><br><br>
+            <label for="platform_link">ลิงก์แพลตฟอร์ม:</label><br>
+            <input type="text" name="platform_link" id="platform_link" required><br><br>
 
-                    <button type="submit">เพิ่มการ์ด</button>
-                </form>
-            </div>
-            <div class="FromFilemanager">
-                เพิ่ม Facebook
-                <form action="edit_facebook.php" method="POST">
-                    <label>ชื่อแพลตฟอร์ม:</label><br>
-                    <input type="text" name="platform_name" required><br><br>
-
-                    <label>ลิงก์แพลตฟอร์ม:</label><br>
-                    <input type="text" name="platform_link" required><br><br>
-
-                    <button type="submit">เพิ่มการ์ด</button>
-                </form>
-            </div>
-            <div class="FromFilemanager">
-                เพิ่ม TikTok
-                <form action="edit_tiktok.php" method="POST">
-                    <label>ชื่อแพลตฟอร์ม:</label><br>
-                    <input type="text" name="platform_name" required><br><br>
-
-                    <label>ลิงก์แพลตฟอร์ม:</label><br>
-                    <input type="text" name="platform_link" required><br><br>
-
-                    <button type="submit">เพิ่มการ์ด</button>
-                </form>
-            </div>
-        </div>
-
+            <button type="submit">เพิ่มการ์ด</button>
+        </form>
+    </div>
+</div>
 
         <style>
             /* CSS ที่คุณให้มา */
