@@ -5,6 +5,7 @@
     if (!isset($_SESSION['admin_logged_in'])) {
     header('Location: login.php');
     exit();
+    }
 ?>
 
 
@@ -12,7 +13,7 @@
 <html>
 
 <head>
-<?php
+    <?php
     // Path to the folder
     $folderPath = "uploads/";
 
@@ -113,7 +114,7 @@
                 // 4) กำหนดเมนูหลัก (Main Menu) แบบ Hard-coded
                 $mainMenus = [
                     ['id' => 1, 'name' => 'หน้าหลัก'],
-                    ['id' => 2, 'name' => 'เกี่ยวกับเรา'], 
+                    ['id' => 2, 'name' => 'เกี่ยวกับเรา'],
                     ['id' => 3, 'name' => 'สินค้า'],
                     ['id' => 4, 'name' => 'โปรเจค'],
                     ['id' => 5, 'name' => 'โซเซี่ยล'],
@@ -243,19 +244,35 @@
                     ?>
                 </form>
 
-                <button onclick="toggleForm('editForm8')">ฟอมเพิ่มรูปปกเว็บไซต์</button>
+                <button  onclick="toggleForm('editForm9')">ลงทะเบียนผู้ใช้งานเพิ่มเติม</button>
+                <form id="editForm9" action="add_header.php" enctype="multipart/form-data" style="display: none;">
+                    <a href="register.php">
+                        <button type="button">ลงทะเบียน</button>
+                    </a>
+                </form>
+
+                <button onclick="toggleForm('editForm8')">ฟอร์มเพิ่มรูปปกเว็บไซต์</button>
                 <form id="editForm8" action="add_header.php" enctype="multipart/form-data" style="display: none;"
                     method="post">
                     <h1>เพิ่มรูปปกเว็บไซต์</h1>
                     <div class="form-container">
                         <div class="form-group">
-                            <input type="file" name="header" required>
-                            <input type='text' name='header_button' placeholder="ข้อความในปุ่ม" required />
+                            <label for="header">รูปปกเว็บไซต์:</label><br>
+                            <input type="file" name="header" id="header" accept="image/*" required><br><br>
+
+                            <label for="img_vertical">รูปแนวตั้ง:</label><br>
+                            <input type="file" name="img_vertical" id="img_vertical" accept="image/*" required><br><br>
+
+                            <label for="header_button">ข้อความในปุ่ม:</label><br>
+                            <input type="text" name="header_button" id="header_button" placeholder="ข้อความในปุ่ม"
+                                required /><br><br>
+
                             <button type="submit">อัปโหลด</button>
                         </div>
                         <a class="btn btn-info" href='edit_header.php'>แก้ไข</a>
                     </div>
                 </form>
+
                 <button onclick="toggleForm('editForm4')">ฟอมจัดการส่วนแสดงหลังจาก banner</button>
                 <form id="editForm4" method="POST" action="add_content.php" style="display: none;">
                     <input type="hidden" name="id" id="formId" placeholder="Form 4"></input>
@@ -339,11 +356,11 @@
                 <!-- ----------------------------------------------------------------------------------------------- -->
                 <button onclick="toggleForm('editForm2')">ฟอม ข้อมูลเกี่ยวกับฉัน</button>
                 <form id="editForm2" method="POST" action="edit_about.php" style="display: none;">
-                <?php
-                $sql = 'select * from about ';
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                ?>
+                    <?php
+                    $sql = 'select * from about ';
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    ?>
                     <div class="mb-3">
                         <label for="abouthead" class="form-label">หัวข้อ</label>
                         <input type="text" class="form-control" name="abouthead" placeholder="กรอกหัวเรื่อง"
@@ -360,25 +377,26 @@
 
                 <button onclick="toggleForm('editForm1')">ฟอมข้อมูลติดต่อ</button>
                 <form id="editForm1" method="POST" action="edit_contact.php" style="display: none;">
-                <?php
-                $sql = 'select * from contacts';
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                ?>  
+                    <?php
+                    $sql = 'select * from contacts';
+                    $result = mysqli_query($conn, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    ?>
 
                     <label for="phone">เบอร์ติดต่อ : </label>
-                    <input type="text" name="phone" value="<?php echo isset($row['phone']) ? $row['phone'] : ''; ?>"/>
+                    <input type="text" name="phone" value="<?php echo isset($row['phone']) ? $row['phone'] : ''; ?>" />
                     <label for="telephone">เบอร์ติดต่อ : </label>
-                    <input type="text" name="telephone" value="<?php echo isset($row['telephone']) ? $row['telephone'] : ''; ?>"/>
+                    <input type="text" name="telephone"
+                        value="<?php echo isset($row['telephone']) ? $row['telephone'] : ''; ?>" />
                     <label for="lineID">ไลน์ไอดี : </label>
-                    <input type="text" name="lineID" value="<?php echo isset($row['line']) ? $row['line'] : ''; ?>"/>
+                    <input type="text" name="lineID" value="<?php echo isset($row['line']) ? $row['line'] : ''; ?>" />
                     <label for="email">อีเมล์ : </label>
-                    <input type="text" name="email" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>"/>
-                    <br/> 
+                    <input type="text" name="email" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>" />
+                    <br />
                     <button type="submit">บันทึก</button>
                 </form>
 
-                
+
                 <button onclick="toggleForm('editForm7')">ฟอมเพิ่มรูปโปรเจค</button>
                 <form id="editForm7" method="POST" action="add_imgproject.php" enctype="multipart/form-data"
                     style="display: none;">
