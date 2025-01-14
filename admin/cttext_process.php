@@ -28,7 +28,7 @@ if ($action === 'add') {
             $line = trim($line);
             if (!empty($line)) {
                 // INSERT ลงตาราง
-                $sql = "INSERT INTO messages (text) VALUES (:txt)";
+                $sql = "INSERT INTO ctpage (text) VALUES (:txt)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':txt', $line);
                 $stmt->execute();
